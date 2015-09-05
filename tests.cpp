@@ -4,7 +4,7 @@
 
 //#include "mini_test.h"
 #include <iostream>
-#include "cartas_enlazadas-2.h"
+#include "TpCasi.h"
 using namespace std;
 
 
@@ -29,15 +29,22 @@ using namespace std;
 int main() {
  // RUN_TEST(check_crear_mesa_vacia);
 CartasEnlazadas<int> l;
-l.agregarJugador(5);
-l.agregarJugador(3);
+
+l.agregarJugador(1);
+l.agregarJugador(2);
+ l.agregarJugador(3);
  l.agregarJugador(4);
-l.agregarJugador(6);
-// l.agregarJugador(3);
+
+l.sumarPuntosAlJugador(1,10);
+l.sumarPuntosAlJugador(2,10);
+l.sumarPuntosAlJugador(3,11);
+
+CartasEnlazadas<int> (r);
+
+
 //cout<<l.tamanio()<<endl;
-l.adelantarMazoRojo(-3);
-cout<< l.dameJugadorConMazoRojo()<<endl;
-cout << l <<endl;
+cout << r <<endl;
+cout<< "el ganador es el jugador:  " << l.ganador()<<endl;
   return 0;
 }
 

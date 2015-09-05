@@ -255,12 +255,23 @@ void CartasEnlazadas<T>::agregarJugador(const T& jug){
 }
 template<class T>
 void CartasEnlazadas<T>::adelantarMazoRojo(int n){
+	while(n<0){
+			n=n+len;
+		}
 	mazoRojo=((mazoRojo+n)%len);
 }
 
 template<class T>
 void CartasEnlazadas<T>::adelantarMazoAzul(int n){
-	mazoAzul=((mazoAzul+n)%len);
+	// if(n>=0){
+	// mazoAzul=((mazoAzul+n)%len);
+	// }else{}
+
+		while(n<0){
+			n=n+len;
+		}
+		mazoAzul=((mazoAzul+n)%len);
+	
 }
 template<class T>
 const T& CartasEnlazadas<T>::dameJugadorConMazoRojo() const{
@@ -282,6 +293,10 @@ const T& CartasEnlazadas<T>::dameJugadorConMazoAzul() const{
 		pos++;
 	}
 	return aux->elem;
+}
+template<class T>
+const T& CartasEnlazadas<T>::dameJugador(int n) const{
+	
 }
 
 template<class T>

@@ -210,6 +210,14 @@ CartasEnlazadas<T>::CartasEnlazadas(){
 
 template<class T>
 CartasEnlazadas<T>::CartasEnlazadas(const CartasEnlazadas<T>& otra){
+int i=0;
+Nodo* aux=prim;
+Nodo* aux2=otra.prim;
+while(i<otra.len){
+aux=aux2;
+aux2=aux2->sig;
+i++;
+}
 
 }
 
