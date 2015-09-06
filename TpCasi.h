@@ -205,20 +205,47 @@ CartasEnlazadas<T>::CartasEnlazadas(){
 	mazoRojo=NULL;
 	mazoAzul=NULL;
 	len=0;
+
+	
 }
 
 
 template<class T>
 CartasEnlazadas<T>::CartasEnlazadas(const CartasEnlazadas<T>& otra){
-int i=0;
-Nodo* aux=prim;
-Nodo* aux2=otra.prim;
+int i=1;
+int j=0;
+prim=NULL;
+	ult=NULL;
+
+	mazoRojo=NULL;
+	mazoAzul=NULL;
+	len=0;
+Nodo* aux2= otra.prim->sig;
+agregarJugador((otra.prim)->elem);
+sumarPuntosAlJugador((otra.prim)->elem, (otra.prim)->puntos);
 while(i<otra.len){
-aux=aux2;
+agregarJugador(aux2->elem);
+sumarPuntosAlJugador(aux2->elem, aux2->puntos);
+adelantarMazoAzul(1);
 aux2=aux2->sig;
 i++;
 }
 
+Nodo* auxAzul=mazoAzul;
+Nodo* auxRojo=mazoRojo;
+
+while(j<len && (auxAzul->elem!=otra.dameJugadorConMazoAzul() || auxRojo->elem!=otra.dameJugadorConMazoRojo())){
+// while(auxAzul->elem!=otra.dameJugadorConMazoAzul()){
+	if(auxAzul->elem!=otra.dameJugadorConMazoAzul()){
+	auxAzul=auxAzul->sig;
+	adelantarMazoAzul(1);
+	}
+	if(auxRojo->elem!=otra.dameJugadorConMazoRojo()){
+		auxRojo=auxRojo->sig;
+		adelantarMazoRojo(1);
+	}
+	j++;
+}
 }
 
 template<class T>
@@ -256,6 +283,7 @@ void CartasEnlazadas<T>::agregarJugador(const T& jug){
 		//nuevo->ant=actual;
 	
 		nuevo->elem=jug;
+		//nuevo->puntos=0;
 	
 	len++;
 }
@@ -452,6 +480,7 @@ template<class T>
 bool CartasEnlazadas<T>::operator==(const CartasEnlazadas<T>& otra) const{
 int i=0;
 bool res=true;
+if(len==0 && otra.len==0){return res;}
 	if(len==otra.len){
 		Nodo* aux=prim;
 		Nodo* aux2=otra.prim;
@@ -466,6 +495,7 @@ bool res=true;
 return res;
 }
 
+
 template<class T>
 int CartasEnlazadas<T>::tamanio() const{
 	return len;
@@ -479,35 +509,38 @@ bool CartasEnlazadas<T>::esVacia() const{
 
 template<class T>
 ostream& CartasEnlazadas<T>::mostrarCartasEnlazadas(ostream& os) const{
-	// os << "[";
-	// Nodo* actual = prim;
-	// os << actual->elem << ",";
-	// actual = actual -> sig;
-	// while(actual != prim){
-	// 	os << actual->elem;
-	// 		if(actual != ult){
-	// 			os << ",";
-	// 		}
-	// 	actual = actual -> sig;
-	// }
-	// os << "]";
-	os << "[";
-		if(prim==NULL){
+		os << "[";
+		if(prim==NULL){ //es vacia?
 			os<< "]";
 		}else{
-	Nodo* actual = prim;
-	os <<"(" << actual->elem << "," << actual->puntos << ")" <<",";
-	actual = actual -> sig;
-	while(actual != prim && actual!=ult ){
-		os <<"(" << actual->elem << "," << actual->puntos << ")"<<",";
-			// if(actual != ult){
-			// 	os << ",";
-			// }else{break;}
+	
+	Nodo* actual = mazoAzul;
+	
+	if(actual==mazoRojo){ //primer elemento
+	os <<"(" << actual->elem << "," << actual->puntos << ")"<<"*"<<","<<" ";
+	}else{
+	os <<"(" << actual->elem << "," << actual->puntos << ")"<<","<<" ";
+	}
+	 actual = actual -> sig;
+	while(actual!=mazoAzul){ //recorro toda la lista
+		if(actual->sig==mazoAzul){ //ultimo elemento
+			if(actual==mazoRojo){
+			os <<"(" << actual->elem << "," << actual->puntos << ")"<<"*";
+			}else{
+			os <<"(" << actual->elem << "," << actual->puntos << ")";
+			}
+		}else if(actual==mazoRojo){ //no es el ultimo elemento
+			os <<"(" << actual->elem << "," << actual->puntos << ")"<<"*"<<","<<" ";
+		}else{
+		os <<"(" << actual->elem << "," << actual->puntos << ")"<<","<<" ";
+		}
 		actual = actual -> sig;
+		//i++;
+	}
+	os<< "]";
+	//os <<"(" << actual->elem << "," << actual->puntos << ")" << "]";
 	}
 
-	os <<"(" << actual->elem << "," << actual->puntos << ")" << "]";
-	}
 }
 
 

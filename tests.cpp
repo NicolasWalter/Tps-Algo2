@@ -29,22 +29,28 @@ using namespace std;
 int main() {
  // RUN_TEST(check_crear_mesa_vacia);
 CartasEnlazadas<int> l;
-
-l.agregarJugador(1);
-l.agregarJugador(2);
- l.agregarJugador(3);
- l.agregarJugador(4);
+ l.agregarJugador(1);
+ l.agregarJugador(2);
+  l.agregarJugador(3);
+  l.agregarJugador(4);
 
 l.sumarPuntosAlJugador(1,10);
 l.sumarPuntosAlJugador(2,10);
 l.sumarPuntosAlJugador(3,11);
+l.adelantarMazoAzul(2);
+l.adelantarMazoRojo(-1);
 
-CartasEnlazadas<int> (r);
+CartasEnlazadas<int> r(l);
 
+cout<<l.dameJugadorConMazoAzul()<<endl;
+cout<<r.dameJugadorConMazoAzul()<<endl;
+cout<<r.dameJugadorConMazoRojo()<<endl;
+cout<<l.dameJugadorConMazoRojo()<<endl;
 
+cout<<(r==l)<<endl;
 //cout<<l.tamanio()<<endl;
+cout<<l<<endl;
 cout << r <<endl;
-cout<< "el ganador es el jugador:  " << l.ganador()<<endl;
   return 0;
 }
 
