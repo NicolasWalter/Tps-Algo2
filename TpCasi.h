@@ -181,8 +181,8 @@ class CartasEnlazadas {
 
 
 
-   int mazoRojo; //posicion dond esta el mazo
-    int mazoAzul;
+   Nodo* mazoRojo; //posicion dond esta el mazo
+    Nodo* mazoAzul;
     int posicion(const T&);
     int len;
 
@@ -198,28 +198,61 @@ ostream& operator<<(ostream& out, const CartasEnlazadas<T>& a) {
 // Implementación a hacer por los alumnos.
 template<class T>
 CartasEnlazadas<T>::CartasEnlazadas(){
-	// Nodo* n = new Nodo;
 
-	// n->elem = 0;
-	// n->sig = n;
-	// prim = n;
-	// n->puntos=0;
-	// ult = n;
 	prim=NULL;
 	ult=NULL;
 
-	mazoRojo=-1;
-	mazoAzul=-1;
+	mazoRojo=NULL;
+	mazoAzul=NULL;
 	len=0;
+
+	
 }
+
 
 template<class T>
 CartasEnlazadas<T>::CartasEnlazadas(const CartasEnlazadas<T>& otra){
-	*this=otra;
+int i=1;
+int j=0;
+prim=NULL;
+	ult=NULL;
+
+	mazoRojo=NULL;
+	mazoAzul=NULL;
+	len=0;
+Nodo* aux2= otra.prim->sig;
+agregarJugador((otra.prim)->elem);
+sumarPuntosAlJugador((otra.prim)->elem, (otra.prim)->puntos);
+while(i<otra.len){
+agregarJugador(aux2->elem);
+sumarPuntosAlJugador(aux2->elem, aux2->puntos);
+adelantarMazoAzul(1);
+aux2=aux2->sig;
+i++;
+}
+
+Nodo* auxAzul=mazoAzul;
+Nodo* auxRojo=mazoRojo;
+
+while(j<len && (auxAzul->elem!=otra.dameJugadorConMazoAzul() || auxRojo->elem!=otra.dameJugadorConMazoRojo())){
+// while(auxAzul->elem!=otra.dameJugadorConMazoAzul()){
+	if(auxAzul->elem!=otra.dameJugadorConMazoAzul()){
+	auxAzul=auxAzul->sig;
+	adelantarMazoAzul(1);
+	}
+	if(auxRojo->elem!=otra.dameJugadorConMazoRojo()){
+		auxRojo=auxRojo->sig;
+		adelantarMazoRojo(1);
+	}
+	j++;
+}
 }
 
 template<class T>
 CartasEnlazadas<T>::~CartasEnlazadas(){
+	for(int i=0;i<len;i++){
+		eliminarJugador(prim->elem);
+	}
 }
 
 template<class T>
@@ -231,14 +264,14 @@ void CartasEnlazadas<T>::agregarJugador(const T& jug){
 		prim=nuevo;
 		ult=nuevo;
 		nuevo->sig=nuevo;
-		mazoAzul++;
-		mazoRojo++;
-	}else if(len==1 || mazoAzul==len-1){
+		mazoAzul=prim;
+		mazoRojo=prim;
+	}else if(len==1 || mazoAzul==ult){
 		ult->sig=nuevo;
 		ult=nuevo;
 		nuevo->sig=prim;
 	}else{
-		while(pos<mazoAzul){
+		while(actual!=mazoAzul){
 			//actual->ant=actual;
 			actual=actual->sig;
 			pos++;
@@ -250,15 +283,20 @@ void CartasEnlazadas<T>::agregarJugador(const T& jug){
 		//nuevo->ant=actual;
 	
 		nuevo->elem=jug;
+		//nuevo->puntos=0;
 	
 	len++;
 }
 template<class T>
 void CartasEnlazadas<T>::adelantarMazoRojo(int n){
+	int aux=0;
 	while(n<0){
 			n=n+len;
 		}
-	mazoRojo=((mazoRojo+n)%len);
+	while(aux<n){
+		mazoRojo=mazoRojo->sig;
+		aux++;
+	}
 }
 
 template<class T>
@@ -266,20 +304,20 @@ void CartasEnlazadas<T>::adelantarMazoAzul(int n){
 	// if(n>=0){
 	// mazoAzul=((mazoAzul+n)%len);
 	// }else{}
-
+int aux=0;
 		while(n<0){
 			n=n+len;
 		}
-		mazoAzul=((mazoAzul+n)%len);
-	
+while(aux<n){
+		mazoAzul=mazoAzul->sig;
+		aux++;
+	}	
 }
 template<class T>
 const T& CartasEnlazadas<T>::dameJugadorConMazoRojo() const{
-	int pos=0;
 	Nodo* aux=prim;
-	while(pos<mazoRojo){
+	while(aux!=mazoRojo){
 		aux=aux->sig;
-		pos++;
 	}
 	return aux->elem;
 }
@@ -288,52 +326,220 @@ template<class T>
 const T& CartasEnlazadas<T>::dameJugadorConMazoAzul() const{
 	int pos=0;
 	Nodo* aux=prim;
-	while(pos<mazoAzul){
+	while(aux!=mazoAzul){
 		aux=aux->sig;
-		pos++;
 	}
 	return aux->elem;
 }
+
 template<class T>
 const T& CartasEnlazadas<T>::dameJugador(int n) const{
-	
+ int contador=0;
+ Nodo* aux=mazoRojo;
+ while(n<0){
+			n=n+len;
 }
+while(contador<n){
+	aux=aux->sig;
+	contador++;
+}
+return aux->elem;
+}
+
+template<class T>
+const T& CartasEnlazadas<T>::dameJugadorEnfrentado() const{
+Nodo* aux=mazoRojo;
+int contador=0;
+// while(aux!=mazoRojo){
+// 	aux=aux->sig;
+// 	contador++;
+// }
+
+// if(contador<)
+while(contador<len/2){
+	aux=aux->sig;
+	contador++;
+}
+return aux->elem;
+}
+
+template<class T>
+
+void CartasEnlazadas<T>::eliminarJugador(const T& jug){
+	Nodo* actual = prim;
+	Nodo* anterior = prim;
+	Nodo* aux=prim;
+	int pos = 0;
+	int i=0;
+	while(aux->elem!=jug){
+		i++;
+		aux=aux->sig;
+	}
+	if(prim->elem==jug){
+		prim = actual->sig;
+		//delete actual;
+	}
+	else if(ult->elem==jug){
+		while(pos<len-1){
+			anterior=actual;
+			actual=actual->sig;
+			pos++;
+		}
+	ult = anterior;
+	anterior->sig= prim;
+	//delete actual;
+	}else{
+		while(pos<i){
+			anterior=actual;
+			actual=actual->sig;
+			//anterior->sig=actual->sig;
+			pos++;
+		}
+		anterior->sig=actual->sig;
+	 //delete actual;
+	}
+	if(actual==mazoRojo){
+		mazoRojo=mazoRojo->sig;
+	}
+	if(actual==mazoAzul){
+		mazoAzul=mazoAzul->sig;
+	}
+	delete actual;
+}
+
+template<class T>
+void CartasEnlazadas<T>::eliminarJugadorConMazoAzul(){
+	eliminarJugador(mazoAzul->elem);
+}
+
+template<class T>
+bool CartasEnlazadas<T>::existeJugador(const T& jug) const{
+
+	bool res=false;
+	if(prim==NULL){
+		return res;
+	}
+	Nodo* n=prim;
+	if(ult->elem==jug){
+		res=true;
+	}else{
+	while(n!=ult && res==false){
+		if(n->elem==jug){
+			res=true;
+		}
+		n=n->sig;
+
+	}
+	}
+	return res;
+}
+
+template<class T>
+void CartasEnlazadas<T>::sumarPuntosAlJugador(const T& jug, int n){
+	Nodo* aux=prim;
+if(prim->elem==jug){
+prim->puntos=prim->puntos+n;
+}else{
+	while(aux->elem!=jug){
+		aux=aux->sig;
+	}
+	aux->puntos=aux->puntos+n;
+	}
+}
+
+template<class T>
+int CartasEnlazadas<T>::puntosDelJugador(const T& jug) const{
+Nodo* aux=prim;
+if(prim->elem==jug){
+return prim->puntos;
+}else{
+	while(aux->elem!=jug){
+		aux=aux->sig;
+	}
+	return aux->puntos;
+	}
+}
+
+template<class T>
+const T& CartasEnlazadas<T>::ganador() const{
+	Nodo* max=prim;
+	Nodo* aux=prim;
+	int i=0;
+	while(i<len){
+		if(aux->puntos>max->puntos){
+			max=aux;
+		}
+		aux=aux->sig;
+		i++;
+	}
+
+	return max->elem;
+}
+
+template<class T>
+bool CartasEnlazadas<T>::operator==(const CartasEnlazadas<T>& otra) const{
+int i=0;
+bool res=true;
+if(len==0 && otra.len==0){return res;}
+	if(len==otra.len){
+		Nodo* aux=prim;
+		Nodo* aux2=otra.prim;
+		while(i<len && res){
+			res=(aux->elem==aux2->elem && aux->puntos==aux2->puntos);
+			aux=aux->sig;
+			aux2=aux2->sig;
+			i++;
+		}
+	}else{res=false;}
+	
+return res;
+}
+
 
 template<class T>
 int CartasEnlazadas<T>::tamanio() const{
 	return len;
 }
 
-
+template<class T>
+bool CartasEnlazadas<T>::esVacia() const{
+	return len==0;
+}
 
 
 template<class T>
 ostream& CartasEnlazadas<T>::mostrarCartasEnlazadas(ostream& os) const{
-	// os << "[";
-	// Nodo* actual = prim;
-	// os << actual->elem << ",";
-	// actual = actual -> sig;
-	// while(actual != prim){
-	// 	os << actual->elem;
-	// 		if(actual != ult){
-	// 			os << ",";
-	// 		}
-	// 	actual = actual -> sig;
-	// }
-	// os << "]";
-	os << "[";
-	Nodo* actual = prim;
-	os <<"(" << actual->elem << "," << actual->puntos << ")" <<",";
-	actual = actual -> sig;
-	while(actual != prim && actual!=ult ){
-		os <<"(" << actual->elem << "," << actual->puntos << ")"<<",";
-			// if(actual != ult){
-			// 	os << ",";
-			// }else{break;}
-		actual = actual -> sig;
+		os << "[";
+		if(prim==NULL){ //es vacia?
+			os<< "]";
+		}else{
+	
+	Nodo* actual = mazoAzul;
+	
+	if(actual==mazoRojo){ //primer elemento
+	os <<"(" << actual->elem << "," << actual->puntos << ")"<<"*"<<","<<" ";
+	}else{
+	os <<"(" << actual->elem << "," << actual->puntos << ")"<<","<<" ";
 	}
-
-	os <<"(" << actual->elem << "," << actual->puntos << ")" << "]";
+	 actual = actual -> sig;
+	while(actual!=mazoAzul){ //recorro toda la lista
+		if(actual->sig==mazoAzul){ //ultimo elemento
+			if(actual==mazoRojo){
+			os <<"(" << actual->elem << "," << actual->puntos << ")"<<"*";
+			}else{
+			os <<"(" << actual->elem << "," << actual->puntos << ")";
+			}
+		}else if(actual==mazoRojo){ //no es el ultimo elemento
+			os <<"(" << actual->elem << "," << actual->puntos << ")"<<"*"<<","<<" ";
+		}else{
+		os <<"(" << actual->elem << "," << actual->puntos << ")"<<","<<" ";
+		}
+		actual = actual -> sig;
+		//i++;
+	}
+	os<< "]";
+	//os <<"(" << actual->elem << "," << actual->puntos << ")" << "]";
+	}
 
 }
 
