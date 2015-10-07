@@ -1,0 +1,125 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{ConjAvl($\alpha$)}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}Se usa el {\sc Tad Conjunto($\alpha$)} especificado por la c\'atedra.
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
+\disSeExplicaCon{Conjunto($\alpha$)}
+
+\disGenero{conjAvl($\alpha$)}
+
+\disOperaciones{b\'asicas de ConjAvl($\alpha$)}
+
+\disDeclaraFuncion{Vacio}{}{res : conjAvl(\alpha)}{true}{res \ $\igobs$ vacio()}{\Ode{1}}{Devuelve un conjAvl($\alpha$) vacio.}
+
+\disDeclaraProc{Agregar}{\paramInOut{c}{conjAvl(\alpha)}, \paramIn{\ a}{\alpha}}{c \ $\igobs$ c_{0}}{res \ $\igobs$ Ag(a, c_{0})}{\Ode{log(n)}}{Agrega el elemento $a$ al conjAvl $c$.}
+
+\disDeclaraFuncion{Vacio?}{\paramIn{c}{conjAvl(\alpha)}}{res: bool}{true}{res \ $\igobs$ \emptyset ?(c)}{\Ode{}}{Devuelve true si y solo si c esta vacio.}
+
+\disDeclaraFuncion{Pertenece?}{\paramIn{c}{conjAvl(\alpha)}, \paramIn{\ a}{\alpha}}{res: bool}{true}{res \ $\igobs$ a \in c}{\Ode{log(n)}}{Devuelve true si y solo si $a$ pertenece al conjunto.}
+
+\disDeclaraProc{Eliminar}{\paramInOut{c}{conjAvl(\alpha)}, \paramIn{\ a}{\alpha}}{c \ $\igobs$ c_{0}}{c \ $\igobs$ c \backslash \{ a \}}{\Ode{log(n)}}{Elimina $a$ de $c$ si es que estaba.}
+
+%\disDeclaraFuncion{\puntito = \puntito}{\paramIn{c_{1}}{conjAvl(\alpha)}, \paramIn{\ c_{2}}{conjAvl(\alpha)}}{res: bool}{true}{res \ $\igobs$ c_{1} = c_{2} }{\Ode{}}{Compara a $c_{1}$ y $c_{2}$ por igualdad.}
+
+\disPautasDeImplementacion
+
+\disEstructuraDeRepresentacion
+
+\disSeRepresentaCon{conjAvl(\alpha)}{estr}
+\disDondeEs{estr}{diccAvl(\alpha, bool)}
+
+\disJustificacionDeLaEstructuraElegida
+{Para entender mejor la estructura damos una explicaci\'on: \\
+Representamos conjAvl($\alpha$) mediante un diccAvl($\alpha$, bool) donde los elementos del conjunto van a ser las claves del diccionario, y elegimos arbitrariamente el tipo bool para el significado, pero no nos va a interesar.
+}
+
+\disInvarianteDeRepresentacion
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Informal}}
+\hspace*{\disSubSubSecMargen}
+\begin{enumerate}
+% HACK: SGA 20/06/2011. Para identar correctmente los items.
+\setlength{\itemindent}{3em}
+	\item No necesitamos pedir nada en el invariante de representacion pues cualquier diccAvl($\alpha$, bool) nos sirve para representar algun conjunto.
+\end{enumerate}
+
+
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
+\disRep{estr}{e}{true}
+
+
+\disFuncionDeAbstraccion
+\vspace*{-1em}
+\disAbs{estr}{e}{conjAvl(\alpha)}{c}{($\forall$ d:$\alpha$) definido?(e, d) $\Longleftrightarrow$ d $\in$ c} 
+
+
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Vacio}}{}{$\disFlecha$ res: estr}\Comment{$\Ode{1}$}
+  \State res $\gets$ vacio() \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Agregar}}{\paramInOut{c}{estr}, \paramIn{a}{\alpha}}\Comment{$\Ode{log(n)}$}
+  \State definir(c, a, true) \Comment{$\Ode{log(n)}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Vacio?}}{\paramIn{c}{estr}}{$\disFlecha$ res: bool} \Comment{$\Ode{1}$}
+  \State res $\gets$ esVacio?(claves(c)) \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Eliminar}}{\paramInOut{c}{estr}, \paramIn{a}{\alpha}}\Comment{$\Ode{log(n)}$}
+  \If {definido?(c, a)} \Comment{$\Ode{log(n)}$}
+  	\State borrar(c, a) \Comment{$\Ode{log(n)}$}
+  \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Pertence?}}{\paramIn{c}{estr}, \paramIn{a}{\alpha}}{$\disFlecha$ res: bool}\Comment{$\Ode{log(n)}$}
+  \State res $\gets$ definido?(c, a) \Comment{$\Ode{log(n)}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+%\begin{algorithm}\phantom{[H]}
+%\begin{algorithmic}[1]
+%\Function {\textsc{\puntito $=_{i}$ \puntito}}{\paramIn{c_{1}}{estr}, \paramIn{c_{2}}{estr}}{$\disFlecha$ res: bool}
+%  \State res $\gets$ claves($c_{1}$) = claves($c_{2}$) 
+%\EndFunction
+%\end{algorithmic}
+%\end{algorithm}
+
+
+
+
+
+

@@ -1,0 +1,157 @@
+
+
+
+\newpage
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{inicar}}{\paramIn{r}{red}}{$\disFlecha$ res : estr}
+  \State compu masEnvio = $<$ $>$ // falta completar
+  \State diccTrie(compu,tupla$<$conjAvl, ColaHeap, diccAvl, nat) paquetes = vacio($)$ 
+  \State diccAvl(compu,diccAvl(compu,compu)) ipSiguiente = vacio()
+  \State tupla$<$compu,nat$>$ masEnviados = $<$masEnvio,0$>$
+  \State iterado$r$ computador1 = crearIterador(mo$s$trarComputadoras(r))
+  \While {haySiguiente(computador)}
+    \State iterador computador2 = crearIterador(mostrarComputadoras(r)) 
+    \State compu compu1 = siguiente(computador1)
+    \State diccAvl(compu,compu) ipSiguiente2 = vacio()
+    \While {haySiguiente(computador2)}
+      \State compu compu2 = siguiente(computador2) 
+      \State lista camino = dameUno(caminoMasCorto(r),compu1,compu2) // si caminoMasCorto es vacio, se indefine
+      \If {!vacio(camino)} // nunca va a ser vacio, minimo 2 elementos 
+        \State compu compu3 = $camino[1]$
+        \State definir(ipSiguiente2,compu2,compu3)
+      \EndIf
+      \State avanzar(computador2)
+    \EndWhile  
+    \State definir(ipSiguiente,compu1,ipSiguiente2)
+    \State avanzar(computador1)
+  \EndWhile
+  \State iterador computador3 = crearIterador(mostrarComputadoras(r))
+  \While {haySiguiente(computador3)}
+    \State conjAvl(paquete) paquetes2 = vacio()
+    \State conjHeap(paquete) paquetes3 = vacio()
+    \State nat paquetesEnviados = 0
+    \State diccAvl caminosRecorridos = vacio()
+    \State definir(paquetes, siguente(compu3), $<$paquetes2, paquetes3, caminosRecorridos, paquetesEnviados$>$)
+    \State avanzar(compu3)
+  \EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{anadirPaquete}}{\paramInOut{dc}{estr}, \paramIn{p}{paquete}}
+  \State puntero actual = &obtener(dc.paquetes,p.origen)
+  \State agregar(actual$\rightarrow$xId, p, true) // true??
+  \State encolar(actual$\rightarrow$xPrior,p)
+  \State lista(compu) caminoRecorrido = vacio()
+  \State agregarAtras(caminoRecorrido, p.origen)
+  \State definir(actual$\rightarrow$caminos, caminoRecorrido)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{verRed}}{\paramIn{dc}{estr}}{$\disFlecha$ res: red}
+  \State res $\gets$ dc.red
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{recorrido}}{\paramIn{dc}{estr}, \paramIn{p}{paquete}}{$\disFlecha$ res: lista(compu)}
+  \State bool noEncontrado = true
+  \State iterador it = crearIterador(mostrarComputadoras(dc.red))
+  \State puntero actual 
+  \While {noEncontrado}
+    \State actual = &obtener(dc.paquetes, siguiente(it))
+    \If {definido?(actual$\rightarrow$xId, paquete)} // en el avl se busca por id...
+      \State noEncontrado = false
+      \State res $\gets$ obtener(actual$\rightarrow$caminos,paquete)
+    \Else
+      \State avanzar(it)
+    \EndIf
+  \EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{enviados}}{\paramIn{dc}{estr}, \paramIn{c}{compu}}{$\disFlecha$ res: nat}
+  \State puntero actual = &obtener(dc.paquetes,c)
+  \State res $\gets$ actual$\rightarrow$enviados
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{paquetes}}{\paramIn{dc}{estr}, \paramIn{c}{compu}}{$\disFlecha$ res: conjAvl(paquete)}
+  \State puntero actual = &obtener(dc.paquetes, c)
+  \State res $\gets$ actual$\rightarrow$paquetes // se repiten nombres
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{avanzarSegundo}}{\paramInOut{dc}{estr}}
+  \State iterador it = crearIterador(mostrarComputadoras(dc.red))
+  \State lista(tupla$<$paquete,lista(compu$>$, compu) aEnviar = vacio()
+  \While {haySiguiente(it)}
+    \State puntero actual = &obtener(dc.paquetes,siguiente(it))
+    \If {!vacio?(actual$\rightarrow$xId)}
+      \State paquete p = desencolar(actual$\rightarrow$xPrior)
+      \State lista(compu) l = obtener(actual$\rightarrow$caminos)
+      \State borrar(actual$\rightarrow$xId, p)
+      \State borrar(actual$\rightarrow$caminos, p)
+      \State puntero aux = &obtener(siguientes, siguiente(it))
+      \State compu comput = obtener(*aux, p.destino)
+      \If {comput != p.destino} 
+        \State agregarAtras(l, comput)
+        \State agregarAtras(aEnviar, $<$p,l$>$, comput)
+      \EndIf
+      \State actual$\rightarrow$enviados = actual$\rightarrow$enviados + 1
+      \If {$\pi_{2}$(dc.masEnviados) $<$ actual$\rightarrow$enviados}
+        \State dc.masEnviados = $<$siguiente(it), actual$\rightarrow$enviados$>$
+      \EndIf      
+    \EndIf
+  \EndWhile
+  \State iterador itP = crearIterador(aEnviar)
+  \While {haySiguiente(itP)}
+    \State puntero actual2 = &obtener(dc.paquetes, $\pi_{3}$(siguiente(itP)))
+    \State agregar(actual2$\rightarrow$xId, $\pi_{1}$(siguiente(itP)))
+    \State encolar(actual2$\rightarrow$xPrior, $\pi_{1}$(siguiente(itP)))
+    \State definir(actual2$\rightarrow$caminos, $\pi_{1}$(siguiente(itP)), $\pi_{2}$(siguiente(itP)))
+    \State avanzar(itP)
+  \EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+

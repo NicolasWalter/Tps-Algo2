@@ -1,0 +1,182 @@
+\section{Modulo DiccArreglo(nat, significado)}
+
+\begin{Interfaz}
+  \textbf{parámetros formales}\hangindent=2\parindent\\
+  \parbox{1.7cm}{\textbf{géneros}} nat, significado\\
+  
+  \textbf{se explica con}: \tadNombre{dicc($clave, significado$)}, \tadNombre{Iterador Unidireccional($\alpha$)}.\\
+  \indent\textbf{géneros}: \TipoVariable{DiccArreglo(nat, significado)}, \TipoVariable{itDicc(nat)}.
+
+  \titlex{Operaciones básicas del diccionario arreglo}
+  
+  \InterfazFuncion{Vacio}{}{DiccArreglo(nat, significado)}%
+  {$res \igobs$ vacio()}%
+  [$\Theta(1)$]
+  [genera un nuevo diccionario arreglo.]
+  
+  \InterfazFuncion{Definir}{\Inout{DA}{DiccArreglo(nat, significado)}, \In{s}{significado}}{}%
+  [$DA_0 \igobs DA$]
+  {$DA \igobs$ definir($\#claves(DA_0) + e$, s, $DA_0$)}%
+  [$\Theta(n)$]
+  [Define una nueva clave con su significado. Donde e es la cantidad de elementos eliminados del diccionario 	historicamente\\
+   n es la cantidad de elementos en el diccionario en el estado anterior a Definir.] 
+
+  \InterfazFuncion{Def?}{\In{a}{nat}, \In{DA}{DiccArreglo(nat, significado)}}{bool}%
+  {$res \igobs$ def?(a, DA)}%
+  [$\Theta(1)$]
+  [Devuelve $True$ si el la clave está definida.]
+
+  \InterfazFuncion{Obtener}{\In{a}{nat}, \In{DA}{DiccArreglo(nat, significado)}}{significado}%
+  [Def?(a, DA)]  
+  {$res \igobs$ obtener(a, DA)}%
+  [$\Theta(1)$]
+  [Devuelve el significado de la clave a.]
+  
+  \InterfazFuncion{Borrar}{\In{a}{nat}, \Inout{DA}{DiccArreglo(nat, significado)}}{}%
+  [Def?(a, DA) $\land$ $DA_0 \igobs DA$]  
+  {$DA \igobs$ borrar(a, $DA_0$)}%
+  [$\Theta(1)$]
+  [Borra el significado y su clave a.]
+  
+  \InterfazFuncion{Claves}{\Inout{DA}{DiccArreglo(nat, significado)}}{itDicc(nat)}%  
+  {$res \igobs$ CrearItUni(toSecu(claves($DA$)))}%
+  [$\Theta(1)$]
+  [Devuelve el conjunto de claves del diccionario.]
+  
+\pagebreak  
+  
+  \titlex{Operaciones básicas del iterador}
+  
+  \InterfazFuncion{CrearIt}{\In{DA}{DiccArreglo(nat, significado)}}{itDicc(nat)}%  
+  {$res$ $\leftarrow$ CrearItUni(toSecu(claves($DA$)))}%
+  [$\Theta(1)$]
+  [Crea un iterador unidireccional del conjunto de claves \\
+  de forma tal que siguiente devuelva la siguiente clave del diccionario.]
+    
+  \InterfazFuncion{Avanzar}{\Inout{it}{itDicc(nat)}}{}%  
+  [$it = it_0$ $\land$ hayMas?(it)]
+  {$it \igobs$ avanzar($it_0$)}%
+  [$\Theta(1)$]
+  [Avanza a la posición siguiente del iterador.]  
+  
+  \InterfazFuncion{Actual}{\In{it}{itDicc(nat)}}{nat}%  
+  [hayMas?(it)]
+  {$res \igobs$ actual($it$)}%
+  [$\Theta(1)$]
+  [devuelve el elemento siguiente a la posición del iterador.] 
+  [res es modificable si y solo si it es modificable.]  
+  
+  \InterfazFuncion{HayMas?}{\In{it}{itDicc(nat)}}{bool}%  
+  {$res \igobs$ hayMas?($it$)}%
+  [$\Theta(1)$]
+  [devuelve $true$ si y solo si en el iterador quedan elementos para avanzar.]   
+    
+\end{Interfaz}
+
+\subsection{Representacion}
+
+\subsubsection{Representación del diccionario arreglo}
+
+El objetivo de este modulo es implementar un arreglo de elementos que son una tupla con un significado y un booleano.
+La idea es que si el booleano vale True significa que el elemento está borrado. 
+
+ \begin{Estructura}{DiccArreglo(nat, significado)}[vec : vector(valor)]
+  \begin{Tupla}[valor]
+   \tupItem{sig}{significado}
+   \tupItem{esta?}{bool}
+  \end{Tupla}
+ \end{Estructura}
+
+  \Rep[vec][v]{true}\mbox{}\
+
+  \AbsFc[vector(valor)]{dicc(nat, significado)}[vec]{\IF long($vec$) $=$ $0$ THEN vacio ELSE 
+  \textbf{if} prim($vec$).esta? = $true$ \textbf{then}\\ definir(long($vec$) $-$ 1, prim(($vec$).significado, Abs(fin($vec$))) \\\textbf{else} \\
+   Abs(fin($vec$)) \\\textbf{fi} FI} 
+
+\pagebreak
+
+\subsubsection{Representación del iterador}
+Este iterador recorre las claves que son los naturales en el rango del vector. Para esto mantiene una variable\\
+actualizada con la posición siguiente. Este iterador se indefine cada vez que el vector se redefine. En ese caso deberá crearse un nuevo iterador.
+
+ \begin{Estructura}{itDicc(nat)}[itTupla]
+  \begin{Tupla}[itTupla]
+   \tupItem{posicion}{nat}
+   \tupItem{pVec}{puntero(vector(valor))}   
+  \end{Tupla}
+ \end{Estructura}
+ 
+ Fijarse que en el rep no puedo indexar porque pVec en el mundo de TAD´s es una secuencia!.
+ \Rep[itTupla][it]{$\neg$($it$.pVec  $=$  NULL) $\yluego$ \\ 
+ ($it$.posicion $<$ long(*($i$.pVec)) \&\& 0 $\leq$ $it$.posicion) $\yluego$ \\ 
+ buscar((*($it$.pVec)), $it$.posicion).esta? = true) 
+ }\mbox{} \\
+
+  \Abs[itTupla]{itUni(nat)}[it]{iu}{siguientes($iu$) $=$ convertir(long(*($it$.pVec))) $\land$ \\ 
+   siguiente($iu$) $=$ $it$.posición}\\
+
+ ~  
+
+ \tadOperacion{convertir}{nat/n}{s : secu(nat)}{}
+  \tadAxioma{convertir($n$)}{if $n = 0$ then \\ 
+  $< >$ else \\
+  convertir(n - 1)) o (n - 1) \\
+  fi} 
+  
+ ~    
+  
+ \tadOperacion{buscar}{vector(valor)/$v$, nat/$n$}{va : valor}{n $\leq$ tam($v$)}
+  \tadAxioma{buscar($v$,$n$)}{if $n = 0$ then \\ 
+  prim(v) else \\
+  buscar(fin(v), n-1) \\
+  fi}
+
+\pagebreak
+
+\subsection{Algoritmos}
+
+  \subsubsection{Algoritmos del diccionario arreglo}
+
+  \TipoFuncion{iVacio}{}{vector(valor)} \\
+  \indent\indent res $\leftarrow$ Vacía();\\
+  
+  \TipoFuncion{iDefinir}{\Inout{vec}{vector(valor)}, \In{s}{significado}}{} \\
+  \indent\indent\indent\indent res  $\leftarrow$ AgregarAtras(vec, s);\\
+  
+  \TipoFuncion{iDef?}{\In{a}{nat}, \Inout{vec}{vector(valor)}}{bool} \\
+  \indent\indent res $\leftarrow$ false; \\ 
+  \indent\indent if a $<$ Longitud(vec) \&\& a $>$ 0 \{ \\
+  \indent\indent\indent\indent if vec[a].esta? true \{ \\ 
+  \indent\indent\indent\indent\indent\indent res $\leftarrow$ true; \\
+  \indent\indent\indent\indent \} \\ 
+  \indent\indent\} \\
+
+  \TipoFuncion{iObtener}{\In{a}{nat}, \Inout{vec}{vector(valor)}}{valor} \\
+  \indent\indent res $\leftarrow$ vec[a].significado; \\
+
+  \TipoFuncion{iBorrar}{\In{a}{nat}, \Inout{vec}{vector(valor)}}{} \\
+  \indent\indent vec[a].esta? $\leftarrow$ false; \\ 
+  
+  \TipoFuncion{iClaves}{\Inout{vec}{vector(valor)}}{itDicc(nat)} \\
+  \indent\indent res $\leftarrow$ iCrearIt(vec);
+ 
+  \subsubsection{Algoritmos del iterador}
+  
+  \TipoFuncion{iCrearIt}{\In{vec}{vector(valor)}}{itTupla} \\
+  \indent\indent res.posicion $\leftarrow$ 0; \\
+  \indent\indent res.pVec $\leftarrow$ \&vec;\\
+  
+  \TipoFuncion{iAvanzar}{\Inout{it}{itTupla}}{} \\
+  \indent\indent while iHaySiguiente(it) \&\& iObtener(i,*(it.pVec)).esta? != true \{ \\
+  \indent\indent\indent\indent it.posicion++; \\
+  \indent\indent \} \\
+ 
+  \TipoFuncion{iActual}{\In{it}{itTupla}}{nat} \\
+  \indent\indent res $\leftarrow$ it.posicion; \\
+
+  \TipoFuncion{iHayMas?}{\In{it}{itTupla}}{bool} \\
+  \indent\indent if it.posicion $<$ Longitud(*(it.pVec)) \{ \\
+  \indent\indent\indent\indent res $\leftarrow$ true; \\
+  \indent\indent \} else \{ \\
+  \indent\indent\indent\indent res $\leftarrow$ false; \\
+  \indent\indent \}

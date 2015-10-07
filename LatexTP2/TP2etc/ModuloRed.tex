@@ -1,0 +1,337 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{Red}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}Se usa el {\sc Tad Red} especificado por la c\'atedra.
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
+\disSeExplicaCon{Red}
+
+\disGenero{red}
+
+\disOperaciones{b\'asicas de Red}
+
+\disDeclaraFuncion{MostrarComputadoras}{\paramIn{r}{red}}{res : conj(pc)}{true}{alias(res \igobs computadoras(r))}{\Ode{n} \ n\ es\ la\ cantidad\ de\ computadoras.}{Devuelve un conjunto con las computadoras de la red.}
+\disComentAliasing{ res no es modificable.}
+
+
+\disDeclaraFuncion{EstanConectadas?}{\paramIn{r}{red}, \paramIn{c_{1}}{pc}, \paramIn{c_{2}}{pc}}{res : bool}{c_{1} \in computadoras(r) \land c_{2} \in computadoras(r)}{res \igobs conectadas?(r,c_{1},c_{2})}{\Ode{n} \ n\ es\ la\ cantidad\ de\ computadoras.}{Devuelve $true$ si y solo si $c_{1}$ y $c_{2}$ estan conectadas.}
+
+\disDeclaraFuncion{InterfazQueUsan}{\paramIn{r}{red}, \paramIn{c_{1}}{pc}, \paramIn{c_{2}}}{res : interfaz}{c_{1} \in computadoras(r) \land c_{2} \in computadoras(r) \ $\yluego$ \ conectadas?(r,c_{1},c_{2})}{res \ $\igobs$ interfazUsada(r,c_{1},c_{2})}{\Ode{1}}{Devuelve la interfaz de $c_{1}$ por la cual las computadoras estan conectadas.}
+
+\disDeclaraFuncion{ArrancarRed}{}{res :red}{true}{res \igobs iniciarRed()}{\Ode{1}}{Genera una red vac\'ia}
+
+\disDeclaraProc{AgregarCompu}{\paramInOut{r}{red}, \paramIn{c}{pc}}{r \igobs r_{0} \ $\land$ (\forall c':pc) \ c' \in computadoras(r) \implies ip(c) \not= ip(c')}{r \igobs agregarComputadora(r_{0})}{\Ode{1}}{Agrega la computadora c a la red.}
+
+\disDeclaraProc{Conectar}{\paramInOut{r}{red}, \paramIn{c_{1}}{pc}, \paramIn{i_{1}}{interfaz}, \paramIn{c_{2}}{pc}, \paramIn{i_{2}}{interfaz}}{c_{1} \ $\in$ computadoras(r) $\land$ c_{2} \ $\in$ computadoras(r) $\land$ {\\} \hspace*{4.3em} $\pi_{1}$(c_{1}) \not= \ $\pi_{1}$(c_{2}) \ $\land$ $\¬$conectadas?(r,c_{1},c_{2}) \ $\land$ $\¬$usaInterfaz?(r,c_{1},i_{1}) \ $\land$  $\¬$usaInterfaz?(r,c_{2},i_{2}) \ $\land$ r = r_{0} }{r \ $\igobs$ conectar(r_{0}, c_{1}, i_{1}, c_{2}, i_{2})}{\Ode{n} \ n\ es\ la\ cantidad\ de\ computadoras.}{Agrega una nueva conexi\'on a la red.}
+
+\disDeclaraFuncion{ConectadoCon}{\paramIn{r}{red}, \paramIn{c}{pc}}{conj(pc)}{c \in computadoras(r)}{alias(res \igobs vecinos(r,c))}{\Ode{$n^{2}$} \ n\ es\ la\ cantidad\ de\ computadoras.}{Devuelve el conjunto de computadoras con las cuales c esta conectada.}\disComentAliasing{ res no es modificable.}
+
+\newpage
+\disDeclaraFuncion{InterfazUsada?}{\paramIn{r}{red}, \paramIn{c}{pc}, \paramIn{i}{interfaz}}{bool}{c \in computadoras(r)}{res \igobs usaInterfaz?(r,c,i)}{\Ode{c} \ c\ es\ la\ cantidad\ de\ conexiones.}{Devuelve true si y solo si la computadora usa la interfaz ingresada.}
+
+\disDeclaraFuncion{CaminosMinimos}{\paramIn{r}{red}, \paramIn{c_{1}}{pc}, \paramIn{c_{2}}{pc}}{conj(lista(pc))}{c_{1} \in computadoras(r) \land c_{2} \in computadoras(r)}{alias(res \igobs caminosMinimos(r,c_{1},c_{2}))}{\Ode{n!}}{Devuelve todos los caminos minimos existentes desde la pc $c_{1}$ hasta la pc $c_{2}$. }\disComentAliasing{ res no es modificable.}
+
+
+\disDeclaraFuncion{ExisteCamino?}{\paramIn{r}{red}, \paramIn{c_{1}}{pc}, \paramIn{c_{2}}{pc}}{bool}{c_{1} \in computadoras(r) \land c_{2} \in computadoras(r)}{res \igobs hayCamino?(r,c_{1},c_{2})}{\Ode{n!}}{Devuelve true si y solo si existe al menos un camino entre $c_{1}$ y $c_{2}$.}
+
+
+\disPautasDeImplementacion
+
+\disEstructuraDeRepresentacion
+
+\disSeRepresentaCon{red}{estr}
+\disDondeEs{estr}{\disTuplaEstr{dicc(IP; conj(interfaz))/interfaces, dicc(IP; conj(IP))/vecinos,lista (tupla$<pc_{1}: IP;\ INT_{1}: interfaz;\ pc_{2}: IP;\ INT_{2}: interfaz>$) /conexiones}}
+
+\disJustificacionDeLaEstructuraElegida
+
+\disInvarianteDeRepresentacion
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Informal}}
+
+\hspace*{\disSubSubSecMargen}
+\begin{enumerate}
+\setlength{\itemindent}{3em}
+  \item Las claves de los diccionarios interfaces y vecinos son las mismas.
+  \item Las computadoras no pueden estar conectadas a si mismas.
+  \item Los elementos de la lista de conexiones cumplen lo siguiente.
+    \begin{enumerate}
+    \setlength{\itemindent}{3em}
+      \item El primer y tercer elemento pertenecen a las claves de vecinos e interfaces.
+      \item El segundo y cuarto elemento son interfaces que corresponden a sus respectivas computadoras.
+      \item Si el elemento existe es porque el primer elemento tiene como vecino al tercero y viceversa, osea en la \hspace*{3em}definici\'on de los vecinos del primero va a estar al tercero y viceversa.
+    \end{enumerate}
+  \item Los elementos obtenidos de obtener la definici\'on de cualquier elemento del diccionario vecinos deben pertener \hspace*{3em}a las claves de vecinos e interfaces.
+\end{enumerate}
+
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
+\onehalfspace
+\disRep{estr}{e}{$true$ $\Longleftrightarrow$ 
+\\\hspace*{3.75em}(1) claves(e.interfaces) $\leq$ claves(e.vecinos) $\land$ $#$claves(e.interfaces = $#$claves(e.vecinos))  $\yluego$
+\\\hspace*{3.75em}(2) ($\forall$ i $\in$ claves(e.vecinos)) $\¬$(i$\in$ pbtener(i,e.vecinos)) $\yluego$
+\\\hspace*{3.75em}(3) ($\forall$ t:$<IP,interfaz,IP,interfaz>$ esta?(e.conexiones,t)($\pi_{1}$(t) $\in$ claves(e.interfaces)) $\land$ 
+$\pi_{3}$(t) $\in$ claves(e.interfaces) \\\hspace*{3.75em}$\yluego$ $\pi_{2}$(t) \in significado($\pi_{1}$,e.interfaces) $\yluego$ $\pi_{4}$(t) $\in$ significado($\pi_{3}$,e.interfaces)) $\yluego$ \\\hspace*{3.75em}($\pi_{1}$(t) $\in$ significado ($\pi_{3}$(t), e.vecinos)) $\yluego$ ($\pi:_{3}$(t) $\in$ significado($\pi_{1}$(t), e.vecinos))
+\\\hspace*{3.75em}(4) ($\forall$ i:IP $\in$ claves(e.vecinos))(($\forall$ j:IP $\in$ significado(i,e.vecinos))(j $\in$ claves(e.interfaces)))}
+\disFuncionDeAbstraccion
+\vspace*{-1em}
+%\hspace*{\disSubSubSecMargen}{Texto}
+\disAbs{estr}{e}{red}{r}{\\\hspace*{3.75em}(1)($\forall$ $c$ $\in$ computadoras(r))$\big$(($\pi_{1}$(c) $\in$ claves(e.vecinos)) $\land$ $\pi_{2}$(c)$\subseteq$ significado($\pi_{1}$(c),e.interfaces)$\big$) $\land$ \\\hspace*{3.75em} ($\forall$ i $\in$ claves(e.vecinos))(i $\in$ juntarIP(computadoras(r))) $\land$ (significado(i,e.interfaces) = \pi_{2}(buscar(i,computadoras(r))) $\land$
+\\\hspace*{3.75em}(2)\big($\forall$ $c_{1}$ $\in$ computadoras(r))($\forall$ $c_{2}$ $\in$ computadoras(r)\big) conectadas(r,$c_{1},c_{2}$) \Leftrightarrow ($\pi_{1}$($c_{1}$) $\in$  significado ($\pi_{1}$($c_{2}$),e.vecinos)) \\\hspace*{3.75em} $\land$ $\pi_{1}$($c_{2}$) $\in$ significado($\pi_{1}$($c_{1}$),e.vecinos) $\land$
+\\\hspace*{3.75em}(3) \big(($\forall$ $c_{1}$ $\in$ computadoras(r))$\land$($\forall$ $c_{2}$ $\in$ computadoras(r))\big) conectadas(r,$c_{1}$,$c_{2}$) $\implies$ \\\hspace*{3.75em}interfazUsada(r,$c_{1}$,$c_{2}$)=$\pi_{2}$(buscar2($\pi_{1}$($c_{1}$),$\pi_{1}$($c_{2}$),e.conexiones))}
+
+
+\disFuncionDeAbsFuncionesAux
+\tadOperacion{\tadNombreFuncion{\hspace*{3.5em}juntarIP}}{conj(pc)/c}{conj(IP)}{}
+\tadAxioma{\hspace*{2.3em}juntarIP(c)}{\IF $\emptyset$?(c) THEN 0 ELSE Ag($\pi_{1}$(dameUno(c)), juntarIP(sinUno(c))) FI}\mbox{}
+
+\tadOperacion{\tadNombreFuncion{\hspace*{2.3em}buscar}}{IP/ip, conj(pc)/c}{pc}{}
+\tadAxioma{\hspace*{2.3em}buscar(ip,c)}{\IF i = $\pi_{1}$(dameUno(c)) THEN dameUno(c) ELSE buscar(i,sinUno(c)) FI}\mbox{}
+
+\tadOperacion{\tadNombreFuncion{\hspace*{2.3em}buscar2}}{IP/$ip_{1}$, IP/$ip_{2}$, Lista/l}{pc}{}
+\tadAxioma{\hspace*{2.3em}buscar2($ip_{1}$,$ip_{2}$,l)}{\IF $\pi_{1}$(primero(l)) = $ip_{1}$ $\land$ $\pi_{3}$(primero(l)) = $ip_{2}$ THEN $\pi_{2}$(primero(l)) ELSE buscar2($ip_{1}$,$ip_{2}$,fin(l)) FI}\mbox{}
+
+
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$ArrancarRed}}{ }{$\disFlecha$ res : estr} \Comment{$\Ode{1}$}
+  \State var $dicc(IP, conj(interfaz))$ interfaces $\gets$ vacio() \Comment{$\Ode{1}$}
+  \State var $dicc(IP, conj(IP))$ vecinos $\gets$ vacio() \Comment{$\Ode{1}$}
+  \State var $lista(<IP, interfaz, IP, interfaz>)$ conexiones $\gets$ vacio() \Comment{$\Ode{1}$}
+  \State res $\gets$ $<$ interfaces, vecinos, conexiones$>$ \Comment{$\Ode{1}$}
+  
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$MostrarComputadoras}}{\paramIn{r}{estr}}{$\disFlecha$ res : conj(pc)} \Comment{$\Ode{n}$}
+  \State var $conj(pc)$ compus $\gets$ vacio() \Comment{$\Ode{1}$}
+  \State var $itDicc(IP,conj(IP))$ claves $\gets$ crearIt(r.vecinos) \Comment{$\Ode{1}$}
+  \While {(haySiguiente(claves))} \Comment{$\Ode{n}$}
+      \State var $conj(interfaz)$ interfaces $\gets$ significado(r.interfaces, siguiente(claves)) \Comment{$\Ode{1}$}
+      \State var $tupla<IP,conj(interfaz)>$ pc $\gets$ $<$ siguiente(clave), interfaces$>$ \Comment{$\Ode{1}$}
+      \State agregar(compus, pc) \Comment{$\Ode{1}$}
+  \EndWhile
+    \State res $\gets$ compus \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$InterfazQueUsan}}{\paramIn{r}{estr}, \paramIn{c_{1}}{pc}, \paramIn{c_{2}}{pc}}{$\disFlecha$ res : interfaz} \Comment{$\Ode{c}$}
+  \State var $itlista(<IP, interfaz, IP, interfaz>)$ conexiones $\gets$ crearIt(r.conexiones)  \Comment{$\Ode{1}$}
+  \While {(c_{1}.IP \ $!=$ \ siguiente(conexiones).pc_{1})} \Comment{$\Ode{c}$}
+    \State avanzar(conexiones) \Comment{$\Ode{1}$}
+  \EndWhile
+  \State res $\gets$ siguiente(conexiones).INT_{1} \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$EstanConectadas}}{\paramIn{r}{estr}, \paramIn{c_{1}}{pc}, \paramIn{c_{2}}{pc}}{$\disFlecha$ res : bool} \Comment{$\Ode{n}$}
+  \State res $\gets$ pertenece?(significado(r.vecinos, c_{1}.IP), c_{2}) \Comment{$\Ode{n}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$AgregarCompu}}{\paramInOut{r}{estr}, \paramIn{c}{pc}}{} \Comment{$\Ode{1}$}
+  \State definir(r.interfaces, c.IP, c.interfaces)  \Comment{$\Ode{1}$}
+  \State var $conj(IP)$ vecinos $\gets$ vacio() \Comment{$\Ode{1}$}
+  \State definir(r.vecinos, c.IP, vecinos) \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Conectar}}{\paramInOut{r}{estr}, \paramIn{c_{1}}{pc}, \paramIn{i_{1}}{interfaz}, \paramIn{c_{2}}{pc}, \paramIn{i_{2}}{interfaz}}{} \Comment{$\Ode{n}$}
+  \State var $itDicc(IP,conj(IP))$ IP_{1} $\gets$ crearIt(r.vecinos)  \Comment{$\Ode{1}$}
+  \State var $itDicc(IP,conj(IP))$ IP_{2} $\gets$ crearIt(r.vecinos) \Comment{$\Ode{1}$}
+  \While {(c_{1}.IP \ $!=$ \ siguiente(IP_{1})} \Comment{$\Ode{n}$}
+    \State avanzar($IP_{1}$) \Comment{$\Ode{1}$}
+  \EndWhile
+  \While {(c_{2}.IP \ $!=$ \ siguiente(IP_{2})} \Comment{$\Ode{n}$}
+    \State avanzar($IP_{2}$) \Comment{$\Ode{1}$}
+  \EndWhile
+  \State agregar(siguienteSignificado($IP_{1}$), c_{2}.IP) \Comment{$\Ode{1}$}
+  \State agregar(siguienteSignificado($IP_{2}$), c_{1}.IP) \Comment{$\Ode{1}$}
+  \State var $tupla<IP, interfaz, IP, interfaz>$ conexion $\gets$ $<$ c_{1}.IP,\ i_{1},\ c_{2}.IP,\ i_{2} $>$ \Comment{$\Ode{1}$}
+  \State agregarAtras(r.conexiones, conexion) \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$ConectadoCon}}{\paramIn{r}{estr}, \paramIn{c}{pc}}{$\disFlecha$ res : conj(pc)} \Comment{$\Ode{n^{2}}$}
+  \State var $conj(IP)$ vecinos $\gets$ significado(r.vecinos, c.IP)  \Comment{$\Ode{n}$}
+  \State var $itConj(IP)$ vec $\gets$ crearIt(vecinos)  \Comment{$\Ode{1}$}
+  \State var $conj(pc)$ resu $\gets$ vacio()  \Comment{$\Ode{1}$}
+    \While {(haySiguiente(vec))} \Comment{$\Ode{n}$}
+      \State var $itDicc(IP,conj(interfaz))$ it $\gets$ crearIt(r.interfaces) \Comment{$\Ode{1}$}
+      \While{(siguiente(vec)\ $!=$ \ siguiente(it))} \Comment{$\Ode{n}$}
+      \State avanzar(it)  \Comment{$\Ode{1}$}
+      \EndWhile
+    \State var $tupla<pc,conj(interfaz)>$ compu $\gets$ $< siguiente (vec),\ siguienteSignificado(it) >$ \Comment{$\Ode{1}$}
+    \State eliminarSiguiente(vec) \Comment{$\Ode{1}$}
+    \State avanzar(vec) \Comment{$\Ode{1}$}
+    \State agregar(resu, compu) \Comment{$\Ode{1}$}
+    \EndWhile
+  \State res $\gets$ resu  \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$InterfazUsada}}{\paramIn{r}{estr}, \paramIn{c_{1}}{pc}, \paramIn{i}{interfaz}}{$\disFlecha$ res : bool} \Comment{$\Ode{c}$}
+  \State var $itLista(tupla<IP,interfaz,IP,interfaz>$ conexion $\gets$ crearIt(r.conexiones)  \Comment{$\Ode{1}$} 
+  \State var $bool$ resu $\gets$ $false$  \Comment{$\Ode{1}$}
+  \While {(haySiguiente(conexion))} \Comment{$\Ode{c}$}
+    \If {(siguiente(conexion).$INT_{1}$ = i)} \Comment{$\Ode{1}$}
+      \State resu $\gets \ true$ \Comment{$\Ode{1}$}
+    \Else
+      \State avanzar(conexion)  \Comment{$\Ode{1}$}
+    \EndIf
+  \EndWhile
+  \State res $\gets$ resu \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Caminos}}{\paramIn{r}{estr}, \paramIn{c_{1}}{pc}, \paramIn{c_{2}}{pc}}{$\disFlecha$ res : conj(lista(IP))}  \Comment{$\Ode{n!}$}
+  \State var $lista(IP)$ recorrido $\gets$ vacio()  \Comment{$\Ode{1}$} 
+  \State agregarAdelante(recorrido, c_{1}.IP) \Comment{$\Ode{1}$}
+  \State var $conj(IP)$ candidatos $\gets$ significado(r.vecinos, c_{1}.IP) \Comment{$\Ode{n}$}
+  \State res $\gets$ auxCaminos(r, c_{1}, c_{2}, recorrido, candidatos) \Comment{$\Ode{n!}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Restaurar}}{\paramIn{c}{conj(lista(IP))}, \paramIn{r}{estr}}{$\disFlecha$ res : lista(pc)}  \Comment{$\Ode{\#(c)*n} c\ es\ el\ conjunto\ de\ entrada. $}
+  \State var $itConj(lista(IP))$ it $\gets$ crearIt(c)  \Comment{$\Ode{1}$}
+    \While {(haySiguiente(it))} \Comment{$\Ode{\#(c)}$}
+      \State var $itDicc(IP, conj(interfaz))$ interfaces $\gets$ crearIt(r.interfaces) \Comment{$\Ode{1}$}
+      \State var $itLista(IP)$ list $\gets$ crearIt(siguiente(it)) \Comment{$\Ode{1}$}
+      \While{(siguiente(list) $!=$ siguiente(interfaces))} \Comment{$\Ode{n}$}
+      \State avanzar(interfaces)  \Comment{$\Ode{1}$}
+      \EndWhile
+    \State var $tupla<lista(IP),conj(interfaz)>$ compu $\gets$ $<$siguiente(it),\ siguienteSignificado(interfaces)$>$ \Comment{$\Ode{1}$}
+    \State avanzar(it)  \Comment{$\Ode{1}$}
+    \State agregar(res, compu)  \Comment{$\Ode{1}$}
+    \EndWhile  
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$AuxCaminos}}{\paramIn{r}{estr}, \paramIn{c_{1}}{pc}, \paramIn{c_{2}}{pc}, \paramIn{recorrido}{lista(IP)}, \paramIn{candidatos}{conj(IP)}}{$\disFlecha$ res : conj(lista(IP))} \Comment{$\Ode{n!}$}
+\State var $conj(lista(IP))$ vacio $\gets$ vacio()  \Comment{$\Ode{1}$}
+  \If {(esVacio?(candidatos))}  \Comment{$\Ode{1}$}
+      \State res$\gets$ vacio() \Comment{$\Ode{1}$}
+    \Else
+      \If {(ultimo=$c_{2}.IP$)}  \Comment{$\Ode{1}$} 
+        \State res $\gets$ agregar($vacio,recorrido$)  \Comment{$\Ode{1}$}
+      \Else
+        \If {($\¬$ pertenece?(dameUno(candidatos),recorrido)} \Comment{$\Ode{1}$}
+          \State res $\gets$ union\Bigg(auxCaminos\bigg(r,$c_{1},c_{2}$,agregarAtras(recorrido, \\
+          \hspace*{6em}dameUno(candidatos)), significado(r.vecinos,dameUno(candidatos))\bigg), \\
+          \hspace*{6em}auxCaminos\bigg(r,$c_{1},c_{2}$,recorrido,sinUno(candidatos)\bigg)\Bigg) \Comment{$\Ode{n!}$}
+        \Else
+          \State res $\gets$auxCaminos(r,$c_{1}, c_{2}$,recorrido,sinUno(candidatos))  \Comment{$\Ode{1}$}
+        \EndIf
+      \EndIf
+  \EndIf      
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$CaminosMinimos}}{\paramIn{r}{estr}, \paramIn{c_{1}}{pc}, \paramIn{c_{2}}{pc}}{$\disFlecha$ res : conj(lista(pc))}\Comment{$\Ode{n!}$}
+  \State res $\gets$ restaurar(auxMinimos(caminos(r,c_{1},c_{2})),r)  \Comment{$\Ode{n!}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$AuxMinimos}}{\paramIn{cc}{conj(lista(pc))}}{$\disFlecha$ res : conj(lista(IP))} \Comment{$\Ode{n}$}
+\State var $conjunto(lista(pc))$ vacio $\gets$ vacio()  \Comment{$\Ode{1}$}
+  \If {(esVacio?(cc))}  \Comment{$\Ode{1}$}
+      \State res $\gets$ vacio() \Comment{$\Ode{1}$}
+    \Else
+      \If {(cardinal(cc) = 1)} \Comment{$\Ode{1}$}
+        \State agregar(vacio, dameUno(cc))  \Comment{$\Ode{1}$}
+      \Else
+        \If {(longitud(dameUno(cc)) $<$ longitud(auxMinimos(sinUno(cc))))}  \Comment{$\Ode{auxMinimos-1}$}
+          \State agregar(vacio, dameUno(cc))  \Comment{$\Ode{1}$}
+        \Else
+          \If {(longitud(dameUno(cc)) = longitud(dameUno(auxMinimos(sinUno(cc)))))}  
+            \State \Comment{$\Ode{auxMinimos-1}$}
+            \State agregar(auxMinimos(sinUno(cc)), dameUno(cc)) \Comment{$\Ode{auxMinimos-1}$}
+          \Else
+            \State auxMinimos(sinUno(cc)) \Comment{$\Ode{auxMinimos-1}$}
+          \EndIf
+        \EndIf
+      \EndIf
+  \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$ExisteCamino?}}{\paramIn{r}{estr}, \paramIn{c_{1}}{pc}, \paramIn{c_{2}}{pc}}{$\disFlecha$ res : bool}\Comment{$\Ode{n!}$}
+  \State res $\gets$ $\#$(caminos(r,$c_{1}$,$c_{2}$)) $\geq$ 1 \Comment{$\Ode{n!}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

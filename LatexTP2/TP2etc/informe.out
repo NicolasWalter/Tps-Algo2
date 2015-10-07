@@ -1,0 +1,13 @@
+\BOOKMARK [1][-]{section.1}{Observaciones}{}% 1
+\BOOKMARK [1][-]{section.2}{Dise\361o del Tipo DiccionarioTrie\(\)}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Especificaci\363n}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Aspectos de la interfaz}{section.2}% 4
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Interfaz}{subsection.2.2}% 5
+\BOOKMARK [2][-]{subsection.2.3}{Pautas de implementaci\363n}{section.2}% 6
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Estructura de representaci\363n}{subsection.2.3}% 7
+\BOOKMARK [3][-]{subsubsection.2.3.2}{Justificaci\363n}{subsection.2.3}% 8
+\BOOKMARK [3][-]{subsubsection.2.3.3}{Invariante de Representaci\363n}{subsection.2.3}% 9
+\BOOKMARK [3][-]{subsubsection.2.3.4}{Funci\363n de Abstracci\363n}{subsection.2.3}% 10
+\BOOKMARK [3][-]{subsubsection.2.3.5}{Algoritmos}{subsection.2.3}% 11
+\BOOKMARK [2][-]{subsection.2.4}{Servicios Usados}{section.2}% 12
+\BOOKMARK [2][-]{subsection.2.5}{Justificaci\363n de los Ordenes de Complejidad}{section.2}% 13

@@ -1,0 +1,378 @@
+\section{Extensiones}
+
+\subsection{Secuencia($\alpha$)}
+\tadOtrasOperaciones
+\tadOperacion{iesimo}{secu($\alpha$)/s, nat/i}{$\alpha$}{}
+\tadAxiomas
+\tadAxioma{iesimo(s,i)}{
+\textbf{if} i = 0 \textbf{then} prim(s) \textbf{else} iesimo(fin(s),n-1) \textbf{fi}
+}
+
+\subsection{Cola($\alpha$)}
+\tadOtrasOperaciones
+\tadOperacion{in?}{$\alpha$/elem, cola($\alpha$)/c}{bool}{}
+\tadAxiomas
+\tadAxioma{in?(vacia)}{false}
+\tadAxioma{in?(e, encolar(elem, c))}{\textbf{if} e = elem \textbf{then} true \textbf{else} in?(e, c) \textbf{fi}}
+
+\section{Módulo Ciudad Robotica}
+
+\begin{Interfaz}
+
+  \textbf{se explica con}: \tadNombre{CiudadRobotica}, \tadNombre{Iterador Bidireccional($\alpha$)}.
+
+  \textbf{géneros}: \TipoVariable{ciudad}, \TipoVariable{itLista($\alpha$)}.
+
+  \textbf{usa}:  \TipoVariable{bool}, \TipoVariable{mapa}, \TipoVariable{rur}, \TipoVariable{tag}, \TipoVariable{diccTrie($\sigma$)} 
+  
+  \titlex{Operaciones básicas de ciudad}
+
+  \InterfazFuncion{Crear}{\In{m}{mapa}}{ciudad}%
+  {$res \igobs$ crear($m$)}%
+  [$\bigO(1)$]
+  [genera una nueva Ciudad.]
+  [el mapa se pasa por referencia. la ciudad se devuelve por referencia.]
+
+  \InterfazFuncion{Entrar}{\In{ts}{secu(tag)}, \In{e}{estacion}, \Inout{c}{ciudad}}{}
+  [$c \igobs c_0 \land e \in$ estaciones($c$)]
+  {$c \igobs$ entrar($ts, e, c_0$)}
+  [$\bigO(|e_{m}|*S*R + N_{total})$]
+  [esta funcion ingresa un robot a la ciudad. un conjunto de tags $ts$ bien formado es un diccTrie(bool), donde si el robot tiene un tag, el diccTrie devuelve true con la operacion definido?(ts, tag)]
+  []
+
+  \InterfazFuncion{Mover}{\In{u}{rur}, \In{e}{estacion}, \Inout{c}{ciudad}}{}
+  [$c \igobs c_0 \land e \in$ estaciones($c$) $\land u \in $ robots($c$)]
+  {$c \igobs$ mover($u, e, c_0$)}
+  [$\bigO(|e| + |estacion(c,u)| + log N_{e} + log N_{estacion(c,u)})$]
+  [mueve un robot entre dos estaciones.]
+  []
+
+  \InterfazFuncion{Inspeccion}{\In{e}{estacion}, \Inout{c}{ciudad}}{}
+  [$c \igobs c_0 \land e \in$ estaciones($c$) $\land$ robots(e,c) $\neq$ $\emptyset$]
+  {$c \igobs$ inspeccion($e, c_0$)}
+  [$\bigO(|e| + log N_e)$]
+  [realiza una inspeccion en una estacion. para determinar que robot se elimina en una inspeccion, se toma el que cometio mas infracciones, desempatando por su RUR.]
+  []
+
+\pagebreak
+
+ \InterfazFuncion{ProximoRUR}{\In{c}{ciudad}}{rur}
+  {$res \igobs$ proximoRUR($c$)}
+  [$\bigO(1)$]
+  []
+  []
+
+  \InterfazFuncion{Mapa}{\In{c}{ciudad}}{mapa}
+  {$res \igobs$ mapa($c$)}
+  [$\bigO(1)$]
+  []
+  [el mapa se devuelve por referencia.]
+
+  \InterfazFuncion{Robots}{\In{c}{ciudad}}{itLista(robot)}
+  {$res \igobs$ CrearIt(robots($c$))}
+  [$\bigO(1)$]
+  [devuelve un iterador al conjunto de rur.]
+  []
+
+  \InterfazFuncion{Estacion}{\In{u}{rur}, \In{c}{ciudad}}{estacion}
+  [$u \in$  robots($c$)]
+  {$res \igobs$ estacion($u, c$)}
+  [$\bigO(1)$]
+  []
+  []
+  
+  \InterfazFuncion{Tags}{\In{u}{rur}, \In{c}{ciudad}}{secu(tag)}
+  [$u \in$ robots($c$)]
+  {$res \igobs$ tags($e, c_0$)}
+  [$\bigO(1)$]
+  []
+  [El conjunto de tags se devuelve por referencia.]
+
+  \InterfazFuncion{$\#$Infracciones}{\In{u}{rur}, \In{c}{ciudad}}{nat}
+  [$u \in$ robots($c$)]
+  {$c \igobs$ $\#$infracciones($u, c$)}
+  [$\bigO(1)$]
+  []
+  []
+  
+  \InterfazFuncion{Estaciones}{\In{c}{ciudad}}{itConj(estaciones)}
+  {$res \igobs$ CrearIt(estaciones($c$))} %CrearIt es la del modulo conjunto
+  [$\bigO(1)$]
+  []
+  []
+
+  \InterfazFuncion{tagMasInvolucrado}{\In{c}{ciudad}}{tag}
+  [$c \igobs c_0 \land (\exists t \in tagsHistoricos(c)) \yluego \#infractoresPorTag(t,c) > 0$]
+  {$tag \igobs$ tagMasInvolucrado(c)}
+  [$\bigO(1)$]
+  [tag mas involucrado en infracciones a lo largo de la historia de la ciudad.]
+  []
+
+  \InterfazFuncion{$\#$inspecciones}{\In{e}{estacion}, \In{c}{ciudad}}{nat}
+  [$c \igobs c_0 \land e \in$ estaciones($c$)]
+  {$res \igobs$ inspecciones($e, c_0$)}
+  [$\bigO(|e|)$]
+  []
+  []
+  
+  \InterfazFuncion{TagsHistoricos}{\In{c}{ciudad}}{secu(tag)}  
+  {$res \igobs$ tagsHistoricos($c$)}
+  [$\bigO(res*ts*R)$ \\
+  res es la longitud de la secuencia devuelta, ts el conjunto de todos los tags posibles existentes en los robots y
+  R la cantidad total de robots en la ciudad.]
+  [La secuencia se devuelve por copia.]
+  []
+
+  \InterfazFuncion{$\#$InfraccionesXtag}{\In{t}{tag}, \In{c}{ciudad}}{nat}
+  [$t \in$ tagsHistoricos($c$)]  
+  {$c \igobs$ $\#$infraccionesXtag($t, c$)}
+  [$\bigO(1)$]
+  []
+  []
+
+\end{Interfaz}
+
+\pagebreak
+
+\subsection{Representación}
+
+  \begin{Estructura}{ciudad}[estr]
+    \begin{Tupla}[estr]
+      \tupItem{robots}{lista(robot)}%
+      \tupItem{\\robRUR}{arreglo\_dimensionable(itLista(robot))}%
+      \tupItem{\\robEstacion}{DiccTrie(colaPrio(itLista(robot)))}%
+      \tupItem{\\mapa}{mapa}%
+      \tupItem{\\proximoRUR}{nat}%
+      \tupItem{\\tagMasInvolucrado}{tag}%
+      \tupItem{\\tagsInvolucrados}{DiccTrie(tag)}%
+      \tupItem{\\historialInspeccion}{DiccTrie(nat)}%
+    \end{Tupla}
+   
+    \begin{Tupla}[robot]
+      \tupItem{infr}{nat}%
+      \tupItem{\\rur}{rur}%
+      \tupItem{\\activo?}{bool}
+      \tupItem{\\est}{estacion}%
+      \tupItem{\\tags}{lista(tag)}%
+      \tupItem{\\permisos}{DiccTrie(DiccTrie(bool))}%
+      \tupItem{\\itEst}{it(colaPrio(itLista(robot))}%
+    \end{Tupla}  
+   
+  \end{Estructura}
+
+Para representar a la ciudad y cumplir con los ordenes de complejidad requeridos, decidimos utilizar una tupla con diferentes estructuras.
+
+En primer lugar, utilizamos una lista de robots para luego poder obtener el siguiente rur en $\bigO$(1). Es relevante notar que todas las estructuras que de alguna manera apuntan a un robot, utilizan un iterador a esta lista para no estar manipulando la estructura interna de la misma de forma directa.
+
+Por otro lado, con el objetivo de poder acceder a cualquier robot por medio de su RUR en $\bigO$(1), utilizamos un arreglo dimensionable. Dado que los RUR son consecutivos y comienzan en 0, utilizamos el indice del arreglo para identificar un RUR.
+
+robEstacion permite buscar el conjunto de robots en una estacion. La busqueda se hace sobre un trie, y luego el conjunto de robots se representa con un heap. Esto se debe a que para que cierre la complejidad de inspeccion, tomar el robot mas infractor debe tener orden logaritmico.
+
+\pagebreak
+
+\subsection{Invariante de Representacion}
+\subsubsection{El invariante en lenguaje natural}
+
+\begin{enumerate}
+  \item proximoRUR es igual a la longitud de la lista de robots mas uno.
+  \item En robRUR, el indice del arreglo coincide con el RUR del robot.
+  \item La estacion de los robots activos coincide con la estacion de robEstacion.
+  \item No existe robot que pertenezca a la cola de alguna estacion que este inactivo o no pertenezca a la lista de robots.
+  \item Un robot no puede estar en mas de una estacion a la vez.
+  \item Si hay algun robot inactivo, existe algun significado de historialInspeccion positivo.
+  \item Si alguna vez algun robot ha cometido una infraccion en la historia de la ciudad, el tagMasInvolucrado corresponde al significado maximo de tagsInvolucrados.
+\end{enumerate}
+  
+\subsubsection{El invariante en lenguaje formal}
+
+  \Rep[estr][c]{
+  \begin{enumerate}
+  \item proximoRUR = long(c.robots) + 1
+  \item ($\forall$ i: nat) i < longitud(c.robots) \impluego c.robRUR[i].rur = i
+  \item ($\forall$ r: rur) esta?(r,c.robots) \impluego ($\exists$ e: estacion) in?(r,obtener(e, c.robEstacion))
+  \item ($\forall$ r: rur) $\neg$($\exists$ e: estacion) \\ esta?(r,obtener(e, c.robEstacion)) $\land$ (r.activo? = false $\lor$ $\neg$esta?(r,c.robots))
+  \item ($\forall$ $r$: rur) $\neg$($\exists$ $e_1, e_2$: estacion) $e_1 \neq e_2$ \\ $\implies$ in?(r,obtener($e_1$, c.robEstacion)) $\land$ in?(r,obtener($e_2$, c.robEstacion))
+  \item ($\exists$ r: rur) (r.activo? = false $\land$ esta?(r, c.robots)) \yluego \\ ($\exists$ e: estacion) def?(e, c.historialInspeccion) \yluego obtener(e, historialInspeccion) $>$ 0
+  \item ($\exists$ r: rur) (r.infr > 0  $\land$ esta?(r, c.robots)) \yluego  $\neg$($\exists$ t: tag) def?(t, c.tagsInvolucrados) \yluego \\ obtener(t, c.tagsInvolucrados) $>$ obtener(c.tagMasInvolucrado, c.tagsInvolucrados)
+  \end{enumerate} 
+  }
+
+\subsection{Funcion de abstraccion}
+
+  \Abs[estr]{ciudad}[c]{ciu}{
+  proximoRUR(ciu) = c.proximoRUR $\land$\\
+  mapa(ciu) = c.mapa $\land$\\
+  robots(ciu) = claves(c \DRef robRUR) $\land$\\
+  ($\forall r$: rur) r $\in$ robots(ciu) \impluego estacion(r,c) = robRUR[rur].estacion  $\land$\\
+  ($\forall r$: rur) r $\in$ robots(ciu) \impluego tags(rur, ciu) = claves(robRUR[rur].tags)  $\land$\\
+  ($\forall r$: rur) r $\in$ robots(ciu) \impluego \#infracciones(r, ciu) = estacion(r,c) = robRUR[rur].infr
+  }
+
+\pagebreak
+
+\subsection{Algoritmos}
+
+\TipoFuncion{iMover}{\Inout{c}{ciudad}, \In{e}{estacion}, \In{u}{rur}}{} \complejidad{Complejidad: }{log(n_{e1}) + |e| + log (n_e)}\\
+\indent var robot $\leftarrow$ Siguiente(c.robRUR[u]) \complejidad{}{1} \\
+\indent ElimSig(robot.itEst) \complejidad{}{log(n_{estacion(u, c)})} \\
+\indent if ($\neg$Significado(robot.est, Significado(e, robot.permisos)))\{ \complejidad{Condicion:}{|e| + |estacion(u, c)|)}\\
+\indent \indent int i $\leftarrow$ 0  \complejidad{}{1}\\
+\indent \indent int inf $\leftarrow$ 0  \complejidad{}{1}\\
+\indent \indent while i <  Longitud(robot.permisos)  \{ \complejidad{}{1}\\
+\indent \indent \indent if definido?(iesimo(robot.permisos, i), c.tagsInvolucrados) \{  \complejidad{}{1}\\
+\indent \indent \indent \indent inf $\leftarrow$ obtener(iesimo(robot.permisos, i). c.tagsInvolucrados)++  \complejidad{}{1}\\
+\indent \indent \indent \} else \{ \\
+\indent \indent \indent \indent definir(iesimo(robot.permisos, i), 1, c.tagsInvolucrados)  \complejidad{}{1}\\
+\indent \indent \indent \indent inf $\leftarrow$ 1  \complejidad{}{1}\\
+\indent \indent \indent \} \\
+\indent \indent \indent if tagMasInvolucrado == '' $\lor$ obtener(c.tagMasInvolucrado. c.tagsInvolucrados) < inf \{  \complejidad{}{1}\\
+\indent \indent \indent \indent tagMasInvolucrado $\leftarrow$ iesimo(robot.permisos, i)  \complejidad{}{1}\\
+\indent \indent \indent \} \\
+\indent \indent \} \\
+\indent \indent robot.infr++ \complejidad{}{1}\\
+\indent \}\\
+\indent robot.itEst $\leftarrow$ encolar(c.robRUR[u], Significado(e, c.robEstacion)) \complejidad{}{|e|+ log(n_e)}\\
+\indent robot.est $\leftarrow$ e\\
+
+\textbf{Justificacion de complejidad:} Debido a que la cantidad de tags esta acotada, dado que tienen a lo sumo 64 caracteres, la complejidad es: 
+$log(n_{estacion(u, c)}) + 2*|e| + |estacion(u, c)| + log(n_e)$.\\
+Pero 2*|e| $\in \bigO(|e|)$. Entonces la complejidad de mover $\in \bigO(log(n_{estacion(u, c)}) + |e| + |estacion(u, c)| + log(n_e))$ .\\
+
+\TipoFuncion{i$\#$infracciones}{\In{c}{ciudad}, \In{u}{rur}}{nat} \complejidad{Complejidad: }{1}\\
+\indent res $\leftarrow$ Siguiente(c.robRUR[u]).infr \complejidad{}{1}\\
+
+\TipoFuncion{i$\#$infraccionesXtag}{\In{c}{ciudad}, \In{t}{tag}}{nat} \complejidad{Complejidad: }{1}\\
+\indent res $\leftarrow$ significado(c.tagsInvolucrados, t) \complejidad{}{1}\\
+
+\TipoFuncion{iTagsHistoricos}{\In{c}{ciudad}}{secu(tag)} \complejidad{}{long(res)*long(tags(siguiente(itRobots)))*long(c.robots)}\\
+\indent itLista(robot) itRobots $\leftarrow$ CrearIt(c.robots) \complejidad{}{1}\\
+\indent res $\leftarrow$ vacia \complejidad{}{1} \\
+\indent itLista(tag) itRes $\leftarrow$ CrearIt(res) \complejidad{}{1} \\
+\indent while haySiguiente(itRobots) \{ \complejidad{}{long(c.robots)}\\
+\indent \indent itLista(tag) itTags $\leftarrow$ CrearIt(tags(siguiente(itRobots))) \complejidad{}{1}\\
+\indent \indent while haySiguiente(itTags) \{ \complejidad{}{long(tags(siguiente(itRobots)))}\\
+\indent \indent \indent int i $\leftarrow$ 0 \complejidad{}{1}\\
+\indent \indent \indent boolean esta $\leftarrow$ false \complejidad{}{1}\\
+\indent \indent \indent while i < long(res) \&\& esta != true \{ \complejidad{}{long(res)}\\
+\indent \indent \indent \indent if res[i] == siguiente(itTags) \{  \complejidad{}{1}\\
+\indent \indent \indent \indent \indent esta $\leftarrow$ true  \complejidad{}{1}\\
+\indent \indent \indent \indent \} \\
+\indent \indent \indent \} \\
+\indent \indent \indent if esta == false \{ \complejidad{}{1}\\
+\indent \indent \indent \indent agregarComoSiguiente(itRes, siguiente(itTags)) \complejidad{}{1}\\
+\indent \indent \indent \} \\
+\indent \indent \indent avanzar(itTags)  \complejidad{}{1}\\
+\indent \indent \}  \\
+\indent \indent avanzar(itRobots) \complejidad{}{1} \\
+\indent \} \\
+
+\pagebreak
+
+\TipoFuncion{iEstacion}{\In{c}{ciudad}, \In{u}{rur}}{estacion} \complejidad{Complejidad: }{1}\\
+\indent res $\leftarrow$ Siguiente(c.robRUR[u]).est  \complejidad{}{1}\\
+
+\TipoFuncion{iTags}{\In{c}{ciudad}, \In{u}{rur}}{lista(tag)} \complejidad{Complejidad: }{1}\\
+\indent res $\leftarrow$ Siguiente(c.robRUR[u]).tags \complejidad{}{1}\\
+
+\TipoFuncion{iEstaciones}{\In{c}{ciudad}}{itLista(estacion)} \complejidad{Complejidad: }{1}\\
+\indent res $\leftarrow$ estaciones(c.mapa)\complejidad{}{1}\\
+
+\TipoFuncion{iRobots}{\In{c}{ciudad}}{itDicc(rur)} \complejidad{Complejidad: }{1}\\
+\indent res $\leftarrow$ CrearIt(c.robots)\complejidad{}{1}\\
+
+\TipoFuncion{iProximoRUR}{\In{c}{ciudad}}{rur} \complejidad{Complejidad: }{1}\\
+\indent res $\leftarrow$ c.proximoRUR\complejidad{}{1}\\
+
+\TipoFuncion{iMapa}{\In{c}{ciudad}}{mapa} \complejidad{Complejidad: }{1}\\
+\indent res $\leftarrow$ c.mapa \complejidad{}{1}\\
+
+\TipoFuncion{iInspeccion}{\In{c}{ciudad}, \In{e}{estacion}}{} \complejidad{Complejidad: }{|e| + log(n_e)}\\
+\indent r $\leftarrow$ Desencolar(Significado(e, c.robEstacion))\complejidad{}{|e| + log(n_e)} \\
+\indent r.activo? $\leftarrow$ false \complejidad{}{1}\\
+\indent if definido?(c.historialInspeccion, e) \{ \complejidad{}{|e|}\\
+\indent \indent significado(c.historialInspeccion, e)++ \complejidad{}{|e|}\\
+\indent \} else \{ \\
+\indent \indent definir(c.historialInspeccion, e, 1) \complejidad{}{|e|}\\
+\indent \} \\
+
+\TipoFuncion{iTagMasInvolucrado}{\In{c}{ciudad}}{tag} \complejidad{Complejidad: }{1}\\
+\indent res $\leftarrow$ c.tagMasInvolucrado \complejidad{}{1}\\
+
+
+\TipoFuncion{i$\#$inspecciones}{\In{e}{estacion}, \In{c}{ciudad}}{nat} \complejidad{}{1}\\
+\indent if def?(e, c.historialInspeccion) \{ \complejidad{}{1}\\
+\indent \indent res $\leftarrow$ significado(c.historialInspeccion, e) \complejidad{}{1}\\
+\indent \} else \{ \\
+\indent \indent res $\leftarrow$ 0 \complejidad{}{1}\\
+\indent \} \\
+
+\pagebreak
+
+\TipoFuncion{iEntrar}{\In{ts}{lista(tag)}, \In{c}{ciudad}, \In{u}{rur}}{} \complejidad{Complejidad:}{|e_{m}|*S*R + N_{total}}\\
+\indent var im $\leftarrow$ CrearIt(c.mapa) \complejidad{}{1}\\
+\indent var permisos $\leftarrow$ vacio() //DiccTrie(DiccTrie(bool)) \complejidad{}{1}\\
+\indent while(HaySiguiente?(im)) \{ \complejidad{}{S}\\
+\indent \indent var senda $\leftarrow$  Siguiente(im) \complejidad{}{1}\\
+\indent \indent var b $\leftarrow$ verifica?(senda.restriccion, ts) \complejidad{}{R}\\
+\indent \indent definir(permisos, senda.$e_{1}$, vacio) \complejidad{}{|e_m|}\\
+\indent \indent definir(significado(permisos, senda.$e_{1}$), $e_{2}$, b) \complejidad{}{|e_m|}\\
+\indent \indent //Definir permutacion del permiso. \\
+\indent \indent definir(permisos, senda.$e_{2}$, vacio)\} \complejidad{}{|e_m|}\\
+\indent \indent definir(significado(permisos, senda.$e_{2}$), $e_{1}$, b) \complejidad{}{|e_m|}\\
+\indent \indent Avanzar(im) \complejidad{}{1}\\
+\indent \}\\
+\indent var rob $\leftarrow$ < 0, c.proximoRUR, true, e, ts, permisos, NULL > \complejidad{}{1}\\
+\indent itRob $\leftarrow$ AgregarAdelante(c.robots, rob) \complejidad{}{1}\\
+\indent var Nuevo $\leftarrow$ CrearArreglo(c.proximoRUR) \complejidad{}{1}\\
+\indent var i $\leftarrow$ 0 \complejidad{}{1}\\
+\indent while (i $<$ c.proximoRUR -1) \{ \complejidad{}{N_{total}}\\
+\indent \indent Nuevo[i] $\leftarrow$ c.robRUR[i] \complejidad{}{1}\\ 
+\indent \indent i++ \complejidad{}{1}\\
+\indent \}\\
+\indent c.robRUR[rob.rur] $\leftarrow$ itRob \complejidad{}{1}\\
+\indent c.robRUR $\leftarrow$ Nuevo \complejidad{}{1}\\
+\indent var it $\leftarrow$ encolar(Significado(c.robEstacion, e), itRob) \complejidad{}{1}\\
+\indent Siguiente(itRob).itEst $\leftarrow$ it \complejidad{}{1}\\
+\indent c.proximoRUR++  \complejidad{}{1}\\
+
+\textbf{Justificacion de complejidad:} Al entrar un robot, en primer lugar debemos armar su 'matriz' de permisos. Eso se hace con un DiccTrie(DiccTrie(bool)). El objetivo de esto es que luego sea mas facil mover a un robot, para saber si comete una infraccion o no al pasar de una estacion a otra. Para ver si un robot puede pasar de la estacion 1 a la estacion 2, primero se busca en el primer diccionario la estacion 1, y luego la estacion 2 para tener como resultado un bool. Esto tiene costo S*(R + 4|$e_m$|) que esta en $\bigO$(|$e_m$| * S * R).
+Luego debemos agregar el robot al comienzo de la lista de robots, que esta en $\bigO$(1), y a su vez hay que agregar el robot al arreglo dimensionable, que esta en $\bigO$($N_{total}$).
+
+\pagebreak
+
+\subsection{Servicios Usados}
+
+\TipoVariable{Lista Enlazada($\alpha$)}:
+\begin{itemize}
+	\item Siguiente(itLista(robot)) en $\bigO(1)$
+	\item AgregarAdelante(lista(robot), robot) en $\bigO(1)$
+\end{itemize}
+
+\TipoVariable{colaPrio(itLista(robot))}:
+\begin{itemize}
+	\item encolar(colaPrio c, itLista it) en $\bigO(log(n))$ donde n es la cantidad de elementos en la cola
+	\item desencolar(colaPrio c) en $\bigO(log(n))$ donde n es la cantidad de elementos en la cola
+	\item ElimSig(itCola) en $\bigO(log(n))$ donde n es la cantidad de elementos en la cola iterada
+\end{itemize}
+
+\TipoVariable{mapa}:
+\begin{itemize}
+	\item Estaciones(mapa) en $\bigO(1)$
+	\item CrearIt(mapa) en $\bigO(1)$
+	\item Siguiente(itMapa) en $\bigO(1)$
+	\item HaySiguiente(itMapa) en $\bigO(1)$
+	\item Avanzar(itMapa) en $\bigO(1)$
+\end{itemize}
+
+\TipoVariable{DiccTrie($\alpha$)}:
+\begin{itemize}
+	\item Definir(DiccTrie, string s, $\alpha$) en $\bigO(|s|)$ donde |s| es la longitud del string 
+	\item Significado(DiccTrie, string) en $\bigO(|s|)$ donde |s| es la longitud del string
+	\item Definido?(DiccTrie, string) en $\bigO(|s|)$ donde |s| es la longitud del string 
+\end{itemize}
+
+\TipoVariable{Restriccion}:
+\begin{itemize}
+	\item Verifica?(restriccion, ListaEnlazada(tags)) en $\bigO(R)$ siendo R la cantidad de nodos del arbol restriccion.
+\end{itemize}
+

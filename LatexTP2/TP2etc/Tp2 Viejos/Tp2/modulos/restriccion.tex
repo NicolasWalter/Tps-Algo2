@@ -1,0 +1,181 @@
+\section{Modulo Restriccion}
+
+\begin{Interfaz}
+
+  \textbf{se explica con}: \tadNombre{Restriccion}
+
+  \textbf{géneros}: \TipoVariable{restriccion}
+
+  \textbf{usa}: \TipoVariable{puntero($\alpha$)}, \TipoVariable{tag}, \TipoVariable{bool}
+
+
+  \InterfazFuncion{NuevoTag}{\In{t}{tag}}{restriccion}%
+  {$res \igobs$ <t>}%
+  [$\bigO(1)$]
+  [genera una restriccion de un solo tag.]
+
+  \InterfazFuncion{And}{\In{r1}{restriccion}, \In{r2}{restriccion}}{restriccion}%
+  {$res \igobs$ $r1$ AND $r2$}%
+  [$\bigO(1)$]
+  []
+  []
+
+  \InterfazFuncion{Or}{\In{r1}{restriccion}, \In{r2}{restriccion}}{restriccion}%
+  {$res \igobs$ $r1$ OR $r2$}%
+  [$\bigO(1)$]
+  []
+  []
+  
+  \InterfazFuncion{Not}{\Inout{r}{restriccion}}{}% este capaz que es inout
+  {$res \igobs$ NOT $r$}%
+  [$\bigO(1)$]
+  []
+  []  
+  
+  \InterfazFuncion{Verifica?}{\In{ts}{secu(tag)}, \In{r}{restriccion}}{bool}%
+  {$res \igobs$ verifica?(ts, r)}%
+  [$\bigO(R)$]
+  [R es el tamaño de la restriccion mas grande vigente en las sendas de la ciudad.]
+  []  
+
+\end{Interfaz}
+
+\subsection{Representacion}
+ 
+ \begin{Estructura}{restriccion}[puntero(nodo)]
+  \begin{Tupla}[nodo]
+   \tupItem{tag}{tag}
+   \tupItem{\\tipo}{log}
+   \tupItem{\\izq}{puntero(nodo)}
+   \tupItem{\\der}{puntero(nodo)}
+  \end{Tupla}
+  
+  \indent \indent donde log es enum\{AND, OR, NOT, CAR\}
+ \end{Estructura}
+
+Las restricciones estan representadas por arboles binarios, donde cada nodo indica si se trata de una operacion logica o de un tag. Las caracteristicas son hojas del arbol, mientras que los operadores logicos son nodos internos. Para ver si se verifica cierta restriccion, el arbol se evalua de forma recursiva, para respetar el orden de los operadores logicos.
+
+\pagebreak 
+ 
+\subsection{Invariante de Representacion}
+\subsubsection{El invariante en lenguaje natural}
+
+\begin{enumerate}
+  \item El arbol binario no posee ciclos.
+  \item Todo nodo que representa los operadores logicos AND y OR tiene ambos hijos definidos.
+  \item Todo nodo que representa el operador logico NOT tiene el hijo derecho definido.
+  \item Todo nodo que representa un tag es una hoja.
+
+\end{enumerate}
+
+\subsubsection{El invariante en lenguaje formal}
+
+ \Rep[rtr][r]{
+  \begin{enumerate}
+  \item ($\forall p$: puntero(nodo)) (p $\in$ punteros(r.raiz)) $\implies$ \#(p, punteros(r.raiz)) \igobs 1)
+  \item ($\forall p$: puntero(nodo)) (p $\in$ punteros(r.raiz) $\land$ (p.tipo = AND $\lor$ p.tipo = OR) $\implies$ \\ p.izq $\neq$ NULL $\land$ p.der $\neq$ NULL
+  \item ($\forall p$: puntero(nodo)) (p $\in$ punteros(r.raiz) $\land$ p.tipo = NOT) $\implies$ p.der $\neq$ NULL
+  \item ($\forall p$: puntero(nodo)) (p $\in$ punteros(r.raiz) $\land$ p.tipo = CAR) $\implies$ \\ p.izq = NULL $\land$ p.der = NULL
+  \end{enumerate} 
+  }
+
+~
+
+\tadOperacion{punteros}{puntero(nodo)/p}{multiconj(punteros(nodo))}{}
+ \tadAxioma{punteros(p)}{
+    \LIF{ p = NULL} \LTHEN{ $\emptyset$} \LELSE{ Ag(r, punteros(r.izq)) $\bigcup$ punteros(r.der)} \LFI
+  }
+  
+\subsection{Funcion de abstraccion}
+
+\Abs[rtr]{restriccion}[r]{rest}{($\forall$ ts : conj(tag) verifica?(ts, rest) $=$ Verifica?(ts, r)}
+
+~
+
+\tadOperacion{Verifica?}{conj(tag)/ts, puntero(nodo)/p}{bool}{}
+ \tadAxioma{Verifica?(ts,p)}{
+\LIF{ p.tipo = CAR } \LTHEN{ p.tag $\in$ ts} \LELSE{ \\
+\LIF{ p.tipo = AND } \LTHEN{ Verifica?(ts, p.izq) $\land$ Verifica?(ts, p.der)} \LELSE{ \\
+\LIF{ p.tipo = OR } \LTHEN{ Verifica?(ts, p.izq) $\lor$ Verifica?(ts, p.der)} \LELSE{ \\
+ $\neg$Verifica?(ts, p.der) }}}\LFI
+  }
+
+\pagebreak
+
+\subsection{Algoritmos}
+
+\TipoFuncion{iNuevoTag}{\In{t}{tag}}{restriccion} \complejidad{Complejidad: }{1}\\
+ \indent\indent puntero(nodo) n $\leftarrow$ new nodo \complejidad{}{1}\\
+ \indent\indent n.tag $\leftarrow$ t \complejidad{}{1}\\
+ \indent\indent n.tipo $\leftarrow$ CAR \complejidad{}{1}\\
+ \indent\indent n.izq $\leftarrow$ NULL \complejidad{}{1}\\
+ \indent\indent n.der $\leftarrow$ NULL \complejidad{}{1}\\
+ \indent\indent res.raiz $\leftarrow$ n \complejidad{}{1}
+
+ ~
+
+\TipoFuncion{iNot}{\Inout{r}{restriccion}}{} \complejidad{Complejidad: }{1}\\
+ \indent\indent puntero(nodo) n $\leftarrow$ new nodo \complejidad{}{1}\\
+ \indent\indent n.tipo $\leftarrow$ NOT \complejidad{}{1}\\
+ \indent\indent n.der $\leftarrow$ r.raiz \complejidad{}{1}\\
+ \indent\indent res.raiz $\leftarrow$ n \complejidad{}{1}
+
+ ~
+
+\TipoFuncion{iAnd}{\In{r1}{restriccion}, \In{r2}{restriccion}}{restriccion} \complejidad{Complejidad: }{1}\\
+ \indent\indent puntero(nodo) n $\leftarrow$ new nodo \complejidad{}{1}\\
+ \indent\indent n.tipo $\leftarrow$ AND \complejidad{}{1}\\
+ \indent\indent n.izq $\leftarrow$ r1.raiz \complejidad{}{1}\\
+ \indent\indent n.der $\leftarrow$ r2.raiz \complejidad{}{1}\\
+ \indent\indent res.raiz $\leftarrow$ n \complejidad{}{1}
+
+ ~
+
+\TipoFuncion{iOr}{\In{r1}{restriccion}, \In{r2}{restriccion}}{restriccion} \complejidad{Complejidad: }{1}\\
+ \indent\indent puntero(nodo) n $\leftarrow$ new nodo \complejidad{}{1}\\
+ \indent\indent n.tipo $\leftarrow$ OR \complejidad{}{1}\\
+ \indent\indent n.izq $\leftarrow$ r1.raiz \complejidad{}{1}\\
+ \indent\indent n.der $\leftarrow$ r2.raiz \complejidad{}{1}\\
+ \indent\indent res.raiz $\leftarrow$ n \complejidad{}{1}
+
+ ~
+
+\TipoFuncion{iVerifica? }{\In{r}{restriccion}, \In{ts}{lista(tag)}}{bool}  \complejidad{Complejidad: }{R}\\
+\indent\indent res $\leftarrow$ verificaAux(r.raiz, ts)  \complejidad{}{R}
+
+ ~
+
+\TipoFuncion{iverificaAux}{\In{n}{nodo}, \In{ts}{lista(tag)}}{bool} \complejidad{Complejidad: }{R * long(ts)}\\
+\indent\indent bool aux \complejidad{}{1}\\
+\indent\indent if n.tipo == CAR \complejidad{}{1}\\
+\indent\indent \indent aux $\leftarrow$ esta?(n.tag, ts) \complejidad{}{1}\\
+\indent\indent else if n.tipo == AND \complejidad{}{1}\\
+\indent\indent \indent aux $\leftarrow$ verificaAux(n.izq, ts) $\land$ verificaAux(n.der, ts) \complejidad{}{R}\\ 
+\indent\indent else if n.tipo == OR \complejidad{}{1}\\
+\indent\indent \indent else aux $\leftarrow$ verificaAux(n.izq, ts) $\lor$ verificaAux(n.der, ts) \complejidad{}{R}\\
+\indent\indent else //NOT \complejidad{}{1}\\
+\indent\indent \indent else aux $\leftarrow$ $\lnot$verificaAux(n.der, ts) \complejidad{}{R}\\
+\indent\indent res $\leftarrow$ aux \complejidad{}{1}\\
+
+Recordar que los tags tienen a lo sumo 64 caracteres. esta? toma $\bigO$(k) (siendo k la cantidad de elementos de la lista), pero como en este caso la cantidad de tags posibles esta acotada, toma $\bigO$(1).\\
+\\
+Debido a esto la ecuacion de complejidad ($T(n)$) es de la forma:\\
+
+$\theta(1$) cuando $n = 1$\\
+$2*T(n/2) + f(n)$  cuando $n > 1$\\
+\\
+a y c son 2 porque realizo dos llamadas recursivas (uno al subarbol derecho y otra al izquierdo) y cada uno de estos tiene la mitad del tamaño del original.
+f(n) es $\bigO(1)$. Aplicando teorema maestro, vemos que cae en el primer caso:\\
+\\
+$\exists \epsilon = 1 / f(n) \in \bigO(n^{log_2(2 - \epsilon)})$\\
+$f(n) \in \bigO(n^{0})$\\
+$f(n) \in \bigO(1)$\\
+\\
+Entonces $T(n) = \theta(n^{log_22}) = \theta(n)$\\
+
+\subsection{Servicios Usados}
+
+\begin{itemize}
+	\item esta?(Lista Enlazada(tag), tag) en $\bigO(n)$ siendo n la longitud de la lista
+\end{itemize}
+

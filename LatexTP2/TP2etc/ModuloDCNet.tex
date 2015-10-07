@@ -1,0 +1,282 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{DCNet}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}Se usa el {\sc Tad DCNet} especificado por la c\'atedra.
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
+\disSeExplicaCon{DCNet}
+
+\disGenero{dcnet}
+\triplespace
+\disOperaciones{b\'asicas de DCNet}
+
+\hspace*{3.75em}{\\\textbf{Observacion}: definimos la operacion $<$ para paquetes; un paquete es menor a otro cuando su id es menor}
+\singlespace
+
+\disDeclaraFuncion{Iniciar}{\paramIn{r}{red}}{res : dcnet}{true}{res \ $\igobs$ iniciarDCNet(r)}{\Ode{n!+ n * L}}{Devuelve un dcnet sin ningun paquete.}
+
+\disDeclaraProc{A\~{n}adirPaquete}{\paramInOut{ d}{dcnet}, \paramIn{p}{paquete}}{d \ $\igobs$ d_{0} \ $\land$ $\¬$ \big((\exists \ p': paquete) \ paqueteEnTransito?(d,p') \ $\land$ \ id(p') $\igobs$ id(p)\big) $\land$ origen(p) $\in$ computadoras(red(d)) $\land$ destino(p) $\in$ computadoras(red(d)) $\yluego$ hayCamino?(d, origen(p), destino(p))}{d  \ $\igobs$ crearPaquete(d_{0}, p)}{\Ode{L + log(k)}}{Agrega al dcnet el paquete p.}
+
+\disDeclaraProc{AvanzarSegundo}{\paramInOut{d}{dcnet}}{d \ $\igobs$ d_{0}}{d \ $\igobs$ avanzarSegundo(d_{0})}{\Ode{n*(L + log(n) + log(k))}}{Avanza un segundo en el dcnet y los paquetes de mayor prioridad pasan de una pc a otra siguiendo su camino correspondiente. Cada paquete puede moverse solo una vez, y cada pc puede enviar solo un paquete.}
+
+\disDeclaraFuncion{VerRed}{\paramIn{d}{dcnet}}{res : red}{true}{alias(res \ $\igobs$ red(d))}{\Ode{1}}{Devuelve la red que utiliza el dcnet.}\disComentAliasing{ res no es modificable.}
+
+\disDeclaraFuncion{Recorrido}{\paramIn{d}{dcnet}, \paramIn{p}{paquete}}{res : lista(pc)}{paqueteEnTransito?(d, p)}{alias(res \ $\igobs$ caminoRecorrido(d, p))}{\Ode{n*log(k)}}{Devuelve el camino recorrido por el paquete p desde que ingreso al dcnet.}
+\disComentAliasing{ res no es modificable.}
+
+\disDeclaraFuncion{Enviados}{\paramIn{d}{dcnet}, \paramIn{c}{pc}}{res : nat}{c \ $\in$ computadoras(red(d))}{res \ $\igobs$ cantidadEnviados(d, c)}{\Ode{L}}{Devuelve la cantidad de paquetes enviados por la pc c.}
+
+\disDeclaraFuncion{Paquetes}{\paramIn{d}{dcnet}, \paramIn{c}{pc}}{res : conj(paquete)}{c \ $\in$ computadoras(red(d))}{alias(res \ $\igobs$ enEspera(d, c))}{\Ode{L}}{Devuelve el conjunto de paquetes en espera que posee la pc c.}
+\disComentAliasing{ res no es modificable.}
+
+\disDeclaraFuncion{EnTransito?}{\paramIn{d}{dcnet}, \paramIn{p}{paquete}}{res : bool}{true}{res \ $\igobs$ paqueteEnTransito?(d, p)}{\Ode{n*(L + log(k)}}{Devuelve true si el paquete p pertenece al dcnet, y false en caso contrario.}
+
+\disDeclaraFuncion{MasEnviados}{\paramIn{d}{dcnet}}{res : pc}{true}{alias(res \ $\igobs$ laQueMasEnvio(d))}{\Ode{1}}{Devuelve la o una de las computadoras que mas paquetes envio (si es que hay mas de una) en el dcnet d.}
+\disComentAliasing{ res no es modificable.}
+
+
+\disPautasDeImplementacion
+
+\disEstructuraDeRepresentacion
+
+\disSeRepresentaCon{dcnet}{estr}
+\disDondeEs{estr}{\disTuplaEstr{{diccTrie(pc; definicion)}/paquetes, {tupla(pc:pc; cantidad:nat)}/masEnviados,
+red/red, {diccAvl(pc; diccAvl(pc; pc))}/siguientes}}
+\disDondeEs{definicion}{\disTuplaEstr{conjAvl(paquete)/xid, colaHeap(paquete)/xprior, {diccAvl(paquete, lista(pc))}/caminos, nat/enviados}}
+
+\disJustificacionDeLaEstructuraElegida
+{Para entender mejor la estructura damos una explicaci\'on: \\
+$\mathit{Paquetes} \,$es un diccionario que dada una pc de la red nos devuelve una tupla $\mathit{definicion} \,$, donde $\mathit{xid} \,$ es el conjunto de paquetes en espera que posee esa pc; $\mathit{xprior} \,$ es una cola de prioridad de dichos paquetes; $\mathit{caminos} \,$ es un diccionario que dado uno de los paquetes que tiene en espera la pc, nos devuelve el camino ya recorrido por ese paquete dentro del dcnet; y $\mathit{enviados} \,$ es la cantidad de paquetes que envio la pc. $\mathit{MasEnviados} \,$} es una tupla donde $\mathit{pc} \,$ es la o una de las pcs que mas paquetes envio en el dcnet, y $\mathit{cantidad} \,$ es el numero de paquetes que envio. $\mathit{Red} \,$ es la red que utiliza el dcnet; y $\mathit{siguientes} \,$ es un diccionario definido para todas las pcs del dcnet, que devuelve otro diccionario cuyas claves son \'unicamente las pcs del dcnet para las cuales existe un camino entre la clave del diccionario principal y esas pcs. La pc que devuelve el diccionario interno es la pc a la que deberia pasar un paquete si quisiera ir desde la pc clave de $\mathit{siguientes}\,$ hasta la pc clave del diccionario interno para realizar el camino mas corto.}  
+
+\disInvarianteDeRepresentacion
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Informal}}
+\hspace*{\disSubSubSecMargen}
+\begin{enumerate}
+% HACK: SGA 20/06/2011. Para identar correctmente los items.
+\setlength{\itemindent}{3em}
+	\item Las claves de $\mathit{paquetes} \,$, las computadoras de $\mathit{red} \,$, y las claves de $\mathit{siguientes} \,$ son el mismo conjunto.
+	\item La $\mathit{pc} \,$ de $\mathit{masEnviados} \,$ esta incluida en las computadoras de la $\mathit{red} \,$, exceptuando el caso en que la $red$ no tenga ninguna pc, por lo tanto ese campo sera completado con algo arbitrario que no tendra importancia.
+	\item La $\mathit{cantidad} \,$ de $\mathit{masEnviados} \,$ es igual a los $\mathit{enviados} \,$ de la $\mathit{definicion} \,$ de la $\mathit{pc} \,$ de $\mathit{masEnviados} \,$ en el diccionario $\mathit{paquetes} \,$(si la $red$ no contiene ni una pc entonces no estara definida ninguna clave).
+	\item Todas las $\mathit{pc}  \,$ definidas en $\mathit{paquetes} \,$ tienen menor o igual $\mathit{enviados} \,$ que la $\mathit{pc} \,$ de $\mathit{masEnviados} \,$.
+	\item Para toda $\mathit{pc} \,$ definida en $\mathit{paquetes} \,$, el conjunto $\mathit{xid} \,$, la cola $\mathit{xprior} \,$ y el conjunto de claves de $\mathit{caminos} \,$, contienen exactamente los mismos elementos.
+	\item Todas las claves de los diccionarios que son significado de $\mathit{siguientes} \,$ estan incluidas en el conjunto de claves de $\mathit{paquetes} \,$.  
+	\item Para cada clave de $\mathit{siguientes} \,$, las claves del diccionario que es significado de dicha clave, cumplen que existe un camino en $\mathit{red} \,$ entre cada una de ellas y la clave de $\mathit{siguientes} \,$.
+	\item Los significados del diccionario interno de $\mathit{siguientes} \,$ son la segunda $\mathit{pc} \,$ de uno de los caminos m\'inimos (si es que existe mas de uno) entre la clave principal y la clave del diccionario interno(obtenido a partir de la clave principal).
+	\item Cada una de las $\mathit{lista(pc)} \,$ que son significado de $\mathit{caminos} \,$ es prefijo de uno de los caminos m\'inimos (si es que existe mas de uno) entre la $\mathit{pc} \,$ de origen y la $\mathit{pc} \,$ destino de la clave (pues la clave es un paquete).
+\end{enumerate} 
+
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
+\doublespace
+\disRep{estr}{e}{$true$ $\Longleftrightarrow$ 
+\\\hspace*{3.75em}(1) claves(e.paquetes) = claves(e.siguientes) = mostrarComputadoras(e.red) $\land$
+\\\hspace*{3.75em}(2) esVacio?(mostrarComputadoras(e.red)) $\lor$ (e.masEnviados).pc $\in$ claves(e.paquetes) $\yluego$
+\\\hspace*{3.75em}(3) esVacio?(mostrarComputadoras(e.red)) $\oluego$ 
+\\\hspace*{3.75em}(e.masEnviados).cantidad = (obtener(e.paquetes,(e.masEnviados).pc)).enviados $\land$
+\\\hspace*{3.75em}(4) ($\forall$ c:claves(e.paquetes)) (obtener(e.paquetes, c)).enviados $\leq$ (e.masEnviados).cantidad $\land$
+\\\hspace*{3.75em}(5) ($\forall$ c:claves(e.paquetes)) \Big( (obtener(e.paquetes, c)).xid = claves((obtener(e.paquetes, c)).caminos) $\land$ \\\hspace*{3.75em}($\forall$ p:paquete) p $\in$ (obtener(e.paquetes, c)).xid  $\Longleftrightarrow$ esta?((obtener(e.paquetes, c)).xprior, p) \Big) $\land$
+\\\hspace*{3.75em}(6) ($\forall$ c:claves(e.paquetes)) claves(obtener(e.siguientes, c)) $\subseteq$ claves(e.paquetes) $\land$
+\\\hspace*{3.75em}(7) ($\forall$ c,d:claves(e.paquetes)) definido?(obtener(e.siguientes, c), d) $\Longleftrightarrow$ existeCamino(e.red, c, d) $\land$
+\\\hspace*{3.75em}(8) ($\forall$ c:claves(e.paquetes))($\forall$ d:claves(obtener(e.siguientes, c))) $\land$
+\\\hspace*{3.75em} obtener(obtener(e.siguientes, c), d) = dameUno(caminosMasCortos(e.red,c, d))[1] $\land$
+\\\hspace*{3.75em}(9) ($\forall$ c:claves(e.paquetes))($\forall$ d:claves(obtener(e.siguientes, c))) $\land$
+\\\hspace*{3.75em} esPrefijo\big(obtener(obtener(e.paquetes, c)).caminos, d), dameUno(caminosMasCortos(e.red, c, d))\big) 
+}
+
+\singlespace
+\disFuncionDeAbsFuncionesAux
+\tadOperacion{\tadNombreFuncion{\hspace*{3.7em}esta?}}{colaHeap($\alpha$), $\alpha$}{bool}{}
+\tadAxioma{\hspace*{2.3em}esta?(c,a)}{$\¬$vacia?(c) $\yluego$ \big(proximo(c) = a $\lor$ esta?(desencolar(c), a)\big)}\mbox{}
+
+\tadOperacion{\tadNombreFuncion{\hspace*{2.3em}esPrefijo}}{lista($\alpha$), lista($\alpha$)}{bool}{}
+\tadAxioma{\hspace*{2.3em}esPrefijo(l,s)}{longitud(l) $\leq$ longitud(s) $\yluego$ ($\forall$ i:[0..longitud(l))) l[i] = s[i] }\mbox{}
+
+\doublespace
+\disFuncionDeAbstraccion
+\vspace*{-1em}
+\disAbs{estr}{e}{dcnet}{d}{red(d) = e.red \yluego
+($\forall$ c:computadoras(red(d))) \ \Big(cantidadEnviados(d, c) = (obtener(e.paquetes, c)).enviados $\land$ 
+\\\hspace*{3.75em}enEspera(d,c) = (obtener(e.paquetes, c)).xid $\land$ ($\forall$ p :claves(obtener(e.paquetes, c))) 
+\\\hspace*{3.75em}caminoRecorrido(d, p) = obtener(obtener(e.paquetes, c), p) \Big)
+}
+\singlespace
+
+
+
+
+$\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ $\\$ 
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Inicar}}{\paramIn{r}{red}}{$\disFlecha$ res : estr}\Comment{$\Ode{n!+ n * L}$}
+  \State var $diccTrie(pc, definicion)$ paquetes $\gets$ vacio() \Comment{$\Ode{1}$}
+  \State var $diccAvl(pc, diccAvl(pc, pc))$ ipSiguiente $\gets$ vacio() \Comment{$\Ode{1}$}
+  \If {esVacio?(mostrarComputadoras(r))} \Comment{$\Ode{1}$}
+    \State var $pc$ random $\gets$ $<$abc, vacio()$>$ \Comment{$\Ode{1}$}
+    \State var $tupla<pc,nat>$ masEnviados $\gets$ $<$random, 0$>$ \Comment{$\Ode{1}$}
+    \State var $estr$ estructura $\gets$ $<$paquetes, masEnviados, r, ipSiguiente$>$ \Comment{$\Ode{1}$}
+  \Else
+    \State var $pc$ masEnvio $\gets$ dameUno(mostrarComputadoras(r)) \Comment{$\Ode{1}$}
+    \State var $tupla<pc,nat>$ masEnviados $\gets$ $<$masEnvio,0$>$ \Comment{$\Ode{1}$}
+    \State var $itConj(pc)$ computador1 $\gets$ crearIt(mostrarComputadoras(r)) \Comment{$\Ode{1}$}
+    \While {haySiguiente(computador1)} \Comment{$\Ode{n}$}
+      \State var $itConj(pc)$ computador2 $\gets$ crearIt(mostrarComputadoras(r)) \Comment{$\Ode{1}$}
+      \State var $pc$ pc1 $\gets$ siguiente(computador1) \Comment{$\Ode{1}$}
+      \State var $diccAvl(pc, pc)$ ipSiguiente2 $\gets$ vacio() \Comment{$\Ode{1}$}
+      \While {haySiguiente(computador2)} \Comment{$\Ode{n}$}
+        \State var $pc$ pc2 $\gets$ siguiente(computador2)  \Comment{$\Ode{1}$}
+        \If {$\¬$esVacio?(caminosMasCortos(r, pc1, pc2))}\Comment{$\Ode{1}$}
+          \State definir(ipSiguiente2, pc2, dameUno(caminosMasCortos(r, pc1, pc2))[1]) \Comment{$\Ode{n!}$}
+        \EndIf
+        \State avanzar(computador2) \Comment{$\Ode{1}$}
+      \EndWhile  
+      \State definir(ipSiguiente, pc1, ipSiguiente2) \Comment{$\Ode{log(n)}$}
+      \State avanzar(computador1) \Comment{$\Ode{1}$}
+    \EndWhile
+    \State var $itConj(pc)$ computador3 $\gets$ crearIt(mostrarComputadoras(r)) \Comment{$\Ode{1}$}
+    \While {haySiguiente(computador3)} \Comment{$\Ode{n}$}
+      \State var $conjAvl(paquete)$ paquetes2 $\gets$ vacio() \Comment{$\Ode{1}$}
+      \State var $colaHeap(paquete)$ paquetes3 $\gets$ vacio() \Comment{$\Ode{1}$}
+      \State var $nat$ paquetesEnviados $\gets$ 0 \Comment{$\Ode{1}$}
+      \State var $diccAvl(paquete, lista(pc))$ caminosRecorridos $\gets$ vacio() \Comment{$\Ode{1}$}
+      \State definir(paquetes, siguente(computador3), $<$paquetes2, paquetes3, caminosRecorridos, paquetesEnviados$>$) 
+      \State \Comment{$\Ode{L}$}
+      \State avanzar(pc3) \Comment{$\Ode{1}$}
+    \EndWhile
+    \State var $estr$ estructura $\gets$ $<$paquetes, masEnviados, r, ipSiguiente$>$ \Comment{$\Ode{1}$}
+  \EndIf
+  \State res $\gets$ estructura \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$A\~{n}adirPaquete}}{\paramInOut{dc}{estr}, \paramIn{p}{paquete}}\Comment{$\Ode{L + log(k)}$}
+  \State var $puntero(tupla)$ actual $\gets$ $\And$obtener(dc.paquetes, p.origen) \Comment{$\Ode{L}$}
+  \State agregar(actual$\rightarrow$xid, p) \Comment{$\Ode{log(k)}$}
+  \State encolar(actual$\rightarrow$xprior, p) \Comment{$\Ode{log(k)}$}
+  \State var $lista(pc)$ caminoRecorrido $\gets$ vacio() \Comment{$\Ode{1}$}
+  \State agregarAtras(caminoRecorrido, p.origen) \Comment{$\Ode{1}$}
+  \State definir(actual$\rightarrow$caminos, p, caminoRecorrido) \Comment{$\Ode{log(k)}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$VerRed}}{\paramIn{dc}{estr}}{$\disFlecha$ res: red}\Comment{$\Ode{1}$}
+  \State res $\gets$ dc.red \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Recorrido}}{\paramIn{dc}{estr}, \paramIn{p}{paquete}}{$\disFlecha$ res: lista(pc)} \Comment{$\Ode{n*log(k)}$}
+  \State var $bool$ noEncontrado $\gets$ true \Comment{$\Ode{1}$}
+  \State var $itDiccTrie(pc, definicion)$ it $\gets$ crearIt(dc.paquetes) \Comment{$\Ode{1}$}
+  \State var $puntero(definicion)$ actual  \Comment{$\Ode{1}$}
+  \While {haySiguiente(it) $\&\&$ noEncontrado}  \Comment{$\Ode{n}$}
+    \State actual $\gets$ siguienteSignificado(it) \Comment{$\Ode{1}$}
+    \If {definido?(actual$\rightarrow$caminos, p)} \Comment{$\Ode{log(k)}$}
+      \State noEncontrado $\gets$ false\Comment{$\Ode{1}$}
+      \State var $lista(pc)$ camrec $\gets$ obtener(actual$\rightarrow$caminos, p) \Comment{$\Ode{log(k)}$}
+    \Else
+      \State avanzar(it) \Comment{$\Ode{1}$}
+    \EndIf
+  \EndWhile
+  \State res $\gets$ camrec \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Enviados}}{\paramIn{dc}{estr}, \paramIn{c}{pc}}{$\disFlecha$ res: nat} \Comment{$\Ode{L}$}
+  \State res $\gets$ (obtener(dc.paquetes, c)).enviados \Comment{$\Ode{L}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Paquetes}}{\paramIn{dc}{estr}, \paramIn{c}{pc}}{$\disFlecha$ res: conjAvl(paquete)}\Comment{$\Ode{L}$}
+  \State res $\gets$ (obtener(dc.paquetes, c)).xid \Comment{$\Ode{L}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$MasEnviados}}{\paramIn{dc}{estr}}{$\disFlecha$ res: pc} \Comment{$\Ode{1}$}
+  \State res $\gets$ (dc.masEnviados).pc \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\newpage
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$AvanzarSegundo}}{\paramInOut{dc}{estr}} \Comment{$\Ode{n*(L + log(n) + log(k))}$}
+  \State var $itConj(pc)$ it $\gets$ crearIt(mostrarComputadoras(dc.red)) \Comment{$\Ode{1}$}
+  \State var $lista(tupla<paquete, lista(pc), pc>)$ aEnviar $\gets$ vacio() \Comment{$\Ode{1}$}
+  \While {haySiguiente(it)} \Comment{$\Ode{n}$}
+    \State var $puntero(definicion)$ actual $\gets$ $\&$obtener(dc.paquetes, siguiente(it)) \Comment{$\Ode{L}$}
+    \If {$\¬$vacio?(actual$\rightarrow$xid)} \Comment{$\Ode{1}$}
+      \State var $paquete$ p $\gets$ desencolar(actual$\rightarrow$xprior) \Comment{$\Ode{log(k)}$}
+      \State var $lista(pc)$ l $\gets$ obtener(actual$\rightarrow$caminos, p) \Comment{$\Ode{log(k)}$}
+      \State eliminar(actual$\rightarrow$xid, p) \Comment{$\Ode{log(k)}$}
+      \State borrar(actual$\rightarrow$caminos, p) \Comment{$\Ode{log(k)}$}
+      \State var $puntero(diccAvl(pc, pc))$ aux $\gets$ $\&$obtener(dc.siguientes, siguiente(it)) \Comment{$\Ode{log(n)}$}
+      \State var $pc$ pct $\gets$ obtener(*aux, p.destino) \Comment{$\Ode{log(n)}$}
+      \If {pct != p.destino} 
+        \State agregarAtras(l, pct) \Comment{$\Ode{1}$}
+        \State agregarAtras(aEnviar, $<$p, l, pct$>$) \Comment{$\Ode{1}$}
+      \EndIf
+      \State actual$\rightarrow$enviados $\gets$ actual$\rightarrow$enviados + 1  \Comment{$\Ode{1}$}
+      \If {(dc.masEnviados).pc $<$ actual$\rightarrow$enviados} \Comment{$\Ode{1}$}
+        \State dc.masEnviados $\gets$ $<$siguiente(it), actual$\rightarrow$enviados$>$ \Comment{$\Ode{1}$}
+      \EndIf      
+    \EndIf
+    \State avanzar(it) \Comment{$\Ode{1}$}
+  \EndWhile
+  \State var $itLista(tupla<paquete, lista(pc), pc>)$ itP $\gets$ crearIt(aEnviar) \Comment{$\Ode{1}$}
+  \While {haySiguiente(itP)} \Comment{$\Ode{n}$}
+    \State var $puntero(definicion)$ actual2 $\gets$ $\&$obtener(dc.paquetes, $\pi_{3}$(siguiente(itP))) \Comment{$\Ode{L}$}
+    \State agregar(actual2$\rightarrow$xid, $\pi_{1}$(siguiente(itP))) \Comment{$\Ode{log(k)}$}
+    \State encolar(actual2$\rightarrow$xprior, $\pi_{1}$(siguiente(itP))) \Comment{$\Ode{log(k)}$}
+    \State definir(actual2$\rightarrow$caminos, $\pi_{1}$(siguiente(itP)), $\pi_{2}$(siguiente(itP))) \Comment{$\Ode{log(k)}$}
+    \State avanzar(itP) \Comment{$\Ode{1}$}
+  \EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$EnTransito?}}{\paramIn{dc}{estr}, \paramIn{p}{paquete}}{$\disFlecha$ res: bool} \Comment{$\Ode{n*(L + log(k)}$}
+  \State var $itConj(pc)$ it $\gets$ creatIt(mostrarComputadoras(dc.red)) \Comment{$\Ode{1}$}
+  \State var $bool$ noEncontrado $\gets$ true \Comment{$\Ode{1}$}
+  \While {noEncontrado $\&\&$ haySiguiente(it)} \Comment{$\Ode{n}$}
+    \State var $puntero(definicion)$ sig $\gets$ $\&$obtener(dc.paquetes, siguiente(it)) \Comment{$\Ode{L}$}
+    \State noEncontrado $\gets$ $\¬$(pertenece?(sig$\rightarrow$xid, p)) \Comment{$\Ode{log(k)}$}
+    \State avanzar(it) \Comment{$\Ode{1}$}
+  \EndWhile
+  \State res $\gets$ $\¬$noEncontrado \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}

@@ -1,0 +1,366 @@
+%*************************************************************************
+% Package Dis2  -  versión 0.02  -  Algoritmos y Estructuras de Datos II
+%*************************************************************************
+%
+% Agregando macros para diseñar TADs
+%
+%*************************************************************************
+%
+% Información sobre el package para el sistema
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{dis}[2011/05/18 v0.035 Para diseniar TADs en formato AED2]
+\RequirePackage{ifthen}% ifthenelse.
+
+% Imprimir un mensajito al procesar un tex que use este package
+\typeout{Cargando package 'dis' v0.035 (18/05/2011)}
+
+\newcommand{\disSubSection}[1]{%
+\subsubsection{\textbf{\textsf{#1}}}%
+}
+
+\newcommand{\creaTup}[1]{%
+$\langle$#1$\rangle$}
+
+\setlength{\tabcolsep}{2pt}
+
+%************************************************************************
+% Margenes para el Diseño.
+%\newdimen\secmargen\secmargen=1.5em
+\newlength{\disSubSecMargen}\setlength{\disSubSecMargen}{2em}
+\newlength{\disSubSubSecMargen}\setlength{\disSubSubSecMargen}{2.3em}
+\newlength{\disOrdenFuncMargen}\setlength{\disOrdenFuncMargen}{2.3em}
+\newlength{\disParrafo}\setlength{\disParrafo}{4em}
+
+\newlength{\disSecInterfaceMargen}\setlength{\disSecInterfaceMargen}{3.8em}
+\newlength{\disSubSecInterfaceMargen}\setlength{\disSubSecInterfaceMargen}{4.8em}
+
+\newlength{\disSubSecEstrDRepMargen}\setlength{\disSubSecEstrDRepMargen}{2.25em}
+\newlength{\disSubSubSecEstrDRepMargen}\setlength{\disSubSubSecEstrDRepMargen}{3em}
+\newlength{\disTuplaEstrMargen}\setlength{\disTuplaEstrMargen}{5em}
+
+\newlength{\tabRep}\setlength{\tabRep}{8.4em}
+
+% Espacio vertical extra antes de cada título o encabezado.
+% Este skip se adiciona al parskip standard. Afecta a todos
+% los títulos y encabezados, pero no a las funcs ni axiomas.
+\newlength{\disSeparacionOperacion}\setlength{\disSeparacionOperacion}{1em}
+\newlength{\disDescripcionOperacionMargen}\setlength{\disDescripcionOperacionMargen}{11.25em}
+
+% Tipo de flechita a usar
+\newcommand{\disFlecha}{\ensuremath{\longrightarrow}}
+
+% El Diseño
+\newcommand{\disDisenio}[1]{%
+\section{\textsf{Dise\~no del Tipo} \sc{#1}}%
+}
+
+% La especificación
+\newcommand{\disEspecificacion}{% 
+\subsection{\textbf{\textsf{Especificaci\'on}}}%
+}
+
+% Los aspectos de la interfaz
+\newcommand{\disAspectosDeLaInterfaz}{% 
+\subsection{\textbf{\textsf{Aspectos de la interfaz}}}%
+}
+
+% Los servicios exportados
+\newcommand{\disServiciosExportados}{% 
+\subsubsection{\textbf{\textsf{Servicios exportados}}}%
+}
+
+% Orden de la función o el Procedimiento
+\newcommand{\disOrdenDeLaFunc}[2]{
+\hspace*{\disOrdenFuncMargen}\textbf{\textsf{La funci\'on}} \ensuremath{#1} \textbf{\textsf{tiene orden}} \emph{\ensuremath{#2}}\par%
+}
+
+\newcommand{\disOrdenDelProc}[2]{
+\hspace*{\disOrdenFuncMargen}\textbf{\textsf{El procedimiento}} \ensuremath{#1} \textbf{\textsf{tiene orden}} \emph{\ensuremath{#2}}\par%
+}
+
+% La interfaz
+\newcommand{\disInterfaz}{% 
+\subsubsection{\textbf{\textsf{Interfaz}}}%
+}
+
+% La interface del tipo
+\newcommand{\disInterface}[1]{% 
+\subsubsection*{\hspace*{\disSecInterfaceMargen}\textbf{\textsf{Interfaz}} \sc {#1}}%
+}
+
+% El diseño se explica con esta especificación
+\newcommand{\disSeExplicaCon}[1]{% 
+\subsubsection*{\hspace*{\disSecInterfaceMargen}\textbf{\textsf{Se explica con especificaci\'on de}} \sc{#1}}
+}
+
+% se usan las siguientes interfaces
+\newcommand{\disUsaInterfaces}[1]{% 
+\subsubsection*{\hspace*{\disSecInterfaceMargen}\textbf{\textsf{Usa interfaces}} \sc{#1}}%
+}
+
+% Genero
+\newcommand{\disGenero}[1]{% 
+\subsubsection*{\hspace*{\disSecInterfaceMargen}\textbf{\textsf{G\' enero}}  \texttt{#1}}%
+}
+
+% Operaciones de {0}
+\newcommand{\disOperaciones}[1]{% 
+\subsubsection*{\hspace*{\disSecInterfaceMargen}\textbf{\textsf{Operaciones}} \textsf{#1}}%
+\vspace*{-1em}
+}
+
+% parametros formales genero
+\newcommand{\disParametrosFormales}[1]{% 
+\subsubsection*{\hspace*{\disSecInterfaceMargen}\textbf{\textsf{par\'ametros formales}}}%
+\subsubsection*{\hspace*{\disSubSecInterfaceMargen}\textbf{\textsf{g\' enero}} \sc{#1}}%
+}
+
+% parametros formales funcion
+\newcommand{\disParametrosFormalesDeclaraFunc}[7]{% 
+\subsubsection*{\hspace*{\disSubSecInterfaceMargen}\textbf{\textsf{funci\'on}} \hspace*{-6.75em} \disDeclaraFuncionPriv{#1}{#2}{#3}{#4}{#5}{#6}{#7}{0em}{6.5em}}%
+}
+
+% parametros formales funcion
+\newcommand{\disParametrosFormalesDeclaraOtraFunc}[7]{% 
+\disDeclaraFuncionPriv{#1}{#2}{#3}{#4}{#5}{#6}{#7}{1em}{7.5em}}%
+
+\newcommand{\disDeclaraFuncion}[7]{\disDeclaraFuncionPriv{#1}{#2}{#3}{#4}{#5}{#6}{#7}{\disSeparacionOperacion}{\disSecInterfaceMargen}}
+
+% WARNING: SGA 25/05/2011. Solo se pueden hasta 9 parametros!!!.
+\newcommand{\disDeclaraFuncionPriv}[9]{
+\vspace*{#8}
+\hspace*{#9}\textsc{#1}(#2) \disFlecha \emph{\ensuremath{#3}}\par%
+\comentDeclaraFuncion{Pre \ensuremath{\equiv}}{ \{ \ensuremath{#4} \}}{16}\par%
+\comentDeclaraFuncion{Post \ensuremath{\equiv}}{ \{ \ensuremath{#5} \}}{16}\par%
+\vspace*{4pt}
+\comentDeclaraFuncion{Complejidad:}{\ensuremath{#6}}{16}\par%
+\vspace*{3pt}
+\comentDeclaraFuncion{Descripci\'on:}{#7}{16}\par%
+}
+
+\newcommand{\disDeclaraFuncionSinEncabezado}[5]{
+\par%
+\hspace*{#5}\textbf{\textsf{Pre}} \ensuremath{\equiv} \{ \ensuremath{#1} \}\par%
+\hspace*{#5}\textbf{\textsf{Post}} \ensuremath{\equiv} \{ \ensuremath{#2} \}\par%
+\hspace*{#5}\textbf{\textsf{Complejidad:}} \ensuremath{#3}\par%
+\hspace*{#5}\textbf{\textsf{Descripci\'on:}} #4\par%
+}
+
+
+\newcommand{\comentDeclaraFuncion}[3]{
+\begin{tabular}{ l  p{#3cm}} \par%
+\hspace*{\disSecInterfaceMargen}  & \textbf{\textsf{#1}}  #2 \\ \par%
+\end{tabular} \par%
+}
+
+%\newcommand{\disDeclaraFuncionPriv}[9]{
+%\vspace*{#8}
+%\hspace*{#9}\textsc{#1}(#2) \disFlecha \emph{\ensuremath{#3}}\par%
+%\begin{tabular}{ | l | r } \par%
+%l					& d \\ \par%
+%FC Copenhagen     & 6  \par%
+%\end{tabular} \par%
+%}
+
+% Declaración de procedimiento
+% \disDeclaraOperacion{nombre}{params}{pre}{post}{complejidad}{descripcion}
+
+
+\newcommand{\disDeclaraProc}[6]{\disDeclaraProcPriv{#1}{#2}{#3}{#4}{#5}{#6}{\disSeparacionOperacion}{\disSecInterfaceMargen}}
+
+\newcommand{\disDeclaraProcPriv}[8]{
+\vspace*{#7}
+\hspace*{#8}\textsc{#1}(#2)\par%
+\comentDeclaraFuncion{Pre \ensuremath{\equiv}}{ \{ \ensuremath{#3} \}}{16}\par%
+\comentDeclaraFuncion{Post \ensuremath{\equiv}}{ \{ \ensuremath{#4} \}}{16}\par%
+\comentDeclaraFuncion{Complejidad:}{ \ensuremath{#5} }{16}\par%
+\comentDeclaraFuncion{Descripci\'on:}{ #6}{16}\par%
+}
+
+
+
+\newcommand{\disComentAliasing}[1]{% 
+\vspace*{3pt}
+\comentDeclaraFuncion{Aliasing:}{#1}{16}%
+}% Las pautas de implementación
+
+
+\newcommand{\disPautasDeImplementacion}{% 
+\subsection{\textbf{\textsf{Pautas de implementaci\'on}}}%
+}
+
+% La estructura de representación
+\newcommand{\disEstructuraDeRepresentacion}{% 
+\subsubsection{\textbf{\textsf{Estructura de representaci\'on}}}%
+}
+
+% La estructura elegida
+\newcommand{\disEstructuraElegida}{% 
+\subsubsection{\textbf{\textsf{Estructura elegida}}}%
+}
+
+% Justificación de la estructura elegida
+\newcommand{\disJustificacionDeLaEstructuraElegida}{% 
+\subsubsection{\textbf{\textsf{Justificaci\'on}}}%
+}
+
+% Otras estructuras alternativas
+\newcommand{\disEstructurasAlternativas}{% 
+\subsubsection{\textbf{\textsf{Estructuras alternativas}}}%
+}
+
+
+% Invariante de representacion
+\newcommand{\disInvarianteDeRepresentacion}{% 
+\subsubsection{\textbf{\textsf{Invariante de Representaci\'on}}}%
+}
+
+% Función de abstracción
+\newcommand{\disFuncionDeAbstraccion}{% 
+\subsubsection{\textbf{\textsf{Funci\'on de Abstracci\'on}}}%
+}
+
+% Función de abstracción
+\newcommand{\disFuncionDeAbsFuncionesAux}{% 
+\subsubsection*{\hspace*{\disSecInterfaceMargen}\textbf{\textsf{Funciones Auxiliares}}}%
+}
+
+% Algoritmos
+\newcommand{\disAlgoritmos}{% 
+\subsubsection{\textbf{\textsf{Algoritmos}}}%
+}
+
+
+% Servicios usados
+\newcommand{\disServiciosUsados}{% 
+\subsection{\textbf{\textsf{Servicios Usados}}}%
+}
+
+% Justificación de los ordenes
+\newcommand{\disJustificacionDeLosOrdenes}{% 
+\subsection{\textbf{\textsf{Justificaci\'on de los Ordenes de Complejidad}}}%
+}
+
+% \Ode(algo)
+\newcommand{\Ode}[1]{% 
+\mathcal{O}(\ensuremath{#1})%
+}
+
+% \OmegaDe(algo)
+\newcommand{\OmegaDe}[1]{% 
+\Omega(\ensuremath{#1})%
+}
+
+% \ThetaDe(algo)
+\newcommand{\ThetaDe}[1]{% 
+\Theta(\ensuremath{#1})}
+
+% \paramInOut(nombreVarible){Tipo}
+\newcommand{\paramInOut}[2]{% 
+\textbf{\textsf{in/out}} \ensuremath{#1}: {\ensuremath{#2}}%
+}
+
+% \paramIn(nombreVarible){Tipo}
+\newcommand{\paramIn}[2]{% 
+\textbf{\textsf{in}} \ensuremath{#1}: {\ensuremath{#2}}%
+}
+
+% \paramOut(nombreVarible){Tipo}
+\newcommand{\paramOut}[2]{% 
+\textbf{\textsf{out}} \ensuremath{#1}: {\ensuremath{#2}}%
+}
+
+% \disSeRepresentaCon{estr}{lista(alpha)}
+\newcommand{\disSeRepresentaCon}[2]{
+\hspace*{\disSubSecEstrDRepMargen}\ensuremath{#1} \textbf{\textsf{se representa con}} \emph{\ensuremath{#2}}\par%
+}
+
+% \disDondeEs{estr}{lista(alpha)}
+\newcommand{\disDondeEs}[2]{
+\hspace*{\disSubSubSecEstrDRepMargen}\textbf{\textsf{donde}} \ensuremath{#1} \textbf{\textsf{es}} #2\par%
+}
+
+\newcommand{\disDondePertenece}[2]{
+\hspace*{\disSubSubSecEstrDRepMargen}\textbf{\textsf{donde}} \ensuremath{#1} $\in$ #2\par%
+}
+
+% ------- Parseo de aridades (listas de argumentos) de funciones 
+%
+% \disTupla{<descripcion tipo>}
+%     Formatea el tipo de la funcion de acuerdo a la <descripcion tipo>. El 
+%     parametro <descripcion tipo> tiene el siguiente formato:
+%         <tipo1>[/<valor1>],<tipo2>[/<valor2>],...,<tipoN>[/>valorN>].
+%     Este comando, transforma <descripcion tipo> en el siguiente texto:
+%         <tipo1> [$<valor1>$] $\times$ <tipo2> [$<valor2>$] $times$ ... <tipoN> [$<valorN>$].
+%    
+%     Por ejemplo, si el input es {fulano/f,nat,bool/b}, entonces el output
+%     del comando es 'fulano $f$ x nat x bool $b$'.
+%
+%     Importante: no debe haber espacios en <descripcion tipo>!
+%     Importante2: no debe haber comas dentro de <tipoI>, <valorI> para ningun 1 <= I <= N, ya que
+%                  se reemplazan por $\times$.
+%                  De ser necesaria la inclusion de comas, estas deberian guardarse en un bloque.
+%                  Por ejemplo, si se escribe tupla(a, b), se obtienen tupla(a \times b), mientras
+%                  que si se escribe tupla(a{,} b) o {tupla(a, b)}, se obtiene tupla(a, b).
+%
+%     El proposito del comando es formar tipos, como {banco b, banco c},
+%     donde la cant. de params es arbitrariamente larga. El tipo de cada param
+%     es obligatorio, pero el nombre de la instancia es opcional.
+%
+%     TODO: permitir espacios en <descripcion tipo>
+\newcommand{\disTuplaEstr}[1]{%
+    \edef\@SinProcesar{#1}%
+    \\\hspace*{\disTuplaEstrMargen}\textit{\textbf{tupla}}(
+    \whiledo{\not\equal{\@SinProcesar}{}}{%
+        \GetTokens[,]{@Param}{@Cola}{\@SinProcesar}%
+        \GetTokens[/]{@Tipo}{@Valor}{\@Param}%
+        %
+        \\\hspace*{\disTuplaEstrMargen}
+        \@Valor:%
+        \ifthen{\not\equal{\@Tipo}{}}{\ \textit{\textbf{\@Tipo}}}%
+        \ifthen{\not\equal{\@Cola}{}}{\ $\times$}%
+        \let\@SinProcesar=\@Cola%
+    }%
+    \\\hspace*{\disTuplaEstrMargen}
+    )
+}
+
+% Realiza un salto de pagina restando 3em de espacio vertical en la nueva pagina.
+\newcommand{\disNuevaPag}{%
+\newpage
+\vspace*{-3em}
+}
+
+
+% \disRep{estr}{e}{predicado}
+\newcommand{\disRep}[3]{%
+\vspace*{\disSeparacionOperacion}\par%
+\hspace*{\disSubSubSecMargen}Rep : #1 $\disFlecha$ \emph{boolean}\par%
+\hspace*{\disSubSubSecMargen}($\forall$ {\emph{#2}} : #1)\par%
+\hspace*{\disSubSubSecMargen}Rep({\emph{#2}}) $\equiv$ ({#3})\par%
+}
+
+
+% \disAbs{generoDeRepresentacion}{g1}{generoRepresentado}{g2}{predicado}
+\newcommand{\disAbs}[5]{%
+\vspace*{\disSeparacionOperacion}\par%
+\hspace*{\disSubSubSecMargen}Abs : #1 $#2$ $\disFlecha$ {#3} \hfill  \{Rep($#2$)\} \par%
+\hspace*{\disSubSubSecMargen}($\forall$ {$#2$}:#1) Abs($#2$) $\igobs$ {$#4$} : {#3} /\par%
+\hspace*{\disSubSubSecMargen}{#5}\par%
+}
+
+% \disComplejidadDeLaFuncion{estr}
+\newcommand{\disComplejidadDeLaOperacion}[1]{
+\vspace*{2em}
+\hspace*{\disSubSecMargen}\textbf{\textsf{Complejidad de la operaci\'on}} \textsc{#1}\par%
+\vspace*{1em}
+}
+
+\newcommand{\disRequerimientosSobreElTipo}[1]{
+\vspace*{2em}
+\hspace*{\disSubSecMargen}\textbf{\textsf{Requerimientos sobre el Tipo}} \textsc{#1}\par%
+}
+
+\newcommand{\disItemRequerimientosSobreElTipo}[1]{
+\hspace*{\disSubSubSecEstrDRepMargen} $\bullet$ #1\par%
+}

@@ -1,0 +1,121 @@
+\section{Módulo Robot}
+
+\begin{Interfaz}
+  
+  \textbf{parámetros formales}\hangindent=2\parindent\\
+  \parbox{1.7cm}{\textbf{géneros}} $robot$\\
+  \textbf{se explica con}: \tadNombre{Robot}
+
+  \textbf{género}: \TipoVariable{robot}
+
+  \textbf{usa}:  \TipoVariable{bool}, \TipoVariable{estacion}, \TipoVariable{rur}, \TipoVariable{diccTrie($\sigma$)} 
+
+  \titlex{Operaciones básicas del robot}
+
+  \InterfazFuncion{crear}{\In{rur}{rur}, \In{est}{estacion}, \In{infr}{nat}, \In{tags}{DiccTrie(bool)}, \In{perm}{DiccTrie(DiccTrie(bool))}}{robot}
+  [true]
+  {$res = crear(rur,est,infr,tags,perm)$}
+  [$\bigO(1)$]
+  []
+  [devuelve un nuevo robot por referencia.]
+
+  \InterfazFuncion{$\bullet > \bullet$}{\In{r_1}{robot}, \In{r_2}{robot}}{bool}
+  [true]
+  {$res = esMayor?(r_1,r_2)$}
+  [$\bigO(1)$]
+  [devuelve true si $r_1$ es 'mayor' a $r_2$, definido por numero de infracciones y luego por RUR.]
+  [devuelve al robot por referencia.]
+
+  \InterfazFuncion{activo?}{\In{r}{robot}}{bool}
+  [true]
+  {$res = activo(r)$}
+  [$\bigO(1)$]
+  [bool que muestrar si el robot esta actualmente activo]
+  []
+
+  \InterfazFuncion{estacion}{\In{r}{robot}}{estacion}
+  [true]
+  {$res = estacion(r)$}
+  [$\bigO(1)$]
+  [devuelve string que representa la estacion actual donde se encuentrar el robot.]
+  []
+
+  \InterfazFuncion{infracciones}{\In{r}{robot}}{nat}
+  [true]
+  {$res = infracciones(r)$}
+  [$\bigO(1)$]
+  []
+  []
+
+  \InterfazFuncion{permisos}{\In{r}{robot}}{DiccTrie(bool)}
+  [true]
+  {$res = permisos(r)$}
+  [$\bigO(1)$]
+  [devuelve la referencia al conj de tags en un DiccTrie.]
+  []
+
+  \InterfazFuncion{tieneTag?}{\In{r}{robot}, \In{tag}{string}}{bool}
+  [true]
+  {$res = tieneTag?(r)$}
+  [$\bigO(|tag|)$]
+  [devuelve true si el robot tiene cierto tag.]
+  []
+
+\end{Interfaz}
+
+\pagebreak
+
+\subsection{Representacion}
+  
+  \titlex{Representación del Robot}
+
+  \begin{Estructura}{robot}[datosRobot]
+    \begin{Tupla}[datosRobot]
+      \tupItem{rur}{rur}%
+      \tupItem{\\presente?}{bool}%
+      \tupItem{\\est}{estacion}%
+      \tupItem{\\infr}{nat}%
+      \tupItem{\\tags}{DiccTrie(bool)}%
+      \tupItem{\\permisos}{DiccTrie(DiccTrie(bool)}%
+    \end{Tupla}
+  \end{Estructura}
+
+Representamos a un robot con una tupla debido a que el modulo en si es necesario para definir la relacion de orden entre robots. Esta relacion es luego utilizada por el modulo cola de prioridad para definir que robot sale de circulacion en una inspeccion. Para evitar tener que hacer el modulo de conjunto, para los tags utilizamos un DiccTrie(bool).
+
+\subsection{Invariante de Representacion}
+\subsubsection{El invariante en lenguaje natural.}
+
+\begin{enumerate}
+  \item Un robot no tiene tags repetidos.
+  \item Los tags tienen menos de 64 caracteres.
+\end{enumerate}
+  
+  \subsection{Funcion de abstraccion}
+
+  \Abs[estr]{robot}[r]{robot}{rur(r) = rur(robot) $\land$ presente?(r) = presente?(robot) $\land$ estacion(r) = estacion(robot) $\land$ infr(r) = infr(robot) $\land$ ($\forall t$: tag) tag $\in$ tags(r) $\iff$ tieneTag?(robot, tag)}
+
+\subsection{Algoritmos}
+
+Dado que los getters son triviales, solo voy a hacer el pseudocodigo de la relacion de orden y tieneTag?.
+
+~
+
+\TipoFuncion{$\bullet > \bullet$}{\In{r_1}{robot}, \In{r_2}{robot}}{bool} \complejidad{Complejidad:}{1} \\
+\indent if infracciones($r_1$) $>$ infracciones($r_2$) \{ \complejidad{}{1} \\
+\indent \indent res $\leftarrow$ $true$ \complejidad{}{1} \\
+\indent \} else \{ \\
+\indent \indent if infracciones($r_2$) > infracciones($r_1$) \{ \complejidad{}{1} \\
+\indent \indent \indent res $\leftarrow$ $false$ \complejidad{}{1} \\
+\indent \indent \} else \{ \\
+\indent \indent \indent if rur($r_1$) $>$ rur($r_2$) \{ \complejidad{}{1} \\
+\indent \indent \indent \indent res $\leftarrow$ $true$ \complejidad{}{1} \\
+\indent \indent \indent \} else \{ \\
+\indent \indent \indent \indent res $\leftarrow$ $false$ \complejidad{}{1} \\
+\indent \indent \indent \} \\
+\indent \indent \} \\
+\indent \} \\
+
+~
+
+\TipoFuncion{tieneTag?}{\In{r}{robot}, \In{tag}{string}}{bool} \complejidad{Complejidad:}{|tag|} \\
+\indent res $\leftarrow$ definido?(robot \DRef tags, tag) \complejidad{}{|tag|}

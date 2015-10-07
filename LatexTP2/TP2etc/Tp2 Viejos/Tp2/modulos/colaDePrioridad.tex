@@ -1,0 +1,444 @@
+\section{Modulo Cola de Prioridad}
+
+\begin{Interfaz}
+  \textbf{se explica con}: \tadNombre{Cola de prioridad(itLista(robot))}, \tadNombre{itMod($\alpha$)}
+
+  \textbf{géneros}: \TipoVariable{colaPrio(itLista(robot))}, \TipoVariable{itCola($\alpha$)}
+
+  \textbf{usa}: \TipoVariable{bool}, \TipoVariable{Lista Enlazada($\alpha$)}, \TipoVariable{puntero($\alpha$)}, \TipoVariable{nat}
+	
+
+  \InterfazFuncion{Vacia}{}{colaPrio(itLista(robot))}%
+  {$res \igobs$ vacia}%
+  [$\bigO(1)$]
+  [genera una cola vacia.]
+  
+  \InterfazFuncion{Encolar}{\In{a}{itLista}, \Inout{c}{colaPrio(itLista(robot))}}{itCola($\alpha$)}%
+  [$c \igobs c_0$]
+  {$c \igobs$ encolar(a, $c_0$) $\land res \igobs CrearItMod(<>,a \bullet <>)$ )}%
+  [$\bigO(log(n))$]
+  [agrega a la cola el elemento $a$.]
+  []
+    
+  \InterfazFuncion{Vacia?}{\In{c}{colaPrio(itLista(robot))}}{bool}%
+  {$res \igobs$ vacia?(c)}%
+  [$\bigO(1)$]
+  [checkea si la cola esta vacia.]
+  
+  \InterfazFuncion{Desencolar}{\Inout{c}{colaPrio(itLista(robot))}}{itLista}%
+  [$c \igobs c_0 \land \neg$ vacia?($c_0$)]%
+  {$res$ \igobs proximo($c_0$) $\land$ c \igobs desencolar($c_0$)}
+  [$\bigO(log(n))$]
+  [elimina el proximo de la cola y retorna el elemento.] 
+  
+\titlex{Operaciones del iterador}
+
+  \InterfazFuncion{Siguiente}{\In{it}{itCola(itLista(robot))}}{itLista(robot)}%  
+  [haySiguiente?(it)]
+  {$res \igobs$ siguiente($it$)}%
+  [$\bigO(1)$]
+  [devuelve el elemento siguiente a la posición del iterador.] 
+  [res no es modificable.]  
+
+  \InterfazFuncion{ElimSig}{\Inout{it}{itCola(itLista(robot))}}{}%  
+  [haySiguiente?(it)]
+  {$it \igobs$ Eliminar($it$)}%
+  [$\bigO( log(n) )$]
+  [Elimina el elemento siguiente de la cola que esta siendo iterada.] 
+  []  
+  
+\end{Interfaz}
+
+\pagebreak
+
+\subsection{Representacion de la Cola}
+
+\subsubsection{Representacion}
+\titlex{Representacion de la cola}
+\begin{Estructura}{colaPrio($\alpha$)}[c]
+  \begin{Tupla}[c]
+   \tupItem{raiz}{puntero(Nodo)}
+   \tupItem{padreUlt}{puntero(Nodo)}
+   \tupItem{cant}{nat}
+  \end{Tupla}
+  
+  \begin{Tupla}[Nodo]
+   \tupItem{elem}{itLista(robot)}   
+   \tupItem{\\padre}{puntero(Nodo)}
+   \tupItem{\\izq}{puntero(Nodo)}
+   \tupItem{\\der}{puntero(Nodo)}
+  \end{Tupla}
+
+    \begin{Tupla}[robot]
+      \tupItem{infr}{nat}%
+      \tupItem{\\rur}{rur}%
+      \tupItem{\\est}{estacion}%
+      \tupItem{\\tags}{DiccTrie(bool)}%
+      \tupItem{\\permisos}{DiccTrie(DiccTrie(bool))}%
+      \tupItem{\\itEst}{it(colaPrio(itLista(robot))}%
+    \end{Tupla}  
+
+\end{Estructura}
+
+\subsubsection{Invariante de Representacion}
+
+Esta es una cola de prioridad implementada sobre un arbol binario. Elegimos esta estructura en ve de la comunmente usada representacion en arreglo por que nos ahorramos el costo lineal de redefinir el vector/arreglo cuando se llena. 
+
+\subsubsection{El invariante en lenguaje natural}
+
+\begin{enumerate}
+  \item La prioridad de cada nodo es mayor que la de sus hijos
+  \item[] es izquierdista
+  \item[] esta balanceado (el subarbol derecho puede tener uno menos de altura)
+  \item[] si un elemento es hijo de N, su puntero padre apunta a N
+  \item[] cada subarbol tambien cumple lo anterior
+  \item cant es la cantidad de nodos
+  \item padreUlt apunta al ultimo nodo
+  \item no hay nodos repetidos ni ciclos
+\end{enumerate}
+
+\subsubsection{El invariante en lenguaje formal}
+
+  \Rep[estr][c]{
+  \begin{enumerate}
+  \item esHeap?(c.raiz) \yluego
+  \item c.cant \igobs cantNodos(c.raiz) \yluego
+  \item c.cant > 1 \impluego c.padreUlt \igobs buscarPadreUlt(c.raiz)
+  \item ($\forall p$: puntero(nodo)) (p $\in$ punteros(r.raiz)) $\implies$ \#(p, punteros(r.raiz)) \igobs 1)
+  \end{enumerate} 
+  }
+  
+
+  \tadOperacion{esHeap?}{puntero(Nodo)/n}{bool}{}
+  \tadAxioma{esHeap?(n)}{
+  
+  \LIF{ n = NULL } \LTHEN{ true } \LELSE{ \\
+    $\neg$ (n\DRef der \igobs NULL) \impluego $\neg$ (n\DRef izq \igobs NULL) \yluego\\
+    \LIF{ n\DRef izq \igobs NULL }\LTHEN{ true }\LELSE{\\
+    masPrio?(n\DRef elem, n\DRef izq\DRef elem) $\land$ n\DRef izq\DRef padre \igobs n \yluego \\
+    \LIF{ n\DRef der \igobs NULL }\LTHEN{ true }\LELSE{\\
+    masPrio?(n\DRef elem, n\DRef der\DRef elem) $\land$ n\DRef der\DRef padre \igobs n
+    }\\ \LFI 
+    }\\ \LFI \yluego \\
+    altura(n\DRef izq) - altura(n\DRef der) <= 1  \yluego \\
+    esHeap?(n\DRef izq) $\land$ esHeap?(n\DRef der)  
+    } \\ \LFI\\
+  }
+
+\tadOperacion{masPrio?}{itLista/r1, itLista/r2}{bool}{}
+\tadAxioma{masPrio?(r1, r2)}{\LIF{ Siguiente(r1)\DRef infr \igobs Siguiente(r2)\DRef infr \\}\LTHEN{
+ Siguiente(r1)\DRef rur >Siguiente(r2)\DRef rur \\}\LELSE{ Siguiente(r1)\DRef infr > Siguiente(r2)\DRef infr \\} \LFI}
+
+
+  \tadOperacion{cantNodos}{puntero(Nodo)/n}{nat}{}
+  \tadAxioma{cantNodos(n)}{
+  
+  \LIF{ n = NULL } \LTHEN{ 0 } \LELSE{ \\
+    1 + cantNodos(n\DRef izq) + cantNodos(n\DRef der)
+    } \\ \LFI\\
+  }
+  
+  \tadOperacion{altura}{puntero(Nodo)/n}{nat}{}
+  \tadAxioma{altura(n)}{
+  
+  \LIF{ n = NULL } \LTHEN{ 0 } \LELSE{ \\
+    1 + max(altura(n\DRef izq), altura(n\DRef der))
+    } \\ \LFI\\
+  }
+  
+  \tadOperacion{buscarPadreUlt}{puntero(Nodo)/n}{puntero(nodo)}{cantNodos(n) > 1 $\land$ esHeap?(n)}
+  \tadAxioma{buscarPadreUlt(n)}{
+  
+  \LIF{ n\DRef der \igobs NULL $\lor$ altura(n\DRef der) \igobs 1} \LTHEN{ n } \LELSE{ \\
+    \LIF{ altura(n\DRef der) + 1 \igobs altura(n\DRef izq)} \LTHEN{\\
+     buscarUlt(n\DRef izq) } 
+    \LELSE{buscarUlt(n\DRef der) } \LFI \\ 
+    } \\ \LFI
+  }
+  
+  \tadOperacion{punteros}{puntero(Nodo)/r}{multiconj(punteros(nodo))}{}
+ \tadAxioma{punteros(d)}{
+    \LIF{ r = NULL} \LTHEN{ $\emptyset$} \LELSE{ Ag(r, punteros(r.izq)) $\bigcup$ punteros(r.der)} \LFI
+  }
+  
+
+\subsection{Funcion de abstraccion de la Cola}
+
+\tadOperacion{Abs}{estr/c}{colaPrior($\alpha$)}{Rep(c)}
+  \tadAxioma{Abs(c)}{\LIF{ c.cant = 0 }\LTHEN{ vacia }\LELSE{\\
+   encoladoRecursivo(colaSecu(c.raiz)) }\\ \LFI}
+
+\tadOperacion{encoladoRecursivo}{secu($\alpha$)/n}{colaPrior($\alpha$)}{}
+\tadAxioma{encoladoRecursivo(n)}{\LIF{ vacia?(n)}\LTHEN{ vacia }\LELSE{\\ 
+encolar(prim(n),encoladoRecursivo(fin(n)))
+}\LIF}
+
+\tadOperacion{colaSecu}{puntero(Nodo)/n}{secu($\alpha$)/n}{}
+\tadAxioma{colaSecu(c)}{\LIF{ n \igobs NULL } \LTHEN{$ < > $} 
+\LELSE{\\n\DRef elem \argumento colaSecu(n\DRef izq) \& colaSecu(n\DRef der)}\\ \LFI}
+
+\pagebreak
+
+\subsection{Representación del Iterador}
+
+\subsubsection{Representación}
+
+Este iterador no es más que un puntero al elemento siguiente y una cola para permitir un eliminado rapido del elemento siguiente.
+ 
+ 
+ \begin{Estructura}{itCola($\alpha$)}[itTupla]
+  \begin{Tupla}[itTupla]
+   \tupItem{cola}{puntero(colaPrio)}
+   \tupItem{pSig}{puntero(Nodo)}   
+  \end{Tupla}
+ \end{Estructura}
+
+\subsubsection{Invariante de Representación}
+
+ \Rep[itTupla][it]{ it.pSig $\in$ punteros(it.cola\DRef raiz) 
+ }\mbox{} \\
+
+\subsection{Funcion de abstraccion del Iterador}
+
+  \Abs[itTupla]{itMod($\alpha$)}[it]{im}{Siguientes($im$) $= a \bullet <> \land$ \\ 
+   Anteriores($im$) $= <>$}\\
+
+\pagebreak
+
+\subsection{Algoritmos} 
+\subsubsection*{Algoritmos de la Cola}
+\TipoFuncion{iVacia}{}{colaPrio($\alpha$)} \complejidad{Complejidad:}{1} \\
+\indent res.raiz $\leftarrow$ NULL\\
+\indent res.cant $\leftarrow$ 0\\
+\indent res.padreUlt $\leftarrow$ NULL\\
+\\
+\TipoFuncion{iVacia?}{\In{c}{colaPrio($\alpha$)}}{bool} \complejidad{Complejidad:}{1}\\
+\indent res $\leftarrow$ c.cant $==$ 0 \complejidad{}{1}\\
+\\
+\TipoFuncion{iEncolar}{\Inout{c}{colaPrio($\alpha$)}, \In{a}{$\alpha$}, \In{n}{nat}}{}\complejidad{Complejidad:}{log(n)} \\
+\indent c.cant++ \complejidad{}{1} \\
+\indent var n $\leftarrow$ New Nodo \complejidad{}{1}\\
+\indent n.elem $\leftarrow$ a \complejidad{}{1}\\
+\indent if c.raiz = NULL \{ c.raiz $\leftarrow$ \& n\} \complejidad{Condicion:}{1}\\
+\indent else \{ \\ 
+\indent \indent if c.padreUlt $==$ NULL\{\complejidad{Condicion:}{1}\\
+\indent \indent c.padreUlt $\leftarrow$ c.raiz \complejidad{}{1}\\ 
+\indent \indent n.padre $\leftarrow$ c.raiz \complejidad{}{1}\\
+\indent \indent c.raiz$\rightarrow$izq $\leftarrow$ \& n  \complejidad{}{1} \\
+\indent \indent \} else \{\\
+\indent \indent \indent if c.padreUlt$\rightarrow$der $==$ NULL\{ \complejidad{Condicion:}{1}\\
+\indent \indent \indent \indent n.padre $\leftarrow$ c.padreUlt \complejidad{}{1}\\
+\indent \indent \indent \indent c.padreUlt$\rightarrow$der $\leftarrow$ \& n \complejidad{}{1}\\
+\indent \indent \indent \}else\{ \\
+\indent \indent \indent \indent if $log_2(cant) == int(log_2(cant))$ \{\complejidad{Condicion:}{1}\\
+\indent \indent \indent \indent \indent c.padreUlt $\leftarrow$ busqIzq(c) \complejidad{}{log(n)}\\
+\indent \indent \indent \indent \indent n.padre $\leftarrow$ c.padreUlt\\
+\indent \indent \indent \indent \indent c.padreUlt$\rightarrow$izq $\leftarrow$ \& n\\
+\indent \indent \indent \indent \}else\{\\
+\indent \indent \indent \indent \indent c.padreUlt $\leftarrow$ busqTransversal(c.padreUlt, c) \complejidad{}{log(n)}\\
+\indent \indent \indent \indent \indent n.padre $\leftarrow$ c.padreUlt \complejidad{}{1}\\
+\indent \indent \indent \indent \indent c.padreUlt$\rightarrow$izq $\leftarrow$ \& n \complejidad{}{1}\\
+\indent \indent \indent \indent \}\\
+\indent \indent \indent \}\\
+\indent \indent \}\\
+\indent \}\\
+\indent subir(n)\\
+\indent res $\leftarrow$ CrearIt(\& c, \& n) \complejidad{}{1}\\
+\\
+\textbf{Justificacion de complejidad:} Primero contemplamos el caso que la cola este vacia. Si no lo está nos fijamos a donde apunta el puntero padreUlt, si esta NULL significa que solo existe la raiz en la cola, entonces agregamos el elemento a su izquierda. Una vez descartados estos casos agregamos el elemento en la izquierda de padreUlt si es posible, sino en su izquierda. De estar ocupado ambos lugares preguntamos si el arbol esta completo (el logaritmo de su cantidad de elementos debe ser entero). Todos estos pasos tienen complejidad constante\\
+Si esta completo usamos BusqIzq que nos da el nodo más a la izquierda del arbol en complejidad logaritmica. si no usamos BusqTransversal(tiempo logaritmico) que nos da el "hermano" de padreUlt, es decir la siguiente posicion si fuera un heap sobre arreglo.\\
+Una vez determinada la posicion del nuevo nodo utilizamos la funcion subir que reacomoda los nodos segun su prioridad en tiempo logaritmico.\\
+Por lo tanto encolar termina siendo una suma de operaciones en tiempo constante o en tiempo logaritmico, sin ciclos.\\
+
+\pagebreak
+
+\TipoFuncion{iDesencolar}{\Inout{c}{colaPrio($\alpha$)}}{$\alpha$}\complejidad{}{log(n)}\\
+\indent res $\leftarrow$ c.raiz$\rightarrow$elem\\
+\indent var ult \complejidad{}{1}\\
+\indent if c.padreUlt$\rightarrow$der != NULL \{ \complejidad{Condicion:}{1}\\
+\indent \indent ult $\leftarrow$ c.padreUlt$\rightarrow$der \complejidad{}{1}\\
+\indent \indent c.padreUlt$\rightarrow$der $\leftarrow$ NULL \complejidad{}{1}\\
+\indent \}else \{\\
+\indent \indent ult $\leftarrow$ c.padreUlt$\rightarrow$izq \complejidad{}{1}\\
+\indent \indent c.padreUlt$\rightarrow$izq $\leftarrow$ NULL \complejidad{}{1}\\
+\indent \}\\
+\indent ult$\rightarrow$padre $\leftarrow$ NULL \complejidad{}{1}\\
+\indent ult$\rightarrow$izq $\leftarrow$ c.raiz$\rightarrow$izq \complejidad{}{1}\\
+\indent ult$\rightarrow$der $\leftarrow$ c.raiz$\rightarrow$der \complejidad{}{1}\\
+\indent ult$\rightarrow$der$\rightarrow$padre $\leftarrow$ ult \complejidad{}{1}\\
+\indent ult$\rightarrow$izq$\rightarrow$padre $\leftarrow$ ult \complejidad{}{1}\\
+\indent delete c.raiz \complejidad{}{1}\\
+\indent c.raiz $\leftarrow$ ult \complejidad{}{1}\\ %tengo en c.raiz y (ult) el nodo a bajar 
+\indent bajar(ult)\\
+\indent c.cant--\\
+\\
+\textbf{Justificacion de complejidad:} Determino la posicion del ultimo nodo (gracias al puntero padreUlt) y lo intercambio con la raiz en tiempo constante. Elimino la anterior raiz y reacomodo los punteros del padre del ultimo y los hijos de la raiz Tambien en tiempo constante.
+Luego utilizo la opèracion bajar sobre la nueva raiz en tiempo logaritmico.\\
+\\
+\TipoFuncion{subir}{\Inout{n}{Nodo}}{} \complejidad{Complejidad:}{log(n)}\\
+\indent var parent$\leftarrow$ n$\rightarrow$padre\\
+\indent while(parent!=NULL $\land$ mayorPrio?(n$\rightarrow$elem, parent$\rightarrow$elem)) \{\\
+\indent \indent swapPadreHijo(parent, n)\\
+\indent \indent parent $\leftarrow$ n$\rightarrow$padre\\
+\indent \}\\
+\\
+\textbf{Justificacion de complejidad:} Todas las operaciones usadas son en tiempo constante. Subir toma un nodo y lo compara con su padre. De tener su padre menor prioridad, los intercambia. Esto se hace hasta que vemos un elemento padre con mayor prioridad o nos chocamos con la raiz. El peor caso seria subir hasta la raiz, intercambiamos nodos una cantidad igual a la altura del arbol. Al ser nuestro arbol balanceado la altura es logaritmica con respecto a la cantidad de elementos.\\
+\\
+\TipoFuncion{bajar}{\Inout{n}{puntero(Nodo)}, \Inout{c}{colaPrio}}{} \complejidad{Complejidad:}{log(n)}\\
+\indent while(n$\rightarrow$izq != NULL $\land$ mayorPrio?(n$\rightarrow$elem, n$\rightarrow$izq$\rightarrow$elem) $\lor$\\
+\indent n$\rightarrow$der != NULL $\land$ mayorPrio?(n$\rightarrow$elem, n$\rightarrow$der$\rightarrow$elem) $\lor$ mayorPrio?(n$\rightarrow$elem, n$\rightarrow$izq$\rightarrow$elem) )\{\\
+\indent \indent if (n$\rightarrow$der != NULL $\land$ mayorPrio?(n$\rightarrow$der$\rightarrow$elem, n$\rightarrow$izq$\rightarrow$elem)\{\\
+\indent \indent \indent if n $==$ c.raiz \{c.raiz $\leftarrow$ n.der\} \complejidad{}{1}\\ 
+\indent \indent \indent swapPadreHijo(n, n$\rightarrow$der)\\
+\indent \indent \}else \{\\
+\indent \indent \indent if n $==$ c.raiz \{c.raiz $\leftarrow$ n$\rightarrow$izq\} \complejidad{}{1}\\ 
+\indent \indent \indent swapPadreHijo(n, n$\rightarrow$izq)\\
+\indent \indent \}\\ 
+\indent \}\\
+\\
+\textbf{Justificacion de complejidad:} Todas las operaciones usadas son en tiempo constante. Bajar toma un nodo y lo compara con sus hijos. De tener algun hijo mayor prioridad, lo intercambia con el de mayor prioridad. Esto se hace hasta queambos hijos tienen menor prioridad o somos una hoja. El peor caso seria bajar desde la raiz hasta ser una hoja, intercambiamos nodos una cantidad igual a la altura del arbol. Al ser nuestro arbol balanceado la altura es logaritmica con respecto a la cantidad de elementos.\\
+
+\pagebreak
+
+\TipoFuncion{mayorPrio?}{\In{it1}{itLista}, \In{it2}{itLista}}{bool} \complejidad{Complejidad:}{1}\\
+\indent var r1 $\leftarrow$ Siguiente(it1) \complejidad{}{1}\\
+\indent var r2 $\leftarrow$ Siguiente(it2) \complejidad{}{1}\\
+\indent if (r1.infr == r2.infr)\{\complejidad{Condicion:}{1}\\
+\indent \indent res $\leftarrow$ r1.rur > r2.rur \complejidad{}{1}\\
+\indent \} else\{\\
+\indent \indent r1.infr > r2.infr \complejidad{}{1}\\
+\indent \}\\
+\indent return res \complejidad{}{1}\\
+\\
+\TipoFuncion{swapPadreHijo}{\Inout{parent}{puntero(Nodo)}, \Inout{hijo}{puntero(Nodo)}}{} \complejidad{}{1}\\
+\indent var aux \\
+\indent if (parent$\rightarrow$padre != NULL) \{\\
+\indent \indent if parent$\rightarrow$padre$\rightarrow$der == parent\{\\
+\indent \indent \indent parent$\rightarrow$padre$\rightarrow$der $\leftarrow$ hijo \complejidad{}{1}\\
+\indent \indent \} else\{\\
+\indent \indent \indent parent$\rightarrow$padre$\rightarrow$izq $\leftarrow$ hijo \complejidad{}{1}\\
+\indent \indent \}\\
+\indent \}\\
+\indent hijo$\rightarrow$padre $\leftarrow$ parent$\rightarrow$padre \complejidad{}{1}\\
+\indent parent$\rightarrow$padre $\leftarrow$ hijo \complejidad{}{1}\\
+\indent if (hijo$\rightarrow$izq != NULL) \{\\
+\indent \indent hijo$\rightarrow$izq$\rightarrow$padre $\leftarrow$ parent \complejidad{}{1}\\
+\indent \}\\
+\indent if (hijo$\rightarrow$der != NULL) \{\\
+\indent \indent hijo$\rightarrow$der$\rightarrow$padre $\leftarrow$ parent \complejidad{}{1}\\
+\indent \}\\
+\\
+\indent if (parent$\rightarrow$der == hijo)\{ \complejidad{Condicion:}{1}\\
+\indent \indent aux $\leftarrow$ parent$\rightarrow$izq \complejidad{}{1}\\
+\indent \indent aux$\rightarrow$padre $\leftarrow$ hijo \complejidad{}{1}\\
+\indent \indent parent$\rightarrow$der $\leftarrow$ hijo.der \complejidad{}{1}\\
+\indent \indent parent$\rightarrow$izq $\leftarrow$ hijo.izq \complejidad{}{1}\\
+\indent \indent hijo.der $\leftarrow$ parent \complejidad{}{1}\\
+\indent \indent hijo.izq $\leftarrow$ aux \complejidad{}{1}\\
+\indent \} else \{\\
+\indent \indent aux $\leftarrow$ parent$\rightarrow$der \complejidad{}{1}\\
+\indent \indent aux$\rightarrow$padre $\leftarrow$ hijo \complejidad{}{1}\\
+\indent \indent parent$\rightarrow$der $\leftarrow$ hijo.der \complejidad{}{1}\\
+\indent \indent parent$\rightarrow$izq $\leftarrow$ hijo.izq \complejidad{}{1}\\
+\indent \indent hijo.izq $\leftarrow$ parent \complejidad{}{1}\\
+\indent \indent hijo.der $\leftarrow$ aux \complejidad{}{1}\\
+\indent \}\\
+\\
+\TipoFuncion{ibusqIzq}{\In{c}{colaPrio($\alpha$)}}{Nodo} \complejidad{Complejidad:}{log(n)}\\
+\indent var actual $\leftarrow$ c.raiz \complejidad{}{1}\\
+\indent while(actual$\rightarrow$izq != NULL)\{ \complejidad{}{log(n)}\\
+\indent \indent actual $\leftarrow$ actual$\rightarrow$izq \complejidad{}{1}\\
+\indent \}\\
+\indent res $\leftarrow$ actual \complejidad{}{1}\\
+
+\pagebreak
+
+\TipoFuncion{ibusqTransversal}{\In{c}{colaPrio($\alpha$)}, \In{n}{Nodo}}{Nodo} \complejidad{Complejidad:}{log(n)}\\
+\indent var parent $\leftarrow$ n.padre \complejidad{}{1}\\
+\indent var act $\leftarrow$ n \complejidad{}{1}\\
+\indent while(parent!= NULL $\land$ parent$\rightarrow$der == act )\{ //subo Hasta Ser Raiz o hijo Izquierdo \complejidad{}{log(n)}\\
+\indent \indent act $\leftarrow$ parent \complejidad{}{1}\\
+\indent \indent parent $\leftarrow$ parent$\rightarrow$padre \complejidad{}{1}\\
+\indent \}\\
+\indent act $\leftarrow$ parent$\rightarrow$der \complejidad{}{1}\\
+\indent while(act$\rightarrow$izq =! NULL)\{ \complejidad{}{log(n)}\\
+\indent \indent act $\leftarrow$ act$\rightarrow$izq \complejidad{}{1}\\
+\indent \}\\
+\indent res $\leftarrow$ act \complejidad{}{1}\\
+\\
+\TipoFuncion{ibusqDer}{\In{c}{colaPrio($\alpha$)}}{Nodo}\\
+\indent var actual $\leftarrow$ c.raiz \complejidad{}{1}\\
+\indent while(actual$\rightarrow$der != NULL)\{ \complejidad{}{log(n)}\\
+\indent \indent actual $\leftarrow$ actual$\rightarrow$der \complejidad{}{1}\\
+\indent \}\\
+\indent res $\leftarrow$ actual \complejidad{}{1}\\
+\\
+\textbf{Justificacion de complejidad:}  Esta funcion trabaja correctamente en tiempo logaritmico a la cantidad de elementos si el nodo en cuestion es el ultimo agregado y es hijo derecho de alguien cuando el arbol no está completo. Subimos en el arbol buscando un nodo que sea hijo izquierdo de alguien. Esto me toma un tiempo $\bigO(log(n))$. Cambio al hijo derecho del padre del nodo.
+Luego bajo por la izquierda hasta toparme con un nodo sin hijo izquierdo. Esto ultimo en caso peor toma tambien $\bigO(log(n))$. $\bigO(2log(n)) \in \bigO(log(n))$.\\
+
+\pagebreak
+
+\subsubsection*{Algoritmos del Iterador}
+
+\TipoFuncion{CrearIt}{\In{c}{colaPrio($\alpha$)}, \In{p}{puntero(Nodo)}}{itCola($\alpha$)} \complejidad{Complejidad:}{1}\\
+\indent res.pSig $\leftarrow$ p \complejidad{}{1}\\
+\indent res.cola $\leftarrow$ \& c \complejidad{}{1}\\
+
+\TipoFuncion{Siguiente}{\In{it}{itCola($\alpha$)}}{$\alpha$} \complejidad{Complejidad:}{1}\\
+\indent res $\leftarrow$ pSig$\rightarrow$elem\\
+
+\TipoFuncion{ElimSig}{\Inout{it}{itCola($\alpha$)}}{} \complejidad{}{log(n)}\\
+\indent var ult \complejidad{}{1}\\
+\indent var c $\leftarrow$ it\DRef cola \complejidad{}{1}\\
+\indent if c\DRef raiz == it.pSig \{ iDesencolar(c) \} else \{ \complejidad{}{log(n)}\\
+\indent \indent if c\DRef padreUlt\DRef der == NULL\{ \complejidad{}{1}\\
+\indent \indent \indent ult$\leftarrow$ c\DRef padreUlt\DRef izq \complejidad{}{1}\\
+\indent \indent \} else\{\\
+\indent \indent \indent ult$\leftarrow$ c\DRef padreUlt\DRef der \complejidad{}{1}\\
+\indent \indent \} \\
+\indent \indent var deboRestaurar? $\leftarrow$ false \complejidad{}{1}\\
+\indent \indent if $\neg$ esDescendiente(ult, it.pSig) \{ \complejidad{Condicion:}{log(n)}\\
+\indent \indent \indent ult$\leftarrow$ buscarDer(it.pSig) \complejidad{}{log(n)}\\
+\indent \indent \indent ult\DRef padre\DRef der$\leftarrow$NULL \complejidad{}{1}\\
+\indent \indent \indent deboRestaurar? $\leftarrow$ true \complejidad{}{1}\\
+\indent \indent \} \\
+\indent \indent ult$\rightarrow$padre $\leftarrow$ it.pSig\DRef padre \complejidad{}{1}\\
+\indent \indent ult$\rightarrow$izq $\leftarrow$ it.pSig$\rightarrow$izq \complejidad{}{1}\\
+\indent \indent ult$\rightarrow$der $\leftarrow$ it.pSig$\rightarrow$der \complejidad{}{1}\\
+\indent \indent ult$\rightarrow$der$\rightarrow$padre $\leftarrow$ ult \complejidad{}{1}\\
+\indent \indent ult$\rightarrow$izq$\rightarrow$padre $\leftarrow$ ult \complejidad{}{1}\\
+\indent \indent delete it.pSig \complejidad{}{1}\\
+\indent \indent var colaUlt \complejidad{}{1}\\
+\indent \indent if deboRestaurar? \{ colaUlt $\leftarrow$ buscarDer(ult)\} \complejidad{}{log(n)}\\
+\indent if deboRestaurar? \{\\
+\indent \indent if c\DRef padreUlt\DRef der==NULL \{ \complejidad{}{1}\\
+\indent \indent \indent colaUlt\DRef der $\leftarrow$ c\DRef padreUlt\DRef izq \complejidad{}{1}\\
+\indent \indent \indent c\DRef padreUlt\DRef izq $\leftarrow$  NULL \complejidad{}{1}\\
+\indent \indent \} else\{\\
+\indent \indent \indent colaUlt\DRef der $\leftarrow$ c\DRef padreUlt\DRef der  \complejidad{}{1}\\
+\indent \indent \indent c\DRef padreUlt\DRef der $\leftarrow$ NULL \complejidad{}{1}\\
+\indent \indent \}\\
+\indent \indent subir(colaUlt\DRef der)\complejidad{}{log(n)}\\
+\indent \indent bajar(ult) \complejidad{}{log(n)}\\
+\\
+\textbf{Justificacion de complejidad:} Si el iterador apunta a la raiz uso Desencolar en $\bigO(log(n))$, sino considero el "subheap" con el nodo en cuestion como raiz. Contemplo el caso del que el ultimo de la cola sea hijo del nodo (me cuesta $\bigO(log(n))$).Si lo es, en ult guardo el ultimo nodo. Si no lo es uso la funcion buscarDer($\bigO(log(n))$) y lo asigno a la variable ult. \\
+Cambio de lugar mi nodo y el de la variable ult (asignar punteros en tiempo constante). Borro el nodo al que apunta el iterador.
+Me quedo un "hueco" en la ultima posicion del subheap. Agarro el ultimo de la cola y lo coloco ahi en tiempo constante. Luego uso la operacion subir sobre el ultimo del subheap y aplico bajar en $\bigO(log(n))$ al nodo ult.\\
+Estas son operaciones en tiempo constante y logaritmico en relacion a la cantidad de elementos de la cola. al no haber ciclos podemos afirmar que la suma de estas pertenece a $\bigO(log(n))$.\\
+
+\pagebreak
+
+\TipoFuncion{esDescendiente}{\In{n}{puntero(Nodo)}, \In{p}{puntero(Nodo)}}{bool} \complejidad{Complejidad}{log(n)}\\
+\indent res $\leftarrow$ false \complejidad{}{1}\\
+\indent while n\DRef padre != NULL \{ \complejidad{}{log(n)}\\
+\indent \indent if p == n\{ res $\leftarrow$ true\} \complejidad{}{1}\\
+\indent \indent n$\leftarrow$ n\DRef padre \complejidad{}{1}\\
+ \indent \}\\
+
+\subsection{Servicios Usados}
+
+\TipoVariable{lista($\alpha$)}:
+\begin{itemize}
+	\item Siguiente en $\bigO(1)$
+\end{itemize}
+

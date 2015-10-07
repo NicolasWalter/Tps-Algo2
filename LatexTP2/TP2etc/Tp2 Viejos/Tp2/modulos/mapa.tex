@@ -1,0 +1,324 @@
+\section{Modulo Mapa}
+
+\begin{Interfaz}
+
+  \textbf{se explica con}: \tadNombre{Mapa}, \tadNombre{Iterador Bidireccional($senda$)}.
+
+  \textbf{géneros}: \TipoVariable{mapa}, \TipoVariable{itMapa}.
+
+  \textbf{usa}: \TipoVariable{restriccion}, \TipoVariable{estacion}, \TipoVariable{lista($\alpha$)}
+  
+  \titlex{Operaciones básicas del mapa}
+  
+  \InterfazFuncion{Vacio}{}{mapa}%
+  {$res \igobs$ vacio}%
+  [$\bigO(1)$]
+  [genera un nuevo mapa vacio.]
+  
+  \InterfazFuncion{Agregar}{estacion $e$, mapa $m$}{mapa}%
+  [$e$ $\not\in$ estaciones($m$)]  
+  {$res \igobs$ agregar(e,m)}%
+  [$\bigO(1)$]
+  [Agrega una nueva estacion al mapa.]
+  [La estacion se agrega por copia.]
+
+  \InterfazFuncion{Conectar}{estacion $e_1$, estacion $e_2$, restriccion $r$, mapa m}{mapa}%
+  [\{e1, e2\} $\subseteq$ estaciones(m) $\land_L$ $\neg$(conectadas?($e_1$, $e_1$, $m$))]  
+  {$res \igobs$ conectar($e_1$, $e_2$, $r$, $m$)}%
+  [$\bigO(1)$]
+  [Conecta dos estaciones del mapa y genera una nueva senda.]
+  [Se copian los punteros]
+
+  \InterfazFuncion{Estaciones}{mapa $m$}{itLista(estacion)}%
+  {$res \igobs$ CrearItBi(toSecu(estaciones($m$)))}%
+  [$\bigO(1)$]
+  [Devuelve el iterador a las estaciones del mapa.]
+  [alias(res, siguientes(itLista(estacion)))]
+
+  \InterfazFuncion{Conectadas?}{estacion $e_1$, estacion $e_2$, mapa $m$}{bool}%
+  [\{e1, e2\} $\subseteq$ estaciones(m)]
+  {$res \igobs$ Conectadas?($e_1$, $e_2$, $m$)}%
+  [$\bigO(S)$ \\
+  Donde S es la cantidad de sendas actuales]
+  [Devuelve $true$ si y solo si las estaciones estan conectadas.]
+  
+  \InterfazFuncion{Restriccion}{estacion $e_1$, estacion $e_2$, mapa $m$}{restriccion}%
+  [\{e1, e2\} $\subseteq$ estaciones(m) $\land_L$ concetadas?($e_1$, $e_2$, $m$)]
+  {$res \igobs$ Restriccion($e_1$, $e_2$, $m$)}%
+  [$\bigO(S)$ \\
+  Donde S es la cantidad de sendas actuales]
+  [Devuelve la restriccion de la senda especificada.]
+  
+\pagebreak  
+  
+  \titlex{Operaciones básicas del iterador} 
+  
+  \InterfazFuncion{CrearIt}{\In{m}{mapa}}{itMapa}%  
+  {$res$ $\leftarrow$ CrearItBi(secuSendas($m$, toSecu(estaciones($m$))))}%
+  [$\bigO(1)$]
+  [Crea un iterador bidireccional a las sendas del mapa \\
+  alias(res,siguientes(itMapa)).]
+    
+  \InterfazFuncion{Avanzar}{\Inout{it}{itMapa(senda)}}{}%  
+  [$it = it_0$ $\land$ haySiguiente?(it)]
+  {$it \igobs$ avanzar($it_0$)}%
+  [$\bigO(1)$]
+  [Avanza a la posición siguiente del iterador.]  
+  
+  \InterfazFuncion{Siguiente}{\In{it}{itMapa}}{senda}%  
+  [haySiguiente?(it)]
+  {$res \igobs$ siguiente($it$)}%
+  [$\bigO(1)$]
+  [devuelve el elemento siguiente a la posición del iterador.] 
+  [res es modificable si y solo si it es modificable.]  
+  
+  \InterfazFuncion{HaySiguiente?}{\In{it}{itMapa}}{bool}%  
+  {$res \igobs$ haySiguiente?($it$)}%
+  [$\bigO(1)$]
+  [devuelve $true$ si y solo si en el iterador quedan elementos para avanzar.] 
+  
+\end{Interfaz}
+
+\subsection{Representacion del Mapa}
+
+ \subsubsection{Representacion}
+   
+ \begin{Estructura}{Mapa}[vec]
+  \begin{Tupla}[vec]
+   \tupItem{sendas}{lista(senda)}
+   \tupItem{estaciones}{lista(estacion)}
+  \end{Tupla}
+ \end{Estructura}
+ \begin{Estructura}{senda}[s]
+  \begin{Tupla}[s]
+  \tupItem{$e_1$}{estacion}
+  \tupItem{$e_2$}{estacion}
+  \tupItem{$r$}{restriccion}
+  \end{Tupla}
+ \end{Estructura}
+ 
+ \subsubsection{Invariante de Representacion}
+ 
+Se permite que las estaciones esten conectadas a si mismas dado que el TAD lo permite. \\
+ 
+ \Rep[vec][v]{if long(vec.sendas) $>$ 0 then \\
+ 	noHaySendasRepetidas(vec.sendas, vec.sendas)
+ 	fi $\land$ \\
+ 	noHayEstacionesRepetidas(vec.estaciones, vec.estaciones) $\land$ \\
+ ($\forall$ $e_1$: estacion) esta?(dameEstaciones(vec.sendas), $e_1$) $\Rightarrow_L$ \\ 
+ ($\exists$ $e_2$: estacion) esta?(vec.estaciones, $e_2$) $\land_L$ $e_1$ = $e_2$)}\mbox{}\
+
+\subsection{Funccion de abstraccion del Mapa.}
+
+  \AbsFc[vec]{mapa}[v]{esPermutacion(v.estaciones, estaciones(mapa)) $\land_L$ \\ 
+  ($\forall$ estacion $e_1$, $e_2$) esSenda($e_1$, $e_2$, v.sendas) $\land_L$ conectadas($e_1$, $e_2$, $m$) $\land$ \\ restriccion($e_1$, $e_2$, $m$) = dameRestriccion($e_1$, $e_2$, v.sendas)
+   } 
+
+ ~  
+
+ \tadOperacion{secuSendas}{$mapa/m$, $secu(estacion)/se$}{s : secu(<estacion $e_1$, estacion $e_2$,  restriccion $r$>)}{}
+  \tadAxioma{secuSendas($m$, $se$)}{
+	if long(se) > 0 then \\
+		conectadasA(prim(se),fin(se), m) \& secuSendas($m$,fin(se))\\
+    else $< >$ fi
+  }
+ 
+ ~  
+
+ \tadOperacion{conectadasA}{$estacion/e$, $secu(estacion)/se$, $mapa/m$}{s : secu(<estacion $e_1$, estacion $e_2$,  restriccion $r$>)}{}
+  \tadAxioma{conectadasA($e$, $se$, $m$)}{
+	if long(se) > 0 then \\
+		if conectadas?(prim(se), e, m) then \\
+		<prim(se), e, restriccion(prim(se), e, m)> fi \argumento conectadasA(e, fin(se), m)
+    else $< >$ fi
+  }
+
+ ~
+
+ \tadOperacion{toSecu}{$conj(estacion)/ce$}{s : secu(estacion)}{}
+  \tadAxioma{toSecu($ce$)}{
+	if \#(ce) > 0 then \\
+		dameUno(ce) \argumento toSecu(sinUno(ce))\\
+    else $< >$ fi
+  }
+ 
+ ~ 
+
+ \tadOperacion{dameRestriccion}{$estacion/e_1$, $estacion/e_2$, secu(senda)/cn}{r : restriccion}{}
+  \tadAxioma{dameRestriccion($e_1$, $e_2$, $cn$)}{if $long(cn) \not= 0$ then \\ 
+  if ((prim(cn)).$e_1$ = $e_1$ $\land$ (prim(cn)).$e_2$ = $e_2$) $\vee$ \\
+  ((prim(cn)).$e_2$ = $e_1$ $\land$ (prim(cn)).$e_1$ = $e_2$) then \\
+   (prim(cn)).r
+  else \\
+   dameRestriccion($e_1$, $e_2$, fin($cn$))
+  fi \\
+  fi}
+ 
+ ~  
+
+ \tadOperacion{esSenda}{$estacion/e_1$, $estacion/e_2$, secu(senda)/cn}{b : bool}{}
+  \tadAxioma{esSenda($e_1$, $e_2$, $cn$)}{if $long(cn) \not= 0$ then \\ 
+  if ((prim(cn)).$e_1$ = $e_1$ $\land$ (prim(cn)).$e_2$ = $e_2$) $\vee$ \\
+  ((prim(cn)).$e_2$ = $e_1$ $\land$ (prim(cn)).$e_1$ = $e_2$) then \\
+   true
+  else \\
+   esSenda($e_1$, $e_2$, fin($cn$))
+  fi \\
+  fi}
+ 
+ ~  
+
+ \tadOperacion{dameEstaciones}{secu(senda))/cn}{s : secu(estacion)}{}
+  \tadAxioma{dameEstaciones($cn$)}{if $long(cn) = 0$ then \\ 
+  $< >$ else \\
+  (prim(cn).$e_1$ \argumento (prim(cn).$e_2$ \argumento dameEstaciones(fin($cn$)) \\
+  fi}
+ 
+ ~   
+  
+  \tadOperacion{noHayEstacionesRepetidas}{$secu(estacion)/cn_1$, $secu(estacion)/cn_2$}{b : bool}{}
+  \tadAxioma{noHayEstacionesRepetidas($cn_1$, $cn_2$)}{
+  if long($cn_1$) = 0 then true else \\  
+  if aparicionesEstacion($cn_1$, prim($cn_2$)) $\not=$ 1 then \\ 
+   false else \\
+    noHayEstacionesRepetidas(fin($cn_2$), $cn_1$)\\
+  fi \\ fi}
+
+ ~  
+
+  \tadOperacion{noHaySendasRepetidas}{$secu(senda)/cn_1$, $secu(senda)/cn_2$}{b : bool}{}
+  \tadAxioma{noHaySendasRepetidas($cn_1$, $cn_2$)}{
+  if long($cn_1$) = 0 then true else \\  
+  if aparicionesSenda($cn_1$, prim($cn_2$)) $\not=$ 1 then \\ 
+   false else \\
+    noHaySendasRepetidas(fin($cn_2$), $cn_1$)\\
+  fi \\ fi}
+
+ ~  
+
+ \tadOperacion{aparicionesEstacion}{secu(estacion)/cn , estacion/e}{n : nat}{}
+  \tadAxioma{aparicionesEstacion($cn$, e)}{
+  if long(cn) $\not=$ 0 then \\  
+  if esta?(cn, e) then \\ 
+   1 + aparicionesEstacion(fin(cn), e) else \\
+   aparicionesEstacion(fin(cn), e) \\
+  fi \\
+  fi}
+
+ ~    
+  
+ \tadOperacion{aparicionesSenda}{secu(senda)/cn , senda/s}{n : nat}{}
+  \tadAxioma{aparicionesSenda($cn$, $s$)}{
+  if long(cn) $\not=$ 0 then \\  
+  if (s.$e_1$ \igobs (prim(senda)).$e_1$ $\land$ s.$e_2$ \igobs (prim(senda)).$e_2$)  $\vee$ \\
+     (s.$e_2$ \igobs (prim(senda)).$e_1$ $\land$ s.$e_1$ \igobs (prim(senda)).$e_2$) then \\ 
+   1 + aparicionesSenda(fin(cn), e) else \\
+   aparicionesSenda(fin(cn), e) \\
+  fi \\
+  fi}
+  
+\subsection{Representacion del Iterardor}  
+  
+\subsubsection{Representacion.}
+
+\begin{Estructura}{itMapa}[im]
+  \begin{Tupla}[im]
+   \tupItem{lista}{itLista(senda)}
+  \end{Tupla}
+ \end{Estructura}
+ 
+\subsubsection{Invariante de Representacion}
+ 
+ \Rep[im][im]{true} 
+
+\subsection{Funcion de abstraccion del Iterador}
+
+ \AbsFc[im]{itBi(senda)}[v]{it $\|$ Anteriores(im.lista) \igobs Anteriores(it) $\land$\\
+ Siguientes(im.lista) \igobs Siguientes(it) }
+ 
+\pagebreak
+
+\subsection{Algoritmos}
+
+  \subsubsection{Algoritmos del Mapa}
+  
+  ~ 
+  
+  \TipoFuncion{iVacio}{}{vec v} \complejidad{Complejidad: }{1}\\
+  \indent\indent v.sendas $\leftarrow$ Vacia() \complejidad{}{1}\\ 
+  \indent\indent v.estaciones $\leftarrow$ Vacia() \complejidad{}{1}\\
+  \indent\indent res $\leftarrow$ v  
+
+  ~  
+  
+  \TipoFuncion{iAgregar}{estacion e,vec v}{vec}  \complejidad{Complejidad: }{1}  \\
+  \indent\indent AgregarAdelante(v.estaciones, e) \complejidad{}{1}\\
+  \indent\indent res $\leftarrow$ v \complejidad{}{1}\\ 
+  
+  ~  
+  
+  \TipoFuncion{iConectar}{estacion a, estacion b, restriccion r, vec v}{vec} \complejidad{Complejidad: }{1}\\ 
+  \indent\indent senda.$e_1$ $\leftarrow$ a  \complejidad{}{1}\\ 
+  \indent\indent senda.$e_2$ $\leftarrow$ b  \complejidad{}{1}\\ 
+  \indent\indent senda.$r$ $\leftarrow$ r \complejidad{}{1}\\ 
+  \indent\indent AgregarAdelante(v.sendas, senda) \complejidad{}{1}\\ 
+  \indent\indent res $\leftarrow$ v \complejidad{}{1}
+  
+  ~  
+  
+  \TipoFuncion{iEstaciones}{vec v}{itLista(estacion)} \complejidad{Complejidad: }{1}\\ 
+  \indent\indent res $\leftarrow$ crearItBi(vec.estaciones) \complejidad{}{1}\\ 
+  
+  ~
+
+  \TipoFuncion{iConectadas?}{estacion a, estacion b, vec v}{bool} \complejidad{Complejidad: }{S}\\ 
+  \indent\indent itLista(senda) it $\leftarrow$ CrearIt(v.sendas) \complejidad{}{1}\\ 
+  \indent\indent bool conectadas $\leftarrow$ false \complejidad{}{1}\\ 
+  \indent\indent while haySiguiente(it) \{ \complejidad{}{S}\\ 
+  \indent\indent\indent senda aux $\leftarrow$ Siguiente(it) \complejidad{}{1}\\ 
+  \indent\indent\indent if (aux.e1 = a \& aux.e2 = b) || (aux.e1 = b \& aux.e2 = a) \complejidad{}{1}\\ 
+   \indent\indent\indent\indent conectadas $\leftarrow$ true \complejidad{}{1}\\ 
+   \indent\indent\indent \} \complejidad{}{1}\\ 
+   \indent\indent\indent Avanzar(it) \complejidad{}{1}\\ 
+   \indent\indent \} \\
+   \indent\indent res $\leftarrow$ conectadas \complejidad{}{1}
+   
+  ~
+  
+  \TipoFuncion{iRestriccion}{estacion a, estacion b, vec v}{restriccion} \complejidad{Complejidad: }{S}\\ 
+  \indent\indent itLista(senda) it $\leftarrow$ CrearIt(v.sendas) \complejidad{}{1}\\ 
+  \indent\indent restriccion restr \complejidad{}{1}\\ 
+  \indent\indent while haySiguiente(it) \{ \complejidad{}{S}\\ 
+  \indent\indent\indent senda aux $\leftarrow$ Siguiente(it) \complejidad{}{1}\\ 
+  \indent\indent\indent if (aux.e1 = a \& aux.e2 = b) || (aux.e1 = b \& aux.e2 = a) \complejidad{}{1}\\ 
+   \indent\indent\indent\indent restr $\leftarrow$ aux.r \complejidad{}{1}\\ 
+   \indent\indent\indent \} \complejidad{}{1}\\ 
+   \indent\indent\indent Avanzar(it) \complejidad{}{1}\\ 
+   \indent\indent \} \\
+   \indent\indent res $\leftarrow$ restr \complejidad{}{1}
+  
+\subsubsection{Algoritmos del Iterador}
+
+\TipoFuncion{iCrearIt}{mapa m}{itMapa} \complejidad{}{1}\\
+\indent\indent return CrearIt(m.sendas)
+
+\TipoFuncion{iAvanzar}{itMapa m}{} \complejidad{}{1}\\
+\indent\indent Avanzar(m.lista)
+
+\TipoFuncion{iSiguiente}{itMapa m}{} \complejidad{}{1}\\
+\indent\indent Siguiente(m.lista)
+
+\TipoFuncion{iHaySiguiente?}{itMapa m}{bool} \complejidad{}{1}\\
+\indent\indent HaySiguiente?(m.lista)
+
+\subsection{Servicios Usados}
+
+\TipoVariable{Lista Enlazada($\alpha$)}:
+\begin{itemize}
+	\item Vacia() en $\bigO(1)$
+	\item Siguiente(itLista($\alpha$)) en $\bigO(1)$
+	\item AgregarAdelante(lista($\alpha$), $\alpha$) en $\bigO(1)$
+	\item CrearIt en $\bigO(1)$
+	\item HaySiguiente(itLista($\alpha$)) en $\bigO(1)$
+	\item Avanzar(itLista($\alpha$)) en $\bigO(1)$
+\end{itemize}

@@ -1,0 +1,54 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{DiccionarioTrie($\sigma$)}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}Se usa el {\sc Tad Diccionario($\kappa$, $\sigma$)} especificado en el apunte de Tads b\'asicos.
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
+\disParametrosFormales{$\kappa,\sigma$}
+
+\disParametrosFormalesDeclaraFunc{\puntito = \puntito}{\paramIn{a_1}{\kappa}, \paramIn{a_2}{\kappa}}{res : bool}{true}{res \igobs (a_1 = a_2)}{\ThetaDe{equals(a_1, a_2)}}{funci\'on de igualdad de $\kappa$'s}
+\disParametrosFormalesDeclaraFunc{COPIAR}{\paramIn{k}{\kappa}}{res : \kappa}{true}{res \igobs k}{\ThetaDe{copy(k)}}{funci\'on de copia de $\kappa$'s}
+\disParametrosFormalesDeclaraFunc{COPIAR}{\paramIn{s}{\sigma}}{res : \sigma}{true}{res \igobs s}{\ThetaDe{copy(s)}}{funci\'on de copia de $\sigma$'s}
+
+\disSeExplicaCon{Diccionario($\kappa,\sigma$), Iterador Bidireccional(Tupla($\kappa,\sigma$))}
+
+\disGenero{diccTrie($\kappa$,$\sigma$)}
+
+\disOperaciones{b\'asicas de diccionario}
+
+\disDeclaraFuncion{Definido?}{\paramIn{d}{diccTrie(\kappa,\sigma)}, \paramIn{k}{\kappa}}{res : bool}{true}{res \igobs def?(d, k)}{\Ode{|k|}\ |k|\ es\ la\ longitud\ de\ la\ clave.}{Devuelve true si y s\'olo si $k$ est\'a definido en el diccionario.}
+
+\disDeclaraFuncion{Obtener}{\paramIn{d}{diccTrie(\kappa,\sigma)}, \paramIn{k}{\kappa}}{res : \sigma}{def?(d, k)}{alias(res \ $\igobs$ obtener(d, k))}{\Ode{|k|}\ |k|\ es\ la\ longitud\ de\ la\ clave.}{Devuelve el significado de la clave $k$ en $d$.}
+\disComentAliasing{ res no es modificable.}
+
+
+\disDeclaraFuncion{Vacio}{}{res : diccTrie(\kappa,\sigma)}{true}{res $\igobs$ vacio()}{\Ode{1}}{Genera un diccionario vac\'io.}
+
+\disDeclaraProc{Definir}{\paramInOut{d}{diccTrie(\kappa,\sigma)}, \paramIn{k}{\kappa}, \paramIn{s}{\sigma}}{d \igobs d_0}{d \igobs definir(k, s, d_0)}{\Ode{|k|}\ |k|\ es\ la\ longitud\ de\ la\ clave.}{Define la clave $k$ con el significado $s$ en el diccionario.}
+
+\disDeclaraFuncion{Claves}{\paramIn{d}{diccTrie(\kappa,\sigma)}}{res : conj(\kappa)}{true}{alias(res \ $\igobs$ claves(d))}{\Ode{n}\ n\ es\ la\ cantidad\ de\ claves.}{Genera un conjunto con todas las claves del diccionario.}
+\disComentAliasing{ res no es modificable.}
+
+
+\disOperaciones{b\'asicas del iterador}
+
+\disDeclaraFuncion{CrearIt}{\paramIn{d}{diccTrie(\kappa,\sigma)}}{res : itDiccTrie(\kappa,\sigma)}{true}{alias(esPermutacion(SecuSuby(res),d)) \ \land vacia?(Anteriores(res))}{\Ode{n}\ n\ es\ la\ cantidad\ de\ claves.}{Crea un iterador del diccionario de forma tal que se puedan recorrer sus elementos aplicando iterativamente SIGUIENTE(no ponemos la operacion SIGUIENTE en la interfaz pues no la usamos).}
+
+\disDeclaraFuncion{HaySiguiente}{\paramIn{it}{itDiccTrie(\kappa,\sigma)}}{res : bool}{true}{res $\igobs$ HaySiguiente?(it)}{\Ode{1}}{Devuelve true si y solo si en el iterador quedan elementos para avanzar.}
+
+\disDeclaraFuncion{SiguienteSignificado}{\paramIn{it}{itDiccTrie(\kappa,\sigma)}}{res : \sigma}{HaySiguiente?(it)}{alias(res $\igobs$ Siguiente(it).significado)}{\Ode{1}}{Devuelve el significado del elemento siguiente del iterador.}
+\disComentAliasing{ res no es modificable.}
+
+
+\disDeclaraProc{Avanzar}{\paramInOut{it}{itDiccTrie(\kappa,\sigma)}}{it \ $\igobs$ it_{0} \ $\land$ HaySiguiente?(it)}{it \ $\igobs$ Avanzar(it_{0})}{\Ode{1}}{Avanza a la posicion siguiente del iterador.}
+
+
+
+

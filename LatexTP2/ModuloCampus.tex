@@ -1,0 +1,201 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{Campus}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}Se usa el {\sc Tad Campus} especificado por la c\'atedra.
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
+\disSeExplicaCon{Campus}
+
+\disGenero{campus}
+
+\disOperaciones{b\'asicas de Campus}
+
+\disDeclaraFuncion{CrearCampus}{\paramIn{c}{nat}, \paramIn{f}{nat}}{res : campus}{true}{res $\igobs$ crearCampus(c,f)}{\Ode{1}}{Crea un campus de c columnas y f filas.}
+
+\disDeclaraFuncion{AgregarObstaculo}{\paramInOut{c}{campus}, \paramIn{p}{posicion}}{}{c $\igobs$ $c_{0}$ $\land$ posValida(p,c) $\yluego$ $\¬$ocupada?(p,c)}{c $\igobs$ agregarObstaculo(p,$c_{0}$)}{\Ode{1}}{Devuelve $true$ sii p esta ocupada por un obstaculo.}
+
+
+\disDeclaraFuncion{Filas?}{\paramIn{c}{campus}}{res : nat}{true}{res $\igobs$ filas(c)}{\Ode{1}}{Devuelve la cantidad de filas en el campus.}
+
+\disDeclaraFuncion{Columnas?}{\paramIn{c}{campus}}{res : nat}{true}{res $\igobs$ columnas(c)}{\Ode{1}}{Devuelve la cantidad de columnas en el campus.}
+
+\disDeclaraFuncion{Ocupada?}{\paramIn{c}{campus}, \paramIn{p}{posicion}}{res : bool}{posValida(p,c)}{res $\igobs$ ocupada?(p,c)}{\Ode{1}}{Devuelve $true$ sii p esta ocupada por un obstaculo.}
+
+\disDeclaraFuncion{PosValida?}{\paramIn{c}{campus}, \paramIn{p}{posicion}}{res : bool}{true}{res $\igobs$ posValida?(p,c)}{\Ode{1}}{Devuelve $true$ sii p es parte del mapa.}
+
+\disDeclaraFuncion{EsIngreso?}{\paramIn{c}{campus}, \paramIn{p}{posicion}}{res : bool}{true}{res $\igobs$ esIngreso?(p,c)}{\Ode{1}}{Devuelve $true$ sii p es un ingreso.}
+\newpage
+ 
+\disDeclaraFuncion{Vecinos}{\paramIn{c}{campus}, \paramIn{p}{posicion}}{res : conj(posicion)}{posValida(p,c)}{res $\igobs$ vecinos(p,c)}{\Ode{1}}{Devuelve el conjunto de posiciones vecinas a p.}
+
+\disDeclaraFuncion{ProxPosicion}{\paramIn{c}{campus}, \paramIn{dir}{direccion}, \paramIn{p}{posicion}}{res : posicion}{posValida(p,c)}{res $\igobs$ proxPosicion(p,d,c)}{\Ode{1}}{Devuelve la posicion vecina a p que esta en la direccion dir.}
+
+\disDeclaraFuncion{IngresosMasCercanos}{\paramIn{c}{campus}, \paramIn{p}{posicion}}{res : conj(posicion)}{posValida(p,c)}{res $\igobs$ ingresosMasCercanos(p,c)}{\Ode{1}}{Devuelve el conjunto de ingresos mas cercanos a p.}
+
+
+
+
+\disPautasDeImplementacion
+
+\disEstructuraDeRepresentacion
+
+\disSeRepresentaCon{campus}{estr}
+\disDondeEs{estr}{\disTuplaEstr{nat/filas, nat/columnas, vector(vector(bool))/mapa}}
+
+\disJustificacionDeLaEstructuraElegida
+
+\disInvarianteDeRepresentacion
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Informal}}
+
+\hspace*{\disSubSubSecMargen}
+\begin{enumerate}
+\setlength{\itemindent}{3em}
+  \item El mapa debe tener tantas filas como indica la estructura, lo mismo con las columnas.
+
+\end{enumerate}
+
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
+\onehalfspace
+\disRep{estr}{e}{$true$ $\Longleftrightarrow$ 
+\\\hspace*{3.75em}(1) e.filas = longitud(e.mapa) $\yluego$ 
+($\forall$ i : nat)(i $\leq$ e.filas $\implies$ longitud(e.mapa[i])= e.columnas)}
+\disFuncionDeAbstraccion
+\vspace*{-1em}
+%\hspace*{\disSubSubSecMargen}{Texto}
+\disAbs{estr}{e}{campus}{c}{\Big(filas(c) = e.filas $\land$ columnas(c) = e.columnas $\yluego$ ($\forall$ p : posicion)(p.X $\leq$ e.filas $\land$
+\\\hspace*{3.75em} p.Y $\leq$ e.columnas $\impluego$ ocupada?(p,c) $\Leftrightarrow$ (e.mapa[f])[c]\Big) }
+
+
+%\disFuncionDeAbsFuncionesAux
+
+\newpage
+
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$CrearCampus}}{\paramIn{c}{nat}, \paramIn{f}{nat}}{$\disFlecha$ res : estr} \Comment{$\Ode{f^{2}*c^{2}}$}
+  \State var vector(vector(bool)) mapa $\gets$ vacia(vacia()) \Comment{$\Ode{1}$}
+  \State var nat i $\gets$ 0 \Comment{$\Ode{1}$}
+  \While {i$\leq$f} \Comment{$\Ode{f}$}
+    \State var vector(bool) nuevo $\gets$ vacia() \Comment{$\Ode{1}$}
+    \State var nat j $\gets$ 0 \Comment{$\Ode{1}$}
+    \While {j$\leq$c} \Comment{$\Ode{c}$}
+      \State AgregarAtras(nuevo, false) \Comment{$\Ode{c}$}
+      \State j++  \Comment{$\Ode{1}$}
+    \EndWhile
+    \State AgregarAtras(mapa, nuevo) \Comment{$\Ode{f}$}
+    \State i++ \Comment{$\Ode{1}$}
+  \EndWhile
+  \State res $\gets$ $<$ f, c, mapa$>$ \Comment{$\Ode{1}$}
+  
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$AgregarObstaculo}}{\paramInOut{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : estr} \Comment{$\Ode{longitud(e.mapa[p.X]}$}
+  \State Agregar(e.mapa[p.X], p.Y, true) \Comment{$\Ode{longitud(e.mapa[p.X])}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Filas?}}{\paramIn{e}{estr}}{$\disFlecha$ res : nat} \Comment{$\Ode{1}$}
+  \State res $\gets$ e.filas  \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Columnas?}}{\paramIn{e}{estr}}{$\disFlecha$ res : nat} \Comment{$\Ode{1}$}
+  \State res $\gets$ e.columnas  \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Ocupada?}}{\paramIn{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : bool} \Comment{$\Ode{1}$}
+  \State res $\gets$ (e.mapa[p.X])[p.Y]  \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$PosValida?}}{\paramIn{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : bool} \Comment{$\Ode{1}$}
+  \State res $\gets$ (0 $<$ p.X) $\land$ (p.X $\leq$ e.filas) $\land$ (0 $<$ p.Y) $\land$ (p.Y $\leq$ e.columnas) \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$EsIngreso?}}{\paramIn{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : bool} \Comment{$\Ode{1}$}
+  \State res $\gets$ (p.Y = 1) $\lor$ (p.Y = e.filas) \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Vecinos}}{\paramIn{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : bool} \Comment{$\Ode{1}$}
+  \State var conj(posicion) nuevo $\gets$ vacio() \Comment{$\Ode{1}$}
+  \State Agregar(nuevo, (p.X+1,p.Y))
+  \State Agregar(nuevo, (p.X-1,p.Y))
+  \State Agregar(nuevo, (p.X,p.Y+1))
+  \State Agregar(nuevo, (p.X,p.Y-1))
+  \State var $itConj(posicion)$ it $\gets$ crearIt(nuevo)
+    \While {haySiguiente(it)} \Comment{$\Ode{c}$}
+      \If {$i$PosValida?(e,siguiente(it))} \Comment{$\Ode{1}$}
+        \State avanzar(it) \Comment{$\Ode{1}$}
+      \Else
+      \State eliminarSiguiente(it)  \Comment{$\Ode{1}$}
+      \EndIf
+    \EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\end{algorithm}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

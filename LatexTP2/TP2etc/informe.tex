@@ -1,0 +1,54 @@
+\documentclass[a4paper,spanish, 10pt]{article}
+\usepackage[paper=a4paper, left=1.2cm, right=1.2cm, bottom=2cm, top=2cm]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{caratula, aed2-symb, aed2-itef, aed2-tad}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{setspace}
+\usepackage{color}
+\usepackage{dis}
+\usepackage{setspace}
+
+\begin{document}
+
+% 0Acomodo fancyhdr.
+\pagestyle{fancy}
+\thispagestyle{fancy}
+\addtolength{\headheight}{1pt}
+\lhead{Algoritmos y Estructuras de Datos II}
+\rhead{$1^{\mathrm{er}}$ cuatrimestre de 2015}
+\cfoot{\thepage /\pageref{LastPage}}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\author{Algoritmos y Estructuras de Datos II, DC, UBA.}
+\date{}
+\title{Tipos abstractos de datos básicos}
+
+
+\include{caratula}
+
+% \section{Observaciones}
+
+% 	\begin{enumerate}
+% 	    \item \textbf{TAD} PC \textbf{ES} NAT
+% 	    \item \textbf{TAD} INTERFAZ \textbf{ES} NAT
+% 	    \item \textbf{TAD} PRIORIDAD \textbf{ES} NAT
+% 	    \item \textbf{TAD} PAQUETE \textbf{ES} TUPLA(NAT,PRIORIDAD,PC,PC)
+% 	\end{enumerate}
+
+\include{ModuloRed}
+\include{ModuloDCNet}
+\include{ModuloDiccTrie}
+%\include{ModuloIt}
+\include{ModuloAVL}
+\include{ModuloConjAvl}
+\include{ModuloHeap}
+\include{ModuloConjExtendido}
+
+
+
+\end{document}
+

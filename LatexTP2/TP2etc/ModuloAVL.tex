@@ -1,0 +1,392 @@
+
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{Diccionario Avl($\kappa, \sigma$)}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}Se usa el {\sc Tad Diccionario($\kappa$, $\sigma$)} especificado en el apunte de Tads b\'asicos.
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
+\disParametrosFormales{$\kappa,\sigma$}
+
+\disParametrosFormalesDeclaraFunc{\puntito = \puntito}{\paramIn{a_1}{\kappa}, \paramIn{a_2}{\kappa}}{res : bool}{true}{res \igobs (a_1 = a_2)}{\ThetaDe{equals(a_1, a_2)}}{funci\'on de igualdad de $\kappa$'s}
+\disParametrosFormalesDeclaraFunc{COPIAR}{\paramIn{k}{\kappa}}{res : \kappa}{true}{res \igobs k}{\ThetaDe{copy(k)}}{funci\'on de copia de $\kappa$'s}
+\disParametrosFormalesDeclaraFunc{COPIAR}{\paramIn{s}{\sigma}}{res : \sigma}{true}{res \igobs s}{\ThetaDe{copy(s)}}{funci\'on de copia de $\sigma$'s}
+
+\disSeExplicaCon{Diccionario($\kappa,\sigma$), Iterador Bidireccional(Tupla($\kappa,\sigma$))}
+
+\disGenero{diccAvl($\kappa,\sigma$)}
+
+\disOperaciones{b\'asicas de diccionario}
+
+\disDeclaraFuncion{Definido?}{\paramIn{d}{diccAvl(\kappa,\sigma)}, \paramIn{k}{\kappa}}{res : bool}{true}{res \igobs def?(d, k)}{\Ode{log(n)}\ n\ es\ la\ cantidad\ de\ claves.}{Devuelve true si y s\'olo si $k$ est\'a definido en el diccionario.}
+
+\disDeclaraFuncion{Obtener}{\paramIn{d}{diccAvl(\kappa,\sigma)}, \paramIn{k}{\kappa}}{res : \sigma}{def?(d, k)}{alias(res\igobs obtener(d, k))}{\Ode{log(n)}\ n\ es\ la\ cantidad\ de\ claves.}{Devuelve el puntero al significado de la clave $k$ en $d$.}
+\disComentAliasing{ res no es modificable.}
+
+
+\disDeclaraFuncion{Vacio}{}{res : diccAvl(\kappa,\sigma)}{true}{res \ $\igobs$ vacio()}{\Ode{1}}{Genera un diccionario vac\'io.}
+
+\disDeclaraProc{Definir}{\paramInOut{d}{diccAvl(\kappa,\sigma)}, \paramIn{k}{\kappa}, \paramIn{s}{\sigma}}{d \igobs d_0}{d \igobs definir(k, s, d_0)}{\Ode{log(n)}\ n\ es\ la\ cantidad\ de\ claves.}{Define la clave $k$ con el significado $s$ en el diccionario.}
+
+\disDeclaraProc{Borrar}{\paramInOut{d}{diccAvl(\kappa,\sigma)}, {k}{\kappa}}{d \igobs d_0 $\land$ def?(d,k)}{d \igobs borrar(d_0, k)}{\Ode{log(n)}\ n\ es\ la\ cantidad\ de\ claves.}{Borra del diccionario la clave $k$ y su significado.}
+
+\disDeclaraFuncion{Claves}{\paramIn{d}{diccAvl(\kappa,\sigma)}}{res : conj(\kappa)}{true}{alias(res\igobs claves(d)}{\Ode{n}\ n\ es\ la\ cantidad\ de\ claves.}{Genera un conjunto con todas las claves del diccionario.}
+\disComentAliasing{ res no es modificable.}
+
+
+
+
+
+
+
+\disPautasDeImplementacion
+
+\disEstructuraDeRepresentacion
+
+\disSeRepresentaCon{diccAvl(\kappa,\sigma)}{puntero(nodo)}
+\disDondeEs{nodo}{\disTuplaEstr{puntero($\sigma$)/significado, puntero(nodo)/der, puntero(nodo)/izq, puntero(nodo)/padre, $\kappa$/key, nat/alt}}
+
+\disJustificacionDeLaEstructuraElegida
+{Para entender mejor la estructura damos una explicaci\'on: \\
+Cada nodo respresenta un AVL, donde $significado$ contiene la definicion de la clave $key$; $der$ e $izq$ son el hijo derecho del nodo y el hijo izquierdo del nodo respectivamente; $padre$ contiene a su nodo padre ; y $alt$ representa la altura del AVL.} 
+
+\disInvarianteDeRepresentacion
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Informal}}
+
+\hspace*{\disSubSubSecMargen}
+\begin{enumerate}
+% HACK: SGA 20/06/2011. Para identar correctmente los items.
+\setlength{\itemindent}{3em}
+  \item La clave de cada nodo es mayor que la clave de su hijo derecho y menor que la de su hijo izquierdo.
+  \item La altura de los subarboles izq y der difieren a lo sumo en 1.
+  \item Todos los nodos del subarbol izq/der son menores/mayores que el nodo raiz.
+  \item No hay 2 punteros al mismo nodo ni ciclos.
+  \item El rep se cumple para todos los subarboles del AVL.
+\end{enumerate}
+
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
+\onehalfspace
+\disRep{estr}{e}{$true$ $\Longleftrightarrow$ 
+\\\hspace*{3.75em}(1) e = NULL $\oluego$ \big((e$\rightarrow$ izq $\not=$ NULL) $\impluego$ e $\rightarrow$ izq $\rightarrow$ key $<$ e $\rightarrow$ key $\land$\ \\\hspace*{11.5em} (e$\rightarrow$ der $\not=$ NULL) $\impluego$ e $\rightarrow$ der $\rightarrow$ key $>$ e $\rightarrow$ key \big) $\land$
+\\\hspace*{3.75em}(2) e = NULL $\oluego$ \big((e $\rightarrow$ der = NULL) $\implies$ e $\rightarrow$ izq $\rightarrow$ alt $\leq$ 1 $\land$
+\\\hspace*{12em}(e $\rightarrow$ izq = NULL) $\implies$ e $\rightarrow$ der $\rightarrow$ alt $\leq$ 1 $\land$
+\\\hspace*{12em}(e$\rightarrow$ der $\not=$ NULL $\land$ e $\rightarrow$ izq $\not=$ NULL ) $\implies$ 
+\\\hspace*{12em} (maxAlt(e$\rightarrow$ der, e$\rightarrow$ izq))$\rightarrow$ alt - (minAlt(e$\rightarrow$ der, e$\rightarrow$ izq))$\rightarrow$ alt $\leq$ 1 \big) $\land$    
+\\\hspace*{3.75em}(3) e $\not=$ NULL $\impluego$ ($\forall$ n:nodo) \big(n $\in$ hijos(*(e$\rightarrow$ der)) $\implies$ e$\rightarrow$ key $<$ n.key $\land$ \\ \hspace*{15em} n $\in$ hijos(*(e$\rightarrow$ izq)) $\implies$ e$\rightarrow$ key $>$ n.key \big)
+\\\hspace*{3.75em}(4) e = NULL $\oluego$ ($\forall$ n,m: nodo) n $\in$ hijos(*e) $\land$ m $\in$ hijos(*e) $\implies$ apuntanDistinto(n, m) $\land$ nadiePadreDeRaiz(n) $\yluego$ sonPadreEHijo(n,m)
+\\\hspace*{3.75em}(5) Rep(e $\rightarrow$ der) $\land$ Rep(e $\rightarrow$ izq) }
+
+\disFuncionDeAbstraccion
+\vspace*{-1em}
+%\hspace*{\disSubSubSecMargen}{Texto}
+\disAbs{estr}{e}{diccAvl
+($\kappa$, $\sigma$)}{d}{\textbf{If} e = NULL \textbf{then} d = vacio() \textbf{else} d = definir(agregar(abs(e $\rightarrow$ der), abs(e $\rightarrow$ izq)),e $\rightarrow$ key, e $\rightarrow$ significado)}
+
+
+\disFuncionDeAbsFuncionesAux
+\tadOperacion{\tadNombreFuncion{\hspace*{3.5em}agregar}}{diccAvl($\kappa$, $\sigma$), diccAvl($\kappa, \sigma$)}{diccAvl($\kappa, \sigma$)}{}
+\tadAxioma{\hspace*{2.3em}agregar(a,b)}{\IF $\#$claves(a) == 0 THEN b ELSE definir(dameUno(claves(a)), obtener(dameUno(claves(a)),a), \\ agregar(borrar(dameUno(claves(a)),a),b)) FI}\mbox{}
+
+\tadOperacion{\tadNombreFuncion{\hspace*{2.3em}maxAlt}}{puntero(nodo), puntero(nodo)}{puntero(nodo)}{}
+\tadAxioma{\hspace*{2.3em}maxAlt(n,m)}{\IF n = NULL $\land$ m = NULL THEN n ELSE \\ (\IF n = NULL THEN m ELSE  \\ (\IF m = NULL THEN n ELSE \\ (\IF n$\rightarrow$ alt $>$ m$\rightarrow$ alt THEN n ELSE m FI) FI) FI) FI}\mbox{}
+
+\tadOperacion{\tadNombreFuncion{\hspace*{2.3em}minAlt}}{puntero(nodo), puntero(nodo)}{puntero(nodo)}{}
+\tadAxioma{\hspace*{2.3em}minAlt(n,m)}{\IF n = NULL $\land$ m = NULL THEN n ELSE \\ (\IF n = NULL THEN m ELSE  \\ (\IF m = NULL THEN n ELSE \\ (\IF n$\rightarrow$ alt $<$ m$\rightarrow$ alt THEN n ELSE m FI) FI) FI) FI}\mbox{}
+\\
+{Explicamos el funcionamiento de $apuntanDistinto$ ; $nadiePadreDeRaiz$ y  $sonPadreEHijo$: \\
+Dados 2 nodos $apuntanDistinto$ devuelve true si y solo si los hijos(izq y der) de dichos nodos no apuntan a mismas posiciones de memoria, exceptuando que sean NULL. \\
+Dado un nodo $nadiePadreDeRaiz$ devuelve true si y solo si los hijos(izq y der) de dicho nodo no apuntan a la raiz del AVL. \\
+Dados 2 nodos $sonPadreEHijo(n,m)$ devuelve true si y solo si, uno de los nodos tiene como hijo al otro $\Longleftrightarrow$ ese otro tiene como padre al primer nodo. 
+}
+
+\newpage
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Vacio}}{ }{$\disFlecha$ res : estr}\Comment{$\Ode{1}$}
+  \State res $\gets$ NULL \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm} 
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Definir}}{\paramInOut{d}{estr}, \paramIn{k}{\kappa}, \paramIn{s}{\sigma}}\Comment{$\Ode{log_{2}(k)}$}
+   \If {d = NULL} 
+      \State var $puntero(nodo)$ nuevoNodo \Comment{\Ode{1}}
+      \State var $nodo$ aux $\gets$ $<s, NULL, NULL, NULL, 1, k>$ \Comment{\Ode{1}}
+      \State *nuevoNodo $\gets$ aux \Comment{\Ode{1}}
+      \State d$\rightarrow$raiz $\gets$ nuevoNodo \Comment{\Ode{1}}
+   \Else 
+      \State var $puntero(nodo)$ n $\gets$ d \Comment{\Ode{1}}
+      \State var $puntero(nodo)$ papa \Comment{\Ode{1}}
+      \While {true} \Comment{$\Ode{log_{2}(k)}$}
+      \If {k = n$\rightarrow$key} \Comment{\Ode{1}}
+        \State \textbf{break} \Comment{\Ode{1}}
+      \EndIf
+      \State papa $\gets$ n \Comment{\Ode{1}}
+      \State var $bool$ porIzq? $\gets$  n$\rightarrow$key $>$ k \Comment{\Ode{1}}
+      \If {porIzq?} \Comment{\Ode{1}}
+        \State n = n$\rightarrow$izq \Comment{\Ode{1}}
+      \Else
+        \State n = n$\rightarrow$der \Comment{\Ode{1}}
+      \EndIf
+      \If {n = NULL} \Comment{\Ode{1}}
+        \If {porIzq?} \Comment{\Ode{1}}
+          \State papa$\rightarrow$izq $\gets$ $<s, NULL, NULL, papa, 1, k>$ \Comment{\Ode{1}}
+        \Else
+          \State papa$\rightarrow$der $\gets$ $<s, NULL, NULL, papa, 1, k>$ \Comment{\Ode{1}}
+        \EndIf
+        \State rebalanceo(d,papa) \Comment{$\Ode{log_{2}(k)}$}
+        \State \textbf{break} \Comment{\Ode{1}}
+      \EndIf        
+      \EndWhile
+   \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Borrar}}{\paramInOut{d}{estr}, \paramIn{k}{\alpha}}\Comment{$\Ode{log_{2}(k)}$}
+   \If {d != NULL} \Comment{\Ode{1}}
+      \State var $puntero(nodo)$ n $\gets$ d \Comment{\Ode{1}}
+      \State var $puntero(nodo)$ papa $\gets$ d \Comment{\Ode{1}}
+      \State var $puntero(nodo)$ bNodo $\gets$ NULL \Comment{\Ode{1}}
+      \State var $puntero(nodo)$ hijo $\gets$ d \Comment{\Ode{1}}
+      \While {hijo != NULL} \Comment{$\Ode{log_{2}(k)}$}
+         \State papa $\gets$ n \Comment{\Ode{1}}
+         \State n $\gets$ hijo \Comment{\Ode{1}}
+         \If {k $\geq$ n$\rightarrow$key}  \Comment{\Ode{1}}
+            \State n $\gets$ n$\rightarrow$der \Comment{\Ode{1}}
+         \Else
+            \State n $\gets$ n$\rightarrow$izq \Comment{\Ode{1}}
+         \EndIf
+         \If {k $=$ n$\rightarrow$key} \Comment{\Ode{1}}
+            \State bNodo $\gets$ n \Comment{\Ode{1}}
+         \EndIf         
+      \EndWhile   
+      \If {bNodo != NULL} \Comment{\Ode{1}}
+         \State bNodo$\rightarrow$key $\gets$ n$\rightarrow$key \Comment{\Ode{1}}
+         \If {n$\rightarrow$izq != NULL} \Comment{\Ode{1}}
+            \State hijo $\gets$ n$\rightarrow$izq \Comment{\Ode{1}}
+         \Else
+            \State hijo $\gets$ n$\rightarrow$der \Comment{\Ode{1}}
+         \EndIf
+         \If {raiz$\rightarrow$key = k}  \Comment{\Ode{1}}
+            \State raiz $\gets$ hijo \Comment{\Ode{1}}
+         \Else
+            \If {papa$\rightarrow$izq = n} \Comment{\Ode{1}} 
+              \State papa$\rightarrow$izq $\gets$ hijo \Comment{\Ode{1}}
+            \Else
+              \State papa$\rightarrow$der $\gets$ hijo \Comment{\Ode{1}}
+            \EndIf
+            \State rebalanceo(d,papa) \Comment{$\Ode{log_{2}(k)}$}
+         \EndIf
+      \EndIf  
+   \EndIf     
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Rebalanceo}}{\paramInOut{d}{estr} \paramInOut{n}{nodo}}\Comment{$\Ode{log_{2}(k)}$}
+  \State balancear(n) \Comment{\Ode{1}}
+  \State var $int$ balanceo $\gets$ (n$\rightarrow$der$\rightarrow$altura) - (n$\rightarrow$izq$\rightarrow$altura) \Comment{\Ode{1}}
+  \If {balanceo = -2} \Comment{\Ode{1}}
+    \If {n$\rightarrow$izq$\rightarrow$izq$\rightarrow$altura $\geq$ n$\rightarrow$izq$\rightarrow$der$\rightarrow$altura} \Comment{\Ode{1}}
+      \State n $\gets$ rotacionDerecha(n) \Comment{\Ode{1}}
+    \Else
+      \State n $\gets$ rotacionIzqDer(n) \Comment{\Ode{1}}
+    \EndIf
+  \Else  
+    \If {balanceo = 2} \Comment{\Ode{1}}
+      \If {n$\rightarrow$der$\rightarrow$der$\rightarrow$altura $\geq$ n$\rightarrow$der$\rightarrow$izq$\rightarrow$altura} \Comment{\Ode{1}}
+        \State n $\gets$ rotacionIzquierda(n) \Comment{\Ode{1}}
+      \Else
+        \State n $\gets$ rotacionDerIzq(n) \Comment{\Ode{1}}
+      \EndIf
+    \EndIf
+  \EndIf
+  \If {n$\rightarrow$padre != NULL} \Comment{\Ode{1}}
+     \State rebalanceo(d,n$\rightarrow$padre) \Comment{\Ode{rebalanceod,n$\rightarrow$padre}}
+  \Else
+     \State d $\gets$ n \Comment{\Ode{1}}
+  \EndIf
+
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$RotacionIzquierda}}{\paramInOut{a}{Nodo}}{$\disFlecha$ res : Nodo}\Comment{\Ode{1}}
+   \State var $puntero(nodo)$ b $\gets$ a$\rightarrow$der \Comment{\Ode{1}}
+   \State b$\rightarrow$padre $\gets$ a$\rightarrow$padre \Comment{\Ode{1}}
+   \State a$\rightarrow$der $\gets$ b$\rightarrow$izq \Comment{\Ode{1}}
+   \If {a$\rightarrow$der != NULL} \Comment{\Ode{1}}
+     \State a$\rightarrow$der$\rightarrow$padre $\gets$ a \Comment{\Ode{1}}
+   \EndIf
+   \State b$\rightarrow$izq $\gets$ a \Comment{\Ode{1}}
+   \State a$\rightarrow$padre $\gets$ b \Comment{\Ode{1}}
+   
+   \If {b$\rightarrow$padre != NULL} \Comment{\Ode{1}}
+     \If {b$\rightarrow$padre$\rightarrow$der = a} \Comment{\Ode{1}}
+       \State b$\rightarrow$padre$\rightarrow$der $\gets$ b \Comment{\Ode{1}}
+     \Else
+       \State b$\rightarrow$padre$\rightarrow$izq $\gets$ b \Comment{\Ode{1}}
+     \EndIf
+  \EndIf
+  \State balancear(a) \Comment{\Ode{1}}
+  \State balancear(b) \Comment{\Ode{1}}
+  \State res $\gets$ b \Comment{\Ode{1}}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$RotacionDerecha}}{\paramInOut{a}{Nodo}}{$\disFlecha$ res : Nodo}\Comment{\Ode{1}}
+   \State var $puntero(nodo)$ b $\gets$ a$\rightarrow$izq \Comment{\Ode{1}}
+   \State b$\rightarrow$padre $\gets$ a$\rightarrow$padre \Comment{\Ode{1}}
+   \State a$\rightarrow$izq $\gets$ b$\rightarrow$der \Comment{\Ode{1}}
+   \If {a$\rightarrow$izq != NULL} \Comment{\Ode{1}}
+     \State a$\rightarrow$izq$\rightarrow$padre $\gets$ a \Comment{\Ode{1}}
+   \EndIf
+   \State b$\rightarrow$der $\gets$ a \Comment{\Ode{1}}
+   \State a$\rightarrow$padre $\gets$ b    \Comment{\Ode{1}}
+   \If {b$\rightarrow$padre != NULL} \Comment{\Ode{1}}
+     \If {b$\rightarrow$padre$\rightarrow$der = a} \Comment{\Ode{1}}
+       \State b$\rightarrow$padre$\rightarrow$der $\gets$ b \Comment{\Ode{1}}
+     \Else
+       \State b$\rightarrow$padre$\rightarrow$izq $\gets$ b \Comment{\Ode{1}}
+     \EndIf
+  \EndIf
+  \State balancear(a) \Comment{\Ode{1}}
+  \State balancear(b) \Comment{\Ode{1}}
+  \State res $\gets$ b \Comment{\Ode{1}}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$RotacionIzqDer}}{\paramInOut{n}{Nodo}}{$\disFlecha$ res : Nodo}\Comment{\Ode{1}}
+   \State n$\rightarrow$izq $\gets$ rotacionIzquierda(n$\rightarrow$izq) \Comment{\Ode{1}}
+  \State res $\gets$ rotacionDerecha(n) \Comment{\Ode{1}}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$RotacionDerIzq}}{\paramInOut{n}{Nodo}}{$\disFlecha$ res : Nodo}\Comment{\Ode{1}}
+   \State n$\rightarrow$der $\gets$ rotacionDerecha(n$\rightarrow$der) \Comment{\Ode{1}}
+  \State res $\gets$ rotacionIzquierda(n) \Comment{\Ode{1}}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Balancear}}{\paramInOut{n}{Nodo}}\Comment{\Ode{1}}
+   \State n$\rightarrow$altura $\gets$ (n$\rightarrow$der$\rightarrow$altura) + (n$\rightarrow$izq$\rightarrow$altura) + 1 \Comment{\Ode{1}}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Definido?}}{\paramIn{n}{estr}, \paramIn{k}{\kappa}}{$\disFlecha$ res : bool}\Comment{$\Ode{log_{2}(k)}$}
+   \If {d = NULL} \Comment{\Ode{1}}
+     \State res $\gets$ false \Comment{\Ode{1}}
+   \Else 
+     \State var $puntero(nodo)$ n $\gets$ d \Comment{\Ode{1}}
+     \While {true} \Comment{$\Ode{log_{2}(k)}$}
+         \If {n$\rightarrow$key = k} \Comment{\Ode{1}}
+            \State res $\gets$ true \Comment{\Ode{1}}
+            \State \textbf{break} \Comment{\Ode{1}}
+         \EndIf 
+         \If {n$\rightarrow$key $>$ k} \Comment{\Ode{1}}
+            \State n $\gets$ n$\rightarrow$izq \Comment{\Ode{1}}
+         \Else
+            \State n $\gets$ n$\rightarrow$der \Comment{\Ode{1}}
+         \EndIf
+         \If {n = NULL}  \Comment{\Ode{1}}
+            \State res $\gets$ false \Comment{\Ode{1}}
+            \State \textbf{break}  \Comment{\Ode{1}}
+         \EndIf
+      \EndWhile
+   \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Significado}}{\paramIn{n}{estr}, \paramIn{k}{$\kappa$}}{$\disFlecha$ res : $\sigma$}\Comment{$\Ode{log_{2}(k)}$}    
+   \State var $puntero(nodo)$ n $\gets$ d \Comment{\Ode{1}}
+   \While {true} \Comment{$\Ode{log_{2}(k)}$}
+       \If {n$\rightarrow$key = k} \Comment{\Ode{1}}
+          \State res $\gets$ n$\rightarrow$significado \Comment{\Ode{1}}
+          \State \textbf{break} \Comment{\Ode{1}}
+       \EndIf
+       \If {n$\rightarrow$key $>$ k} \Comment{\Ode{1}}
+          \State n $\gets$ n$\rightarrow$izq \Comment{\Ode{1}}
+       \Else
+          \State n $\gets$ n$\rightarrow$der \Comment{\Ode{1}}
+       \EndIf
+    \EndWhile
+ \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Claves}}{\paramInOut{d}{estr}}{$\disFlecha$ res : conj(\kappa)} \Comment{\Ode{n}}
+  \State var $conj(\kappa)$ c $\gets$ vacio() \Comment{\Ode{1}}
+  \If {d $!$= NULL}\Comment{\Ode{1}}
+    \State res $\gets$ unir(agregar(c, e$\rightarrow$key), unir(claves(e$\rightarrow$izq), claves(e$\rightarrow$der)))\Comment{\Ode{n}}
+  \Else
+    \State res $\gets$ vacio() \Comment{\Ode{1}}
+  \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}

@@ -1,0 +1,59 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{Conjunto Lineal Extendido($\alpha)$}
+% La especificación
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+Se extiende la interfaz del conjunto lineal dada en el apunte de m\'odulos b\'asicos.
+
+\disOperaciones{b\'asicas de conjunto}
+
+\disDeclaraProc{Unir}{\paramInOut{$c_{1}$}{conj($\alpha$)}, \paramIn{$c_{2}$}{conj($\alpha$)}}{$c_{1} \igobs c_{0}$}{$c_{1} \igobs c_{0} \cup c_{2}$}{\Ode{n}\ donde\ n\ es\ el\ cardinal\ del\ conjunto.}{Devuelve la uni\'on entre 2 conjuntos.}
+
+\disDeclaraFuncion{DameUno}{\paramIn{$c_{1}$}{conj($\alpha$)}}{res: \alpha}{$\¬$vacio(c)}{res \ $\igobs$ dameUno(c)}{\Ode{1}}{Devuelve un elemento del conjunto c.}
+
+\disDeclaraProc{SinUno}{\paramInOut{c}{conj($\alpha$)}}{$\¬$vacio(c) $\land$ c $\igobs$ c_{0}}{res \ $\igobs$ sinUno(c_{0})}{\Ode{1}}{Devuelve el conjunto c con un elemento menos.}
+
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Unir}}{\paramInOut{$c_{1}$}{conj($\alpha$)}, \paramIn {$c_{2}$}{conj($\alpha$)}}{}  \Comment{$\Ode{n}$}
+  \State var $itConj(\alpha)$ it $\gets$ crearIt($c_{2}$) \Comment{$\Ode{1}$}
+  \While{(haySiguiente(it))}                      \Comment{$\Ode{n}$}
+    \If{($\¬$ pertenece?($c_{1}$, siguiente(it)))} \Comment{$\Ode{1}$}
+      \State agregar($c_{1}$,siguiente(it))       \Comment{$\Ode{1}$}
+      \State avanzar(it)                          \Comment{$\Ode{1}$}
+    \EndIf
+  \EndWhile     
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$DameUno}}{\paramIn{c}{conj($\alpha$)}}{$\disFlecha$ res : $\alpha$}{} \Comment{$\Ode{1}$}
+  \State res $\gets$ siguiente(crearIt(c))  \Comment{$\Ode{1}$}                        
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$SinUno}}{\paramInOut{c}{conj($\alpha$)}}{}  \Comment{$\Ode{1}$}
+  \State eliminarSiguiente(crearIt($c_{1}$))  \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+

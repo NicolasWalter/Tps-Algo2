@@ -1,0 +1,180 @@
+\section{Módulo DiccTrie($\sigma$)}
+
+\begin{Interfaz}
+  
+  \textbf{parámetros formales}\hangindent=2\parindent\\
+  \parbox{1.7cm}{\textbf{géneros}} $\sigma$\\
+  % notar que ya existe el tad diccionario, este es otro. por ahora lo dejo asi, pero lo mejor seria darle un renombre.
+  \textbf{se explica con}: \tadNombre{Diccionario($\sigma$)}.
+
+  \textbf{géneros}: \TipoVariable{diccTrie($\sigma$)}.
+
+  \titlex{Operaciones básicas de diccionario}
+
+  \InterfazFuncion{Vacío}{}{dicc($\sigma$)}
+  {$res \igobs vacio$}
+  [$\bigO(1)$]
+  [genera un diccionario vacío.]
+
+  \InterfazFuncion{Definir}{\Inout{d}{dicc($\sigma$)}, \In{k}{string}, \In{s}{$\sigma$}}{}
+  [$d \igobs d_0$]
+  {$d = definir(d, k, s)$}
+  [$\bigO(long(k))$]
+  [define la clave $k$ con el significado s en el diccionario.]
+  [la clave se define por copia, pero el significado se define por referencia.]
+
+  \InterfazFuncion{Definido?}{\In{d}{dicc($\sigma$)}, \In{k}{string}}{bool}
+  [long(k) $>$ 0]
+  {$res \igobs def?(d,k)$}
+  [$\bigO(long(k))$]
+  [devuelve true si k esta definido en el diccionario.]
+
+  \InterfazFuncion{Significado}{\In{d}{dicc($\sigma$)}, \In{k}{string}}{$\sigma$}
+  [$def?(d,k)$]
+  {$res \igobs obtener(k,d)$}
+  [$\bigO(long(k))$]
+  [devuelve la referencia al significado de la clave k en d.]
+
+\end{Interfaz}
+
+\subsection{Representacion}
+  
+  \titlex{Representación del diccionario}
+
+  \begin{Estructura}{dicc$(\sigma)$}[puntero(nodo)]
+    \begin{Tupla}[nodo]
+      \tupItem{caracteres}{arreglo[256] de puntero(nodo)}%
+      \tupItem{significado}{puntero($\sigma$)}%
+    \end{Tupla}
+  \end{Estructura}
+
+Representamos este diccionario sobre un trie, compuesto por nodos. Cada nodo puede redireccionar a otro nodo en O(1), dado que usamos un arreglo con punteros a otros nodos. Esto se debe a que la cantidad de caracteres posibles esta acotada por 256, por lo que un arreglo estatico alcanza para todas las redirecciones posibles. A su vez, este nodo tiene un puntero al significado, dado que no necesariamente debe apuntar una estructura primitiva.
+
+\pagebreak
+
+\subsection{Invariante de Representacion}
+\subsubsection{El invariante en lenguaje natural}
+
+\begin{enumerate}
+  \item Como este diccionario esta implementado sobre un trie, debemos garantizar que no existan ciclos. Caso contrario se esta limitando innecesariamente el espacio de significados. Como el TAD mapa en ningun momento especifica que no puede existir una ciudad sin nombre, no debemos olvidar este caso, representado con la raiz del diccionario.
+  \item A excepcion de la raiz, un nodo que no redirecciona a cualquier otro nodo necesariamente debe tener un significado. Caso contrario no tiene sentido que ese nodo exista.
+\end{enumerate}
+
+\subsubsection{El invariante en lenguaje formal}
+
+  \Rep[estr][d]{
+  \begin{enumerate}
+  \item ($\forall p, q$: puntero(nodo)) (p $\in$ Ag(d, punteros(d)) $\land$ q $\in$ Ag(d, punteros(d)) - \{p\}) $\implies$ p $\neq$ q)
+  \item ($\forall p$: puntero(nodo)) (p $\in$ punteros(d) $\land$ esHoja(p)) $\implies$ p \DRef significado $\neq$ NULL
+  \end{enumerate} 
+  }
+
+  ~
+  
+  \tadOperacion{punteros}{dicc/d}{multiconj(punteros(nodo))}{}
+  \tadAxioma{punteros(d)}{
+    \LIF{ d = NULL} \LTHEN{ $\emptyset$} \LELSE{ punterosAux(d, 0)} \LFI
+  }
+
+  ~
+
+  \tadOperacion{punterosAux}{dicc/d, nat/n}{multiconj(punteros(nodo))}{}
+  \tadAxioma{punterosAux(d, n)}{
+  
+  \LIF{ n = long(d->caracteres) } \LTHEN{ $\emptyset$ } \LELSE{ \\
+    \LIF{ d \DRef caracteres[n] = NULL} \LTHEN{ $\emptyset$ } 
+    \LELSE{ Ag(d \DRef caracteres[n], punteros(d \DRef caracteres[n], 0) } \LFI \\ $\bigcup$ punteros(d, n+1) 
+    } \\ \LFI
+  }
+
+
+  ~
+
+  \tadOperacion{esHoja}{dicc/d}{bool}{}
+  \tadAxioma{esHoja(d, n)}{ esHojaAux(d,0) }
+
+  ~
+
+  \tadOperacion{esHojaAux}{dicc/d, nat/n}{bool}{}
+  \tadAxioma{esHojaAux(d, n)}{
+  
+  \LIF{ n $<$ 256 $\land$ d $\neq$ NULL} \\ \LTHEN{ d \DRef significado $\neq$ NULL $\land$ d \DRef caracteres[n] = NULL $\land$ esHojaAux(d, n+1)} 
+  \LELSE{ true} \LFI
+  }
+  
+  \subsection{Funcion de abstraccion}
+
+  \Abs[estr]{dicc($\sigma$)}[d]{dic}{  
+  ($\forall s$: string) def?(dic, s) = estaDefinido?(s, d) $\land$ \\ (def?(dic, s) \impluego ($\forall k$: string) obtener(k, dic) = dameSignificado(s, d))
+  }
+  
+  ~
+
+  \tadOperacion{dameSignificado}{string/s, puntero(nodo)/d}{puntero($\sigma$)}{}
+  \tadAxioma{dameSignificado(s, d)}{
+  
+  \LIF{ d = NULL } \LTHEN{ NULL} \LELSE{ \\
+    \LIF{ long(s) = 0} \LTHEN{ d\DRef significado }\\
+    \LELSE{ dameSignificado(fin(s), d\DRef caracteres[ord(prim(s))-1])} \LFI
+     } \\ \LFI
+  }
+
+  \tadOperacion{estaDefinido?}{string/s, puntero(nodo)/p}{bool}{}
+  \tadAxioma{estaDefinido?(s, p)}{dameSignificado(s, p) $\neq$ NULL}
+
+\newpage
+
+\subsection{Algoritmos}
+
+\TipoFuncion{iVacio}{}{dicc($\sigma$)} \complejidad{Complejidad:}{1} \\
+\indent res $\leftarrow$ <caracteres: arreglo[256] de puntero(nodo), significado: puntero($\sigma$)> \complejidad{}{1}
+
+~
+
+\TipoFuncion{nuevoNodo}{}{nodo} \complejidad{Complejidad:}{1}\\
+\indent res $\leftarrow$ <ad(puntero(nodo)), puntero($\sigma$)> \complejidad{}{1}
+
+~
+
+\TipoFuncion{iDefinir}{\Inout{d}{dicc($\sigma$)}, \In{k}{string}, \In{s}{$\sigma$}}{} \complejidad{Complejidad:}{|k|} \\
+\indent var nodoActual $\leftarrow$ d \complejidad{}{1} \\
+\indent var i $\leftarrow$ 0 \complejidad{}{1} \\
+\indent while i $<$ long(k) \{ \complejidad{}{|k|} \\
+\indent \indent if *nodoActual.campo$_1$[ord(k[i])] == NULL \complejidad{}{1} \\
+\indent \indent \indent *nodoActual.campo$_1$[ord(k[i])] $\leftarrow$ nuevoNodo() \complejidad{}{1} \\
+\indent \indent \} \\
+\indent \indent nodoActual $\leftarrow$ *nodoActual.campo$_1$[ord(k[i])] \complejidad{}{1} \\
+\indent \indent i++ \complejidad{}{1}\\
+\indent \} \\
+\indent *nodoActual.campo$_2$ $\leftarrow$ \&s \complejidad{}{1}
+
+~
+
+\TipoFuncion{iDefinido?}{\In{d}{dicc($\sigma$)}, \In{k}{string}}{bool} \complejidad{Complejidad:}{|k|}\\
+\indent var nodoActual $\leftarrow$ d \complejidad{}{1}\\
+\indent var i $\leftarrow$ 0 \complejidad{}{1}\\
+\indent var seguirBuscando $\leftarrow$ true \complejidad{}{1}\\
+\indent while i $<$ long(k) \&\& seguirBuscando \{ \complejidad{}{|k|}\\
+\indent \indent if *nodoActual.campo$_1$[ord(k[i])] == NULL \{ \complejidad{}{1}\\
+\indent \indent \indent seguirBuscando $\leftarrow$ false \complejidad{}{1}\\
+\indent \indent \} else \{ \\
+\indent \indent \indent nodoActual $\leftarrow$ *nodoActual.campo$_1$[ord(k[i])] \complejidad{}{1}\\
+\indent \indent \indent i++ \complejidad{}{1}\\
+\indent \indent \} \\
+\indent \} \\
+\indent res $\leftarrow$ false \complejidad{}{1}\\
+\indent if i == long(k)  \{ \complejidad{}{1}\\
+\indent \indent  res $\leftarrow$ (*nodoActual.campo$_2$[ord(k[i])] $\neq$ NULL) \complejidad{}{1}\\
+\indent \} \\
+
+~
+
+\TipoFuncion{iSignificado}{\In{d}{dicc($\sigma$)}, \In{k}{string}}{$\sigma$} \complejidad{Complejidad:}{|k|}\\
+\indent var nodoActual $\leftarrow$ d \complejidad{}{1}\\
+\indent var i $\leftarrow$ 0 \complejidad{}{1}\\
+\indent while i $<$ long(k) \{ \complejidad{}{|k|}\\
+\indent \indent nodoActual $\leftarrow$ *nodoActual.campo$_1$[ord(k[i])] \complejidad{}{1}\\
+\indent \indent i++ \complejidad{}{1}\\
+\indent \} \\
+\indent res $\leftarrow$ *nodoActual.campo$_2$ \complejidad{}{1}\\
+

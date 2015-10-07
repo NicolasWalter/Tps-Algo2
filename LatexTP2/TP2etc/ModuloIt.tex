@@ -1,0 +1,59 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
+\disParametrosFormales{}
+
+
+\disSeExplicaCon{}
+
+\disGenero{}
+
+\disOperaciones{}
+
+\disDeclaraFuncion{crearIt}{\paramIn{d}{diccTrie($\kappa,\sigma$)}}{res : itDiccTrie(\kappa,\sigma)}{true}{alias(esPermutacion(secuSuby(res),d)) \land vacia?(anteriores(res))}{\Ode{1}}{Crea un iterador bidireccional del diccionario, de forma tal que HayAnterior evalúe a false (i.e.,que se pueda recorrer los elementos aplicando iterativamente Siguiente)}
+\disComentAliasing{El iterador se invalida si y sólo si se elimina el elemento siguiente del iterador sin utilizar la función EliminarSiguiente. Además, anteriores(res) y siguientes(res) podrían cambiar completamente ante cualquier operación que modifique d sin utilizar las funciones del iterador.}
+
+\disDeclaraFuncion{haySiguiente}{\paramIn{it}{itDiccTrie($\kappa,\sigma$)}}{res : bool}{true}{res \igobs haySiguiente?(it)}{\Ode{1}}{Devuelve true si y sólo si en el iterador todavía quedan elementos para avanzar}
+\disComentAliasing{}
+
+\disDeclaraFuncion{hayAnterior}{\paramIn{it}{itDiccTrie($\kappa,\sigma$)}}{res : bool}{true}{res \igobs hayAnterior?(it)}{\Ode{1}}{Devuelve true si y sólo si en el iterador todavía quedan elementos para retroceder.}
+\disComentAliasing{}
+
+\disDeclaraFuncion{siguiente}{\paramIn{it}{itDiccTrie($\kappa,\sigma$)}}{res : tupla(\kappa,\sigma)}{haySiguiente?(it)}{alias(res \igobs siguiente(it))}{\Ode{1}}{devuelve el elemento siguiente del iterador.}
+\disComentAliasing{res.significado es modificable si y sólo si it es modificable. En cambio, res.clave no es modificable.}
+
+
+\disDeclaraFuncion{siguienteClave}{\paramIn{it}{itDiccTrie($\kappa,\sigma$)}}{res : \kappa}{haySiguiente?(it)}{alias(res \igobs siguiente(it).clave)}{\Ode{1}}{devuelve la clave del elemento siguiente del iterador.}
+\disComentAliasing{res no es modficable.}
+
+\disDeclaraFuncion{siguienteSignificado}{\paramIn{it}{itDiccTrie($\kappa,\sigma$)}}{res : \sigma}{haySiguiente?(it)}{alias(res \igobs siguiente(it).significado)}{\Ode{1}}{devuelve el significado del elemento siguiente del iterador.}
+\disComentAliasing{res es modificable si y sólo si it es modficable.}
+
+
+\disDeclaraFuncion{anterior}{\paramIn{it}{itDiccTrie($\kappa,\sigma$)}}{res : tupla(\kappa,\sigma)}{haySiguiente?(it)}{alias(res \igobs anterior(it))}{\Ode{1}}{devuelve el elemento anterior del iterador}
+\disComentAliasing{res.significado es modificable si y sólo si it es modificable. En cambio, res.clave no es modificable.}
+
+
+\disDeclaraFuncion{anteriorClave}{\paramIn{it}{itDiccTrie($\kappa,\sigma$)}}{res : \kappa}{haySiguiente?(it)}{alias(res \igobs anterior(it).clave)}{\Ode{1}}{devuelve la clave del elemento anterior del iterador.}
+\disComentAliasing{res no es modficable.}
+
+\disDeclaraFuncion{anteriorSignificado}{\paramIn{it}{itDiccTrie($\kappa,\sigma$)}}{res : \sigma}{haySiguiente?(it)}{alias(res \igobs anterior(it).significado)}{\Ode{1}}{devuelve el significado del elemento anterior del iterador.}
+\disComentAliasing{res es modificable si y sólo si it es modficable.}
+
+\disDeclaraFuncion{avanzar}{\paramInOut{it}{itDiccTrie($\kappa,\sigma$)}}{}{it = $it_{0}$ \land haySiguiente?(it)}{it \igobs avanzar($it_{0}$)}{\Ode{1}}{avanza a la posición siguiente del iterador.}
+\disComentAliasing{}
+
+\disDeclaraFuncion{retroceder}{\paramInOut{it}{itDiccTrie($\kappa,\sigma$)}}{}{it = $it_{0}$ \land hayAnterior?(it)}{it \igobs retroceder($it_{0}$)}{\Ode{1}}{retrocede a la posición siguiente del iterador.}
+\disComentAliasing{}
+
+
+

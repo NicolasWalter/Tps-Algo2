@@ -1,0 +1,192 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{DiccionarioTrie($\sigma$)}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}Se usa el {\sc Tad Diccionario($\kappa$, $\sigma$)} especificado en el apunte de Tads b\'asicos.
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
+\disParametrosFormales{}
+
+\disParametrosFormalesDeclaraFunc{\puntito = \puntito}{\paramIn{a_1}{\alpha}, \paramIn{a_2}{\alpha}}{res : bool}{true}{res \igobs (a_1 = a_2)}{\ThetaDe{equals(a_1, a_2)}}{funci\'on de igualdad de $\alpha$'s}
+\disParametrosFormalesDeclaraFunc{COPIAR}{\paramIn{k}{\kappa}}{res : \kappa}{true}{res \igobs k}{\ThetaDe{copy(k)}}{funci\'on de copia de $\kappa$'s}
+\disParametrosFormalesDeclaraFunc{COPIAR}{\paramIn{s}{\sigma}}{res : \sigma}{true}{res \igobs s}{\ThetaDe{copy(s)}}{funci\'on de copia de $\sigma$'s}
+
+\disSeExplicaCon{Diccionario($k,\sigma$), Iterador Bidireccional(Tupla($k,\sigma$))}
+
+\disGenero{dicc\_trie($\kappa,\sigma$)}
+
+\disOperaciones{b\'asicas de diccionario}
+
+\disDeclaraFuncion{Definido?}{\paramIn{d}{dicc\_trie(\kappa,\sigma)}, \paramIn{k}{string}}{res : bool}{true}{res \igobs def?(d, k)}{\Ode{|k|}}{Devuelve true si y s\'olo si $k$ est\'a definido en el diccionario.}
+
+\disDeclaraFuncion{Obtener}{\paramIn{d}{dicc\_trie(\kappa,\sigma)}, \paramIn{k}{string}}{res : \sigma}{def?(d, k)}{esAlias(res, obtener(d, k))}{\Ode{|k|}}{Devuelve el puntero al significado de la clave $k$ en $d$.}
+\disComentAliasing{ res no es modificable.}
+
+
+\disDeclaraFuncion{Vacio}{}{res : dicc\_trie(\kappa,\sigma)}{true}{res $\igobs$ vacio}{\Ode{1}}{Genera un diccionario vac\'io.}
+
+\disDeclaraProc{Definir}{\paramInOut{d}{dicc\_trie(\kappa,\sigma)}, \paramIn{k}{string}, \paramIn{s}{\sigma}}{d \igobs d_0}{d \igobs definir(k, s, d_0)}{\Ode{|k|}}{Define la clave $k$ con el significado $s$ en el diccionario.}
+
+
+
+
+
+
+\disPautasDeImplementacion
+
+\disEstructuraDeRepresentacion
+
+\disSeRepresentaCon{dicc\_trie(\kappa,\sigma)}{puntero(nodo)}
+\disDondeEs{nodo}{\disTuplaEstr{Puntero($\sigma$)/significado, arreglo[256] $de \ puntero (nodo)$/caracteres }}
+
+\disJustificacionDeLaEstructuraElegida
+
+%\disEstructurasAlternativas
+
+\disInvarianteDeRepresentacion
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Informal}}
+
+\hspace*{\disSubSubSecMargen}
+\begin{itemize}
+% HACK: SGA 20/06/2011. Para identar correctmente los items.
+\setlength{\itemindent}{3em}
+  \item Todas las posiciones del arreglo de caracteres están definidas.
+  \item No hay claves de 0 caracteres. El significado de la raíz es NULL.
+  \item No hay ciclos en la estructura. Es decir, existe una cota superior sobre la cantidad de niveles posibles del árbol.
+  \item Dado un nodo cualquiera del trie, existe un único camino desde la raíz hasta el nodo.
+\end{itemize}
+
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
+
+\disRep{estr}{e}{$true$ $\Longleftrightarrow$ 
+\\\hspace*{3.75em}(1)(\forall i:nat)(i<256 $\implies$ definido?(e $\rightarrow$ caracteres,i)) \yluego
+\\\hspace*{3.75em}(2)(e \rightarrow significado = NULL) \yluego
+\\\hspace*{3.75em}(2)($\exists$ n:nat)(finaliza(e,n)) \yluego
+\\\hspace*{3.75em}(3)($\forall$ p,q: puntero(nodo))(p $\in$ punteros(e) \land q \in (punteros(e) - \lbrace p\rbrace ) $\implies$ p\not=q) \yluego
+\\\hspace*{3.75em}}
+
+
+\disFuncionDeAbstraccion
+\vspace*{-1em}
+%\hspace*{\disSubSubSecMargen}{Texto}
+\disAbs{roseTree(estrDato)}{r}{dicc\_trie($\sigma$)}{d}{($\forall$ $k$ : secu($letra$))(def?(k, d) $\igobs$ esta?(k, r)) $\land$ (def?(c, d) $\implies$ (obtener(k, d) $\igobs$ buscar(k, r)))}
+
+
+\disFuncionDeAbsFuncionesAux
+
+
+\newpage
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iVacio}}{ }{$\disFlecha$ res : estr}
+  \State res $\gets$ $<Significado: NULL, Caracteres: crearArreglo()>$ \Comment{$\Ode{1}$}
+  \State for i $\gets$ 0 to 256 do \Comment{$\Ode{1}$}
+  \State res.caracteres[i] $\gets$ NULL \Comment{\Ode{1}}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iDefinir}}{\paramInOut{d}{estr}, \paramIn{k}{string}, \paramIn{s}{\sigma}}
+  \State nat $i$ $\gets$ 0 \Comment{$\Ode{1}$}
+  \State puntero actual $\gets$ d \Comment{$\Ode{1}$}
+  \While {($i$ $<$ $|k|$)} \Comment{$\Ode{|k|}$}
+    \If {actual $\disFlecha$ caracteres[ord(k[i])] = NULL} \Comment{$\Ode{1}$}
+      \State actual $\disFlecha$ caracteres[ord(k[i]) $\gets$ $i$Vacio() \Comment{$\Ode{1}$}
+      \EndIf
+      \State actual $\gets$ (actual $\disFlecha$ caracteres[ord(k[i])]) \Comment{$\Ode{1}$}
+      \State $i$ $\gets$ $i + 1$ \Comment{$\Ode{1}$}
+  \EndWhile
+    \State actual $\disFlecha$ significado $\gets$ $\&$copiar(s) \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iObtener}}{\paramIn{d}{estr}, \paramIn{k}{string}}{$\disFlecha$ res : $\sigma$}
+  \State nat $i$ $\gets$ 0 \Comment{$\Ode{1}$}
+  \State puntero actual $\gets$ d \Comment{$\Ode{1}$}
+  \While {$i$ $<$ $|k|$} \Comment{$\Ode{|k|}$}
+      \State actual $\gets$ (actual $\disFlecha$ caracteres[ord(k[i])]) \Comment{$\Ode{1}$}
+      \State $i$ $\gets$ $i+1$
+  \EndWhile
+  \State res $\gets$ *(actual $\disFlecha$ significado)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iDefinido?}}{\paramIn{d}{estr}, \paramIn{k}{string}}{$\disFlecha$ res : bool}
+  \State nat $i$ $\gets$ 0 \Comment{$\Ode{1}$}
+  \State puntero actual $\gets$ d \Comment{$\Ode{1}$}
+  \State bool def $\gets$ \textsf{true} \Comment{$\Ode{1}$}
+  \While {($i$ $<$ $|k|$ \textbf{and} def)} \Comment{$\Ode{|k|}$}
+    \If {actual $\disFlecha$ caracteres[ord(k[i])] = NULL} \Comment{$\Ode{1}$}
+      \State def $\gets$ \textsf{false} \Comment{$\Ode{1}$}
+      \Else
+        \State actual $\gets$ actual $\disFlecha$ caracteres[ord(k[i])] \Comment{$\Ode{1}$}
+        \State $i$ $\gets$ $i+1$ \Comment{$\Ode{1}$}
+      \EndIf
+  \EndWhile
+  \State res $\gets$ def $\land$ $¬$(actual $\disFlecha$ significado(NULL)) \Comment{$\Ode{1}$}
+
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\newpage
+\disServiciosUsados
+\vspace*{-1em}
+ 
+\disRequerimientosSobreElTipo{Secuencia}
+\disItemRequerimientosSobreElTipo{La funci\'on \textbf{$|$x$|$} debe tener complejidad $\Ode{1}$ en el caso peor.}
+\disItemRequerimientosSobreElTipo{La funci\'on \textbf{$|$x$|$} debe tener complejidad $\Ode{1}$ en el caso peor.}
+\disItemRequerimientosSobreElTipo{Las operaciones deben realizarse por referencia.}
+\disItemRequerimientosSobreElTipo{Debe proveer una operaci\'on \textbf{Copia} que devuelve una nueva instancia de la secuencia pero que es\\ \hspace*{5.75em}independiente de la actual, con complejidad $\Ode{n}$ en el caso peor.}
+\disItemRequerimientosSobreElTipo{Debe proveer un \textbf{iterador} para avanzar que comienza en el primero elemento de la secuencia.}
+\disItemRequerimientosSobreElTipo{Debe proveer un \textbf{iterador} para retroceder que comienza en el último elemento de la secuencia.}
+\disItemRequerimientosSobreElTipo{Las operaciones \textbf{CrearIt, Siguiente, Anterior, TieneSiguiente, TieneAnterior} deben tener complejidad \\
+\hspace*{5.75em}$\Ode{1}$ en el caso peor.}
+\vspace*{1em}
+\hspace*{2em}Donde $n$ es la longitud de la secuencia.
+
+\disJustificacionDeLosOrdenes
+
+\vspace*{-1em}
+
+\disComplejidadDeLaOperacion {Vacio}
+\hspace*{\disSubSecMargen}Esta funci\'on tiene complejidad $\Ode{1}$ porque se hace una operaci\'on de $\Ode{1}$.
+
+\disComplejidadDeLaOperacion {Definir}
+\hspace*{\disSubSecMargen}Tiene complejidad $\Ode{|k|}$, ya que hacemos $|k|$ veces el ciclo while. 
+
+\disComplejidadDeLaOperacion {Definido?}
+\hspace*{\disSubSecMargen}Como la funci\'on \textsc{QuienTieneLaLetra} y \textsc{EstaLaLetra?} tienen $\Ode{1}$ esto no influye en la complejidad del ciclo.
+\\\hspace*{3.5em}Como se recorre el ciclo $|k|$ veces, y las operaciones dentro del mismo son $\Ode{1}$ entonces la funci\'on tiene 
+\\\hspace*{3.5em}complejidad $\Ode{|k|}$.
+
+\disComplejidadDeLaOperacion {Obtener}
+\hspace*{\disSubSecMargen}Esta función va a tener complejidad $\Ode{|k|}$. Como la guarda del while se calcula en $\Ode{1}$, y adem\'as, la funci\'on
+\\\hspace*{3.5em}\textsc{QuienTieneEseAlfa} es $\Ode{1}$, y lo mismo para las asignaciones que est\'an dentro del if, entonces todas las
+\\\hspace*{3.5em}operaciones del while tienen complejidad $\Ode{1}$. Como este ciclo se hace |k| veces, este es la complejidad de la
+\\\hspace*{3.5em}funci\'on.
+
+
+
+

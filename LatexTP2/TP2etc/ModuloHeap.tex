@@ -1,0 +1,299 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{ColaHeap(paquete)}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}Se usa el {\sc Tad Cola de Prioridad($\alpha$)} especificado en el apunte de Tads b\'asicos.
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
+\disParametrosFormales{paquete}
+\disParametrosFormalesDeclaraFunc{\puntito = \puntito}{\paramIn{a_1}{paquete}, \paramIn{a_2}{paquete}}{res : bool}{true}{res \igobs (a_1 = a_2)}{\ThetaDe{equals(a_1, a_2)}}{funci\'on de igualdad de paquetes}
+\disParametrosFormalesDeclaraFunc{COPIAR}{\paramIn{k}{paquete}}{res : paquete}{true}{res \igobs k}{\ThetaDe{copy(k)}}{funci\'on de copia de paquetes}
+
+
+\disSeExplicaCon{Cola de Prioridad(\alpha)}
+
+\disGenero{colaHeap(paquete)}
+
+\disOperaciones{b\'asicas de colaHeap}
+
+\disDeclaraFuncion{Vacia}{}{res : colaHeap(paquete)}{true}{res \igobs vacia()}{\Ode{1}}{Genera una cola vacia.}
+
+\disDeclaraFuncion{Encolar}{\paramInOut{c}{colaHeap(paquete)}, \paramIn{a}{paquete}}{res : colaHeap(paquete)}{c \igobs c_0}{c \igobs encolar(a, c_0)}{\Ode{log(n)\ n\ es\ la\ cantidad\ de\ paquetes.}}{Agrega el elemento $a$ en la cola.}
+\disComentAliasing{}
+
+\disDeclaraFuncion{Vacia?}{\paramIn{c}{colaHeap(paquete)}}{res : bool}{true}{res \igobs vacia?(c)}{\Ode{1}}{Comprueba si la cola esta vacia}
+\disComentAliasing{}
+
+\disDeclaraFuncion{Desencolar}{\paramInOut{c}{colaHeap(paquete)}}{res : paquete}{c \igobs c_0 \ \land \ $¬$vacia?(c)}{c \igobs desencolar(c_0) \ $\land$ \ res $\igobs$ proximo(c)}{\Ode{log(n)}\ n\ es\ la\ cantidad\ de\ paquetes.}{Elimina el proximo de la cola y devuelve el eliminado.}
+\disComentAliasing{}
+
+%\disDeclaraFuncion{desencolar}{\paramInOut{c}{colaHeap(paquete)}}{res : colaHeap(paquete)}{c \igobs c_0 \land $¬$vacia?(c)}{c \igobs desencolar(c_0)}{\Ode{log(n)}}{Elimina el proximo de la cola}
+%\disComentAliasing{}
+
+
+
+\disPautasDeImplementacion
+
+\disEstructuraDeRepresentacion
+
+\disSeRepresentaCon{colaHeap(paquete)}{estr}
+\disDondeEs{estr}{\disTuplaEstr{puntero(nodo)/raiz, puntero(nodo)/padreUlt, nat/cant }}
+\disDondeEs{nodo}{\disTuplaEstr{puntero(nodo)/izq, puntero(nodo)/der, puntero(nodo)/padre, paquete/elem }}
+
+
+
+%\disEstructurasAlternativas
+
+\disInvarianteDeRepresentacion
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Informal}}
+
+\hspace*{\disSubSubSecMargen}
+\begin{enumerate}
+% HACK: SGA 20/06/2011. Para identar correctmente los items.
+\setlength{\itemindent}{3em}
+  \item La priroridad de cada nodo es mayor que la de sus hijos, es izquierdista, esta balanceado, si un nodo es hijo de un nodo N, su puntero padre apunta a N.
+  \item $Cant$ es la cantidad de elementos.
+  \item $PadreUlt$ apunta al ultimo (de izquerda a derecha) nodo incompleto de un nivel completo (completo es que el nivel tiene todos los nodos posibles).
+  \item No hay nodos repetidos ni ciclos.
+\end{enumerate}
+
+\doublespace
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
+
+\disRep{estr}{e}{$true$ $\Longleftrightarrow$ 
+\\\hspace*{3.75em}(1)esHeap?(c.raiz) \yluego
+\\\hspace*{3.75em}(2)c.cant \igobs cantNodos(c.raiz) \yluego
+\\\hspace*{3.75em}(3)c.cant $>$ 1 \impluego c.padreUlt \igobs buscarPadreUlt(c.raiz)
+\\\hspace*{3.75em}(4)($\forall p$: puntero(nodo)) (p $\in$ punteros(r.raiz)) $\implies$ \#(p, punteros(r.raiz)) \igobs 1)} 
+
+
+
+\disFuncionDeAbstraccion
+\vspace*{-1em}
+%\hspace*{\disSubSubSecMargen}{Texto}
+\disAbs{estr}{e}{colaPrior(paquete)}{c}{\IF c.cant = 0 THEN vacia ELSE encolado(colaSecu(c.raiz)) FI}
+\singlespace
+
+\disFuncionDeAbsFuncionesAux
+
+\tadOperacion{\tadNombreFuncion{\hspace*{2.3em}esHeap?}}{puntero(nodo)/n}{bool}{}
+\tadAxioma{\hspace*{2.3em}esHeap?(n)}{\IF n = NULL THEN true ELSE $¬$(n$\rightarrow$der = NULL) $\implies$ $¬$(n$\rightarrow$izq = NULL) $\land$ \\ \IF n$\rightarrow$izq = NULL THEN true ELSE (n$\rightarrow$elem).prioridad $>$ $\bigstar$ $\land$ n$\rightarrow$izq$\rightarrow$padre = n $\land$ \\ \IF n$\rightarrow$der = NULL THEN true ELSE (n$\rightarrow$elem).prioridad $>$ (n$\rightarrow$der$\rightarrow$elem).prioridad $\land$ n$\rightarrow$der$\rightarrow$padre = n FI FI \\ $\land$ altura(n$\rightarrow$izq)-altura(n$\rightarrow$der) $<=$ 1 $\land$ esHeap?(n$\rightarrow$izq) $\land$ esHeap?(n$\rightarrow$der) FI}\mbox{} \\
+
+\hspace*{2.3em}$\bigstar$==(n$\rightarrow$izq$\rightarrow$elem).prioridad \\
+
+
+\tadOperacion{\tadNombreFuncion{\hspace*{2.3em}cantNodos}}{puntero(nodo)/n}{nat}{}
+\tadAxioma{\hspace*{2.3em}cantNodos(n)}{\IF n = NULL THEN 0 ELSE 1 + cantNodos(n$\rightarrow$izq) + cantNodos(n$\rightarrow$der) FI}\mbox{}
+
+\tadOperacion{\tadNombreFuncion{\hspace*{2.3em}altura}}{puntero(nodo)/n}{nat}{}
+\tadAxioma{\hspace*{2.3em}altura(n)}{\IF n = NULL THEN 0 ELSE 1 + max(cantNodos(n$\rightarrow$izq), cantNodos(n$\rightarrow$der)) FI}\mbox{}
+
+\tadOperacion{\tadNombreFuncion{\hspace*{2.3em}buscarPadreUlt}}{puntero(nodo)/n}{nat}{cantNodos(n) $>$ 1 \land esHeap?(n)}
+\tadAxioma{\hspace*{2.3em}buscarPadreUlt(n)}{\IF n$\rightarrow$der = NULL \lor altura(n$\rightarrow$der) = 1 THEN n ELSE \IF altura(n$\rightarrow$der) + 1 = altura(n$\rightarrow$izq) THEN buscarPadreUlt(n$\rightarrow$izq) ELSE buscarPadreUlt(n$\rightarrow$der) FI FI}\mbox{}
+
+\tadOperacion{\tadNombreFuncion{\hspace*{2.3em}punteros}}{puntero(nodo)/n}{multiconjunto(puntero(nodo))}{}
+\tadAxioma{\hspace*{2.3em}punteros(n)}{\IF n = NULL THEN $\emptyset$ ELSE Ag(n,punteros(n$\rightarrow$izq)) $\cup$ punteros(n$\rightarrow$der) FI}\mbox{}
+
+\tadOperacion{\tadNombreFuncion{\hspace*{2.3em}encolado}}{secu(paquete)/s}{ColaPrior(paquete)}{}
+\tadAxioma{\hspace*{2.3em}encolado(s)}{\IF vacia?(s) THEN vacia ELSE encolar(prim(s),encolado(fin(s))) FI }\mbox{}
+
+\tadOperacion{\tadNombreFuncion{\hspace*{2.3em}colaSecu}}{puntero(nodo)/n}{secu(paquete)}{}
+\tadAxioma{\hspace*{2.3em}colaSecu(n)}{\IF n = NULL THEN $<$ $>$ ELSE n$\rightarrow$elem \puntito colaSecu(n$\rightarrow$izq) & colaSecu(n$\rightarrow$der) FI}\mbox{}
+
+
+\newpage
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Encolar}}{\paramInOut{c}{estr}, \paramIn{p}{paquete}} \Comment{$\Ode{log_{2}(k)}$}
+  \State var $nodo$ n $\gets$ new Nodo \Comment{$\Ode{1}$}
+  \State n$\rightarrow$izq $\gets$ NULL \Comment{$\Ode{1}$}
+  \State n$\rightarrow$der $\gets$ NULL \Comment{$\Ode{1}$}
+  \State n$\rightarrow$elem $\gets$ p \Comment{$\Ode{1}$}
+  \State n$\rightarrow$padre $\gets$ NULL \Comment{$\Ode{1}$}
+  \If {c.raiz = NULL}  \Comment{$\Ode{1}$}
+     \State c.raiz $\gets$ $\&$n \Comment{$\Ode{1}$}
+  \Else
+     \If {c.padreUlt = NULL} \Comment{$\Ode{1}$}
+       \State c.padreUlt $\gets$ c.raiz \Comment{$\Ode{1}$}
+       \State n$\rightarrow$padre $\gets$ c.raiz \Comment{$\Ode{1}$}
+       \State c.raiz$\rightarrow$izq $\gets$ $\&$n \Comment{$\Ode{1}$}
+     \Else
+       \If {c.padreUlt$\rightarrow$der = NULL} \Comment{$\Ode{1}$}
+          \State n$\rightarrow$padre $\gets$ c.padreUlt \Comment{$\Ode{1}$}
+          \State c.padreUlt$\rightarrow$der $\gets$ $\&$n \Comment{$\Ode{1}$}
+       \Else
+          \State int alt $\gets$ $log_{2}(c.cant)$ \Comment{$\Ode{1}$}
+          \If {c.cant = $2^{alt}$} \Comment{$\Ode{1}$}
+            \State var $puntero(nodo)$ actual $\gets$ c.raiz \Comment{$\Ode{1}$}
+            \While {actual$\rightarrow$izq != NULL} \Comment{$\Ode{log_{2}(k)}$}
+               \State actual $\gets$ actual$\rightarrow$izq \Comment{$\Ode{1}$}                   
+            \EndWhile
+            \State c.padreUlt $\gets$ actual \Comment{$\Ode{1}$}
+            \State n$\rightarrow$padre $\gets$ actual \Comment{$\Ode{1}$}
+            \State actual$\rightarrow$izq $\gets$ $\&$n \Comment{$\Ode{1}$}
+          \Else
+            \State var $puntero(nodo)$ abuelo $\gets$ c.padreUlt$\rightarrow$padre \Comment{$\Ode{1}$}
+            \State actual $\gets$ c.padreUlt \Comment{$\Ode{1}$}
+            \While {abuelo != NULL $&&$ abuelo$\rightarrow$der = actual} \Comment{$\Ode{log_{2}(k)}$}
+               \State actual $\gets$ abuelo \Comment{$\Ode{1}$}
+               \State abuelo $\gets$ abuelo$\rightarrow$padre \Comment{$\Ode{1}$}
+            \EndWhile
+            \State actual $\gets$ abuelo$\rightarrow$der \Comment{$\Ode{1}$}
+            \While {actual$\rightarrow$izq != NULL} \Comment{$\Ode{log_{2}(k)}$}
+               \State actual $\gets$ actual$\rightarrow$izq \Comment{$\Ode{1}$}
+            \EndWhile
+            \State c.padreUlt $\gets$ actual \Comment{$\Ode{1}$}
+          \EndIf
+       \EndIf
+     \EndIf 
+  \EndIf
+  \State acomodar(n) \Comment{$\Ode{log_{2}(k)}$}
+  \State c.cant++ \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm} 
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Vacio}}{ }{$\disFlecha$ res : estr}\Comment{$\Ode{1}$}
+  \State res $\gets$ $<NULL, NULL, 0>$ \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm} 
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Vacia?}}{\paramIn{c}{estr}}{$\disFlecha$ res : bool}\Comment{$\Ode{1}$}
+  \State res $\gets$ c.raiz = NULL \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm} 
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{Acomodar}}{\paramInOut{n}{Nodo}}\Comment{$\Ode{log_{2}(k)}$}
+  \State var $puntero(nodo)$ pad $\gets$ n$\rightarrow$padre \Comment{$\Ode{1}$}
+  \While {pad != NULL $\&\&$ mayorPrioridad(n$\rightarrow$elem, pad$\rightarrow$elem)} \Comment{$\Ode{log_{2}(k)}$}
+    \State swap(pad,n) \Comment{$\Ode{1}$}
+    \State pad $\gets$ n$\rightarrow$padre \Comment{$\Ode{1}$}
+  \EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm} 
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{mayorPrioridad}}{\paramIn{p1}{paquete}, \paramIn{p2}{paquete}}{$\disFlecha$ res : bool}\Comment{$\Ode{1}$}
+  \State res $\gets$ p1.prioridad $>$ p2.prioridad \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm} 
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{Swap}}{\paramIn{papa}{Nodo}, \paramIn{hijo}{Nodo}}\Comment{$\Ode{1}$}
+  \If {papa$\rightarrow$padre != NULL} \Comment{$\Ode{1}$}
+    \If {papa$\rightarrow$padre$\rightarrow$der = papa} \Comment{$\Ode{1}$}
+      \State papa$\rightarrow$padre$\rightarrow$der $\gets$ hijo \Comment{$\Ode{1}$}
+    \Else
+      \State papa$\rightarrow$padre$\rightarrow$izq $\gets$ hijo \Comment{$\Ode{1}$}
+    \EndIf
+  \EndIf
+  \State hijo$\rightarrow$padre $\gets$  papa$\rightarrow$padre \Comment{$\Ode{1}$}
+  \State papa$\rightarrow$padre $\gets$ hijo \Comment{$\Ode{1}$}
+  \If {hijo$\rightarrow$izq != NULL}  \Comment{$\Ode{1}$}
+    \State hijo$\rightarrow$izq$\rightarrow$padre $\gets$ papa \Comment{$\Ode{1}$}
+  \EndIf
+  \If {hijo$\rightarrow$der != NULL}  \Comment{$\Ode{1}$}
+    \State hijo$\rightarrow$der$\rightarrow$padre $\gets$ papa \Comment{$\Ode{1}$}
+  \EndIf
+  \State var $puntero(nodo)$ aux
+  \If {papa$\rightarrow$der = hijo} \Comment{$\Ode{1}$}
+    \State aux $\gets$ papa$\rightarrow$izq \Comment{$\Ode{1}$}
+    \State aux$\rightarrow$padre $\gets$ hijo \Comment{$\Ode{1}$}
+    \State papa$\rightarrow$der $\gets$ hijo$\rightarrow$der \Comment{$\Ode{1}$}
+    \State papa$\rightarrow$izq $\gets$ hijo$\rightarrow$izq \Comment{$\Ode{1}$}
+    \State hijo$\rightarrow$der $\gets$ papa \Comment{$\Ode{1}$}
+    \State hijo$\rightarrow$izq $\gets$ aux \Comment{$\Ode{1}$}
+  \Else
+    \State aux $\gets$ papa$\rightarrow$der \Comment{$\Ode{1}$}
+    \State aux$\rightarrow$padre $\gets$ hijo \Comment{$\Ode{1}$}
+    \State papa$\rightarrow$der $\gets$ hijo$\rightarrow$der \Comment{$\Ode{1}$}
+    \State papa$\rightarrow$izq $\gets$ hijo$\rightarrow$izq \Comment{$\Ode{1}$}
+    \State hijo$\rightarrow$izq $\gets$ papa \Comment{$\Ode{1}$}
+    \State hijo$\rightarrow$der $\gets$ aux  \Comment{$\Ode{1}$}
+  \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm} 
+
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Desencolar}}{\paramInOut{c}{estr}}{$\disFlecha$ res : paquete}\Comment{$\Ode{log_{2}(k)}$}
+  \State res $\gets$ c.raiz$\rightarrow$elem \Comment{$\Ode{1}$}
+  \State var $puntero(nodo)$ ult \Comment{$\Ode{1}$}
+  \If {c.padreUlt$\rightarrow$der != NULL} \Comment{$\Ode{1}$}
+     \State ult $\gets$ c.padreUlt$\rightarrow$der \Comment{$\Ode{1}$}
+     \State c.padreUlt$\rightarrow$der $\gets$ NULL \Comment{$\Ode{1}$}
+  \Else
+     \State ult $\gets$ c.padreUlt$\rightarrow$izq \Comment{$\Ode{1}$}
+     \State c.padreUlt$\rightarrow$izq $\gets$ NULL \Comment{$\Ode{1}$}
+  \EndIf
+  \State ult$\rightarrow$padre $\gets$ NULL \Comment{$\Ode{1}$}
+  \State ult$\rightarrow$izq $\gets$ c.raiz$\rightarrow$izq \Comment{$\Ode{1}$}
+  \State ult$\rightarrow$der $\gets$ c.raiz$\rightarrow$der \Comment{$\Ode{1}$}
+  \State ult$\rightarrow$der$\rightarrow$padre $\gets$ ult \Comment{$\Ode{1}$}
+  \State ult$\rightarrow$izq$\rightarrow$padre $\gets$ ult \Comment{$\Ode{1}$}
+  \State c.raiz $\gets$ ult \Comment{$\Ode{1}$}
+  \State bajar(ult,c) \Comment{$\Ode{log_{2}(k)}$}
+  \State c.cant - - \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm} 
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{Bajar}}{\paramInOut{c}{estr}}\Comment{$\Ode{log_{2}(k)}$}
+  \While {n$\rightarrow$izq != NULL $\&\&$ mayorPrioridad(n$\rightarrow$elem, n$\rightarrow$izq$\rightarrow$elem) \lor n$\rightarrow$der != NULL $\&\&$ mayorPrioridad(n$\rightarrow$elem, n$\rightarrow$der$\rightarrow$elem)} \Comment{$\Ode{log_{2}(k)}$}
+    \If {n$\rightarrow$der != NULL $\&\&$ mayorPrioridad(n$\rightarrow$der$\rightarrow$elem, n$\rightarrow$izq$\rightarrow$elem)} \Comment{$\Ode{1}$}
+      \If {n = c.raiz} \Comment{$\Ode{1}$}
+           \State c.raiz $\gets$ n$\rightarrow$der \Comment{$\Ode{1}$}
+      \EndIf
+      \State swap(n, n$\rightarrow$der) \Comment{$\Ode{1}$}
+    \Else
+      \If {n = c.raiz} \Comment{$\Ode{1}$}
+           \State c.raiz $\gets$ n$\rightarrow$izq \Comment{$\Ode{1}$}
+      \EndIf
+      \State swap(n, n$\rightarrow$izq) \Comment{$\Ode{1}$}
+    \EndIf
+  \EndWhile 
+\EndFunction
+\end{algorithmic}
+\end{algorithm} 
