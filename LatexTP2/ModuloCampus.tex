@@ -37,6 +37,10 @@
  
 \disDeclaraFuncion{Vecinos}{\paramIn{c}{campus}, \paramIn{p}{posicion}}{res : conj(posicion)}{posValida(p,c)}{res $\igobs$ vecinos(p,c)}{\Ode{1}}{Devuelve el conjunto de posiciones vecinas a p.}
 
+\disDeclaraFuncion{VecinosComunes}{\paramIn{c}{campus}, \paramIn{p}{posicion}, \paramIn{p2}{posicion}}{res : conj(posicion)}{posValida(p,c) $\land$ posValida(p2,c)}{res $\igobs$ vecinos(p,c)$\cap$vecinos(p2,c)}{\Ode{1}}{Devuelve el conjunto de vecinos comunes. La complejidad es \Ode{1} dado que los vecinos son a lo sumo 4, o sea, constantes}
+
+\disDeclaraFuncion{VecinosComunes}{\paramIn{c}{campus}, \paramIn{p}{posicion}, \paramIn{p2}{posicion}}{res : conj(posicion)}{posValida(p,c) $\land$ posValida(p2,c)}{res $\igobs$ vecinos(p,c)$\cap$vecinos(p2,c)}{\Ode{1}}{Devuelve el conjunto de vecinos comunes entre dos posiciones. La complejidad es \Ode{1} dado que los vecinos son a lo sumo 4, o sea, constantes.}
+
 \disDeclaraFuncion{ProxPosicion}{\paramIn{c}{campus}, \paramIn{dir}{direccion}, \paramIn{p}{posicion}}{res : posicion}{posValida(p,c)}{res $\igobs$ proxPosicion(p,d,c)}{\Ode{1}}{Devuelve la posicion vecina a p que esta en la direccion dir.}
 
 \disDeclaraFuncion{IngresosMasCercanos}{\paramIn{c}{campus}, \paramIn{p}{posicion}}{res : conj(posicion)}{posValida(p,c)}{res $\igobs$ ingresosMasCercanos(p,c)}{\Ode{1}}{Devuelve el conjunto de ingresos mas cercanos a p.}
@@ -177,14 +181,30 @@
 
 \begin{algorithm}\phantom{[H]}
 \begin{algorithmic}[1]
-\Function {\textsc{$i$VecinosComunes}}{\paramIn{e}{estr}, \paramIn{p}{posicion}, \paramIn{p2}{posicion}}{$\disFlecha$ res : conj(posicion)} \Comment{$\Ode{}$}
-    \State  var conj(posicion) v $\gets$ vecinos(e,p)
-    \State  var conj(posicion) v2 $\gets$ vecinos(e,p2)
-    \State  var conj(posicion) nuevo $\gets$ vacio() 
-    \State var $itConj(posicion)$ it $\gets$ crearIt(v)
-    \While {haySiguiente(it)} \Comment{$\Ode{c}$}
-      \If {pertenece?(v2,siguiente(it))} \Comment{$\Ode{1}$}
-        \State Agregar(nuevo, siguiente(it))
+\Function {\textsc{$i$VecinosComunes}}{\paramIn{e}{estr}, \paramIn{p}{posicion}, \paramIn{p2}{posicion}}{$\disFlecha$ res : conj(posicion)} \Comment{$\Ode{1}$}
+    \State  var conj(posicion) v $\gets$ vecinos(e,p) \Comment{$\Ode{1}$}
+    \State  var conj(posicion) v2 $\gets$ vecinos(e,p2) \Comment{$\Ode{1}$} 
+    \State  var conj(posicion) nuevo $\gets$ vacio() \Comment{$\Ode{1}$}
+    \State var $itConj(posicion)$ it $\gets$ crearIt(v) \Comment{$\Ode{1}$}
+    \While {haySiguiente(it)} \Comment{$\Ode{1}$}
+      \If {Pertenece?(v2,Siguiente(it))} \Comment{$\Ode{1}$}
+        \State Agregar(nuevo, Siguiente(it))	\Comment{$\Ode{1}$}
+       \EndIf
+       \State Avanzar(it) \Comment{$\Ode{1}$}
+    \EndWhile
+ \State res $\gets$ nuevo \Comment{$\Ode{1}$}    
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$VecinosValidos}}{\paramIn{e}{estr}, \paramIn{ps}{conj(posicion)}} {$\disFlecha$ res : conj(posicion)} \Comment{$\Ode{1}$}
+    \State  var conj(posicion) nuevo $\gets$ vacio() \Comment{$\Ode{1}$}
+    \State var $itConj(posicion)$ it $\gets$ crearIt(ps) \Comment{$\Ode{1}$}
+    \While {haySiguiente(it)} \Comment{$\Ode{1}$} 
+      \If {PosValida?(e,siguiente(it))} \Comment{$\Ode{1}$}
+        \State Agregar(nuevo, siguiente(it))\Comment{$\Ode{1}$}
       \EndIf
       \State avanzar(it) \Comment{$\Ode{1}$}
     \EndWhile
@@ -195,19 +215,56 @@
 
 \begin{algorithm}\phantom{[H]}
 \begin{algorithmic}[1]
-\Function {\textsc{$i$VecinosValidos}}{\paramIn{e}{estr}, \paramIn{ps}{conj(posicion)}}{$\disFlecha$ res : conj(posicion)} \Comment{$\Ode{}$}
-    \State  var conj(posicion) nuevo $\gets$ vacio() 
-    \State var $itConj(posicion)$ it $\gets$ crearIt(ps)
-    \While {haySiguiente(it)} \Comment{$\Ode{c}$}
-      \If {pertenece?(v2,siguiente(it))} \Comment{$\Ode{1}$}
-        \State Agregar(nuevo, siguiente(it))
-      \EndIf
-      \State avanzar(it) \Comment{$\Ode{1}$}
-    \EndWhile
- \State res $\gets$ nuevo \Comment{$\Ode{1}$}    
+\Function {\textsc{$i$Distancia}}{\paramIn{e}{estr}, \paramIn{p}{posicion}, \paramIn{p2}{posicion}}{$\disFlecha$ res : nat} \Comment{$\Ode{1}$}
+    \State res $\gets$ $\mid$p.X - p2.X$\mid$ + $\mid$p.Y - p2.Y$\mid$ \Comment{$\Ode{1}$}    
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$ProxPosicion}}{\paramIn{e}{estr}, \paramIn{d}{direccion}, \paramIn{p}{posicion}}{$\disFlecha$ res : posicion} \Comment{$\Ode{1}$}
+		  \State var posicion p2 $\gets$ p	      
+	  \If {d$==$izq}
+	        \State p2 $\gets$ $<$p2.X+1, p2.Y$>$   \Comment{$\Ode{1}$}
+	  \Else
+	      \If {d$==$der}
+            \State p2 $\gets$ $<$p2.X, p2.Y$>$   \Comment{$\Ode{1}$}
+          \Else
+             \If {d$==$arriba} \Comment{$\Ode{1}$}
+          		\State p2 $\gets$ $<$p2.X, p2.Y-1$>$ \Comment{$\Ode{1}$}
+          	  \Else 
+          		\State p2 $\gets$ $<$p2.X, p2.Y+1$>$ \Comment{$\Ode{1}$}
+   			 \EndIf		   
+		  \EndIf		
+      \EndIf
+      
+    \State res $\gets$ p2 \Comment{$\Ode{1}$}    
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$IngresosMasCercanos}}{\paramIn{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : conj(posicion)} \Comment{$\Ode{1}$}
+		  \State var conj(posicion) nuevo $\gets$ Vacio()	      \Comment{$\Ode{1}$}
+	      \If {distancia(e, p, $<$p.x,1$>$) $<$ distancia(e, p, $<$p.x,e.filas$>$)} \Comment{$\Ode{1}$}
+		        \State Agregar(nuevo, $<$p.x,1$>$) \Comment{$\Ode{1}$}
+	      \Else
+		      	\If {distancia(e, p, $<$p.x,1$>$) $>$ distancia(e, p, $<$p.x,filas(e)$>$)} \Comment{$\Ode{1}$}
+        		    \State Agregar(nuevo, $<$p.x,e.filas$>$) \Comment{$\Ode{1}$}
+		        \Else
+        	  		\State Agregar(nuevo, $<$p.x,1$>$) \Comment{$\Ode{1}$}
+					\State Agregar(nuevo, $<$p.x,e.filas$>$) \Comment{$\Ode{1}$}
+				\EndIf
+     	 \EndIf
+    \State res $\gets$ nuevo \Comment{$\Ode{1}$}    
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
 
 \end{algorithm}
 

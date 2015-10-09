@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.12.22)  9 OCT 2015 12:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.12.22)  9 OCT 2015 16:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -546,14 +546,106 @@ LaTeX Warning: Reference `LastPage' on page 2 undefined on input line 36.
 
 
 ]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.40 ...ecinos son a lo sumo 4, o sea, constantes}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 80.
+! Missing $ inserted.
+<inserted text> 
+                $
+l.40 ...ecinos son a lo sumo 4, o sea, constantes}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.40 ...ecinos son a lo sumo 4, o sea, constantes}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.40 ...ecinos son a lo sumo 4, o sea, constantes}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: \mathcal allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.40 ...ecinos son a lo sumo 4, o sea, constantes}
+                                                  
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42 ...cinos son a lo sumo 4, o sea, constantes.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42 ...cinos son a lo sumo 4, o sea, constantes.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42 ...cinos son a lo sumo 4, o sea, constantes.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42 ...cinos son a lo sumo 4, o sea, constantes.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: \mathcal allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.42 ...cinos son a lo sumo 4, o sea, constantes.}
+                                                  
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 75.
 
 [3]
+
+LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 84.
+
+[4]
 ! Extra }, or forgotten \endgroup.
 \@endfloatbox ...pagefalse \outer@nobreak \egroup 
                                                   \color@endbox 
-l.198 \end{algorithm}
+l.269 \end{algorithm}
                      
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -564,7 +656,7 @@ deleted material, e.g., by typing `I$}'.
 ! Too many }'s.
 \color@endbox ->\color@endgroup \egroup 
                                         
-l.198 \end{algorithm}
+l.269 \end{algorithm}
                      
 You've closed more groups than you opened.
 Such booboos are generally harmless, so keep going.
@@ -572,7 +664,7 @@ Such booboos are generally harmless, so keep going.
 ! Undefined control sequence.
 \endalgorithm ...oatbox \global \setbox \@currbox 
                                                   \float@makebox \columnwidt...
-l.198 \end{algorithm}
+l.269 \end{algorithm}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -583,7 +675,7 @@ and I'll forget about whatever was undefined.
 ! Missing number, treated as zero.
 <to be read again> 
                    \vbox 
-l.198 \end{algorithm}
+l.269 \end{algorithm}
                      
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
@@ -592,7 +684,7 @@ look up `weird error' in the index to The TeXbook.)
 ! Undefined control sequence.
 \float@makebox ...ze =#1 \@parboxrestore \@fs@pre 
                                                   \@fs@iftopcapt \ifvoid \@f...
-l.198 \end{algorithm}
+l.269 \end{algorithm}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -603,7 +695,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 \float@makebox ...restore \@fs@pre \@fs@iftopcapt 
                                                   \ifvoid \@floatcapt \else ...
-l.198 \end{algorithm}
+l.269 \end{algorithm}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -614,7 +706,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 \float@makebox ... \@fs@mid \fi \unvbox \@currbox 
                                                   \else \unvbox \@currbox \i...
-l.198 \end{algorithm}
+l.269 \end{algorithm}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -625,7 +717,7 @@ and I'll forget about whatever was undefined.
 ! Missing number, treated as zero.
 <to be read again> 
                    \par 
-l.198 \end{algorithm}
+l.269 \end{algorithm}
                      
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
@@ -634,7 +726,7 @@ look up `weird error' in the index to The TeXbook.)
 ! Undefined control sequence.
 \float@makebox ...loatcapt \fi \fi \par \@fs@post 
                                                   \vskip \z@ }
-l.198 \end{algorithm}
+l.269 \end{algorithm}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -649,7 +741,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.198 \end{algorithm}
+l.269 \end{algorithm}
                      
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -658,19 +750,23 @@ or  <return>  to continue without it.
 ! Extra \endgroup.
 <recently read> \endgroup 
                           
-l.198 \end{algorithm}
+l.269 \end{algorithm}
                      
 Things are pretty mixed up, but I think the worst is over.
 
 )
 
-LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 41.
-
-[4]
-
 LaTeX Warning: Reference `LastPage' on page 5 undefined on input line 41.
 
 [5]
+
+LaTeX Warning: Reference `LastPage' on page 6 undefined on input line 41.
+
+[6]
+
+LaTeX Warning: Reference `LastPage' on page 7 undefined on input line 41.
+
+[7]
 ! Extra \else.
 \@include ...ediate \closeout \@partaux \fi \else 
                                                   \deadcycles \z@ \@nameuse ...
@@ -694,13 +790,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 5217 strings out of 493109
- 71706 string characters out of 6135009
- 167384 words of memory out of 5000000
- 8536 multiletter control sequences out of 15000+600000
+ 5223 strings out of 493109
+ 71791 string characters out of 6135009
+ 176384 words of memory out of 5000000
+ 8542 multiletter control sequences out of 15000+600000
  10125 words of font info for 38 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,14n,43p,431b,384s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,14n,43p,536b,384s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb
@@ -717,10 +813,10 @@ live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/te
 xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
 live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texl
 ive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on informe.pdf (5 pages, 549823 bytes).
+Output written on informe.pdf (7 pages, 553538 bytes).
 PDF statistics:
- 86 PDF objects out of 1000 (max. 8388607)
- 60 compressed objects within 1 object stream
+ 94 PDF objects out of 1000 (max. 8388607)
+ 66 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
