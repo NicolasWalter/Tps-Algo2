@@ -1,12 +1,13 @@
-function imoverHippie (inout e:estr, h:nombre, d:direccion){
+function imoverHippie (inout e:estr, h:nombre){
 	var posicion actual <-- obtener (e.posCiviles, h)
+	var posicion d <-- FUNCION A HACER DONDE TE DEVUELVE LA PROXIMA POSICION
 	var posicion prx <-- proxPosicion(e.campus, d, obtener(e.posCiviles,h))
 	var itConj(nombre) copia <-- e.quienOcupa[actual.X][actual.Y].hayHippieoEstudiante
 		QuienOcupa [actual.X][actual.Y] <-- <false, nadie, nuevoIt(), nuevoIt()>
-		QuienOcupa [p.X][p.Y] <-- <false, hippie, nuevoIt(), copia>
+		QuienOcupa [prx.X][prx.Y] <-- <true, hippie, nuevoIt(), copia>
 		borrar (e.posCiviles, h)
-		definir(e.posCiviles, h, p)
-	var conj(posicion) Ps <-- vecinos(e.campus, p)
+		definir(e.posCiviles, h, prx)
+	var conj(posicion) Ps <-- vecinos(e.campus, prx)
 	var itConj(posicion) it <-- crearIt(Ps)
 
 	while (haySiguiente(it)) do
