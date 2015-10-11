@@ -1,0 +1,205 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{DiccionarioString($\sigma$)}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}Se usa el {\sc Tad Diccionario($\kappa$, $\sigma$)} especificado en el apunte de Tads b\'asicos.
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
+\disParametrosFormales{$\kappa,\sigma$}
+
+\disParametrosFormalesDeclaraFunc{\puntito = \puntito}{\paramIn{a_1}{\kappa}, \paramIn{a_2}{\kappa}}{res : bool}{true}{res \igobs (a_1 = a_2)}{\ThetaDe{equals(a_1, a_2)}}{funci\'on de igualdad de $\kappa$'s}
+\disParametrosFormalesDeclaraFunc{COPIAR}{\paramIn{k}{\kappa}}{res : \kappa}{true}{res \igobs k}{\ThetaDe{copy(k)}}{funci\'on de copia de $\kappa$'s}
+\disParametrosFormalesDeclaraFunc{COPIAR}{\paramIn{s}{\sigma}}{res : \sigma}{true}{res \igobs s}{\ThetaDe{copy(s)}}{funci\'on de copia de $\sigma$'s}
+
+\disSeExplicaCon{Diccionario($\kappa,\sigma$), Iterador Bidireccional(Tupla($\kappa,\sigma$))}
+
+\disGenero{diccString($\kappa$,$\sigma$)}
+
+\disOperaciones{b\'asicas de diccionario}
+
+\disDeclaraFuncion{Definido?}{\paramIn{d}{diccString(\kappa,\sigma)}, \paramIn{k}{\kappa}}{res : bool}{true}{res \igobs def?(d, k)}{\Ode{|k|}\ |k|\ es\ la\ longitud\ de\ la\ clave.}{Devuelve true si y s\'olo si $k$ est\'a definido en el diccionario.}
+
+\disDeclaraFuncion{Obtener}{\paramIn{d}{diccString(\kappa,\sigma)}, \paramIn{k}{\kappa}}{res : \sigma}{def?(d, k)}{alias(res \ $\igobs$ obtener(d, k))}{\Ode{|k|}\ |k|\ es\ la\ longitud\ de\ la\ clave.}{Devuelve el significado de la clave $k$ en $d$.}
+\disComentAliasing{ res no es modificable.}
+
+
+\disDeclaraFuncion{Vacio}{}{res : diccString(\kappa,\sigma)}{true}{res $\igobs$ vacio()}{\Ode{1}}{Genera un diccionario vac\'io.}
+
+\disDeclaraProc{Definir}{\paramInOut{d}{diccString(\kappa,\sigma)}, \paramIn{k}{\kappa}, \paramIn{s}{\sigma}}{d \igobs d_0}{d \igobs definir(k, s, d_0)}{\Ode{|k|}\ |k|\ es\ la\ longitud\ de\ la\ clave.}{Define la clave $k$ con el significado $s$ en el diccionario.}
+
+\disDeclaraFuncion{Borrar}{\paramInOut{d}{diccString(\kappa,\sigma)}, \paramIn{k}{\kappa}}{res : bool}{d=$d_{0}$ \land def?(k,d)}{d \igobs borrar(k,$d_{0}$)}{\Ode{|k|}\ |k|\ es\ la\ longitud\ de\ la\ clave.}{Elimina la clave k del diccionario.}
+
+
+
+\disOperaciones{b\'asicas del iterador}
+
+\disDeclaraFuncion{CrearIt}{\paramIn{d}{diccString(\kappa,\sigma)}}{res : itdiccString(\kappa,\sigma)}{true}{alias(esPermutacion(SecuSuby(res),d)) \ \land vacia?(Anteriores(res))}{\Ode{n}\ n\ es\ la\ cantidad\ de\ claves.}{Crea un iterador del diccionario de forma tal que se puedan recorrer sus elementos aplicando iterativamente SIGUIENTE(no ponemos la operacion SIGUIENTE en la interfaz pues no la usamos).}
+
+\disDeclaraFuncion{HaySiguiente}{\paramIn{it}{itdiccString(\kappa,\sigma)}}{res : bool}{true}{res $\igobs$ HaySiguiente?(it)}{\Ode{1}}{Devuelve true si y solo si en el iterador quedan elementos para avanzar.}
+
+\disDeclaraFuncion{SiguienteSignificado}{\paramIn{it}{itdiccString(\kappa,\sigma)}}{res : \sigma}{HaySiguiente?(it)}{alias(res $\igobs$ Siguiente(it).significado)}{\Ode{1}}{Devuelve el significado del elemento siguiente del iterador.}
+\disComentAliasing{ res no es modificable.}
+
+
+\disDeclaraProc{Avanzar}{\paramInOut{it}{itdiccString(\kappa,\sigma)}}{it \ $\igobs$ it_{0} \ $\land$ HaySiguiente?(it)}{it \ $\igobs$ Avanzar(it_{0})}{\Ode{1}}{Avanza a la posicion siguiente del iterador.}
+
+
+
+
+\disPautasDeImplementacion
+
+\disEstructuraDeRepresentacion
+
+\disSeRepresentaCon{dicc\_trie(\kappa,\sigma)}{puntero(nodo)}
+\disDondeEs{nodo}{\disTuplaEstr{Puntero($\sigma$)/significado, arreglo[256] $de \ puntero (nodo)$/caracteres, Puntero(nodo)/padre}}
+
+\disJustificacionDeLaEstructuraElegida
+
+%\disEstructurasAlternativas
+
+\disInvarianteDeRepresentacion
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Informal}}
+
+\hspace*{\disSubSubSecMargen}
+\begin{itemize}
+% HACK: SGA 20/06/2011. Para identar correctmente los items.
+\setlength{\itemindent}{3em}
+  \item Todas las posiciones del arreglo de caracteres están definidas.
+  \item No hay claves de 0 caracteres. El significado de la raíz es NULL.
+  \item No hay ciclos en la estructura. Es decir, existe una cota superior sobre la cantidad de niveles posibles del árbol.
+  \item Dado un nodo cualquiera del trie, existe un único camino desde la raíz hasta el nodo.
+\end{itemize}
+
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
+
+\disRep{estr}{e}{$true$ $\Longleftrightarrow$ 
+\\\hspace*{3.75em}(1)(\forall i:nat)(i<256 $\implies$ definido?(e $\rightarrow$ caracteres,i)) \yluego
+\\\hspace*{3.75em}(2)(e \rightarrow significado = NULL) \yluego
+\\\hspace*{3.75em}(2)($\exists$ n:nat)(finaliza(e,n)) \yluego
+\\\hspace*{3.75em}(3)($\forall$ p,q: puntero(nodo))(p $\in$ punteros(e) \land q \in (punteros(e) - \lbrace p\rbrace ) $\implies$ p\not=q) \yluego
+\\\hspace*{3.75em}}
+
+
+\disFuncionDeAbstraccion
+\vspace*{-1em}
+%\hspace*{\disSubSubSecMargen}{Texto}
+\disAbs{roseTree(estrDato)}{r}{dicc\_trie($\sigma$)}{d}{($\forall$ $k$ : secu($letra$))(def?(k, d) $\igobs$ esta?(k, r)) $\land$ (def?(c, d) $\implies$ (obtener(k, d) $\igobs$ buscar(k, r)))}
+
+
+\disFuncionDeAbsFuncionesAux
+
+
+\newpage
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iVacio}}{ }{$\disFlecha$ res : estr} \Comment{$\Ode{1}$}
+	\State var arreglo(puntero(nodo)) letras $\gets$ crearArreglo[256]
+	\State \textbf{for} i $\gets$ 0 \textbf{to} 255 \textbf{do} \Comment{$\Ode{1}$}
+  	\State letras[i] $\gets$ NULL \Comment{\Ode{1}}
+  	\State \textbf{end for}
+  	\State var nodo nuevo $\gets$ $<$NULL,letras,NULL$>$ \Comment{$\Ode{1}$}
+  	\State res $\gets$ \&nuevo \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iDefinir}}{\paramInOut{d}{estr}, \paramIn{k}{string}, \paramIn{s}{\sigma}}
+    \State nat $i$ $\gets$ 0 \Comment{$\Ode{1}$}
+    \State puntero(nodo) actual $\gets$ d \Comment{$\Ode{1}$}
+    \While {($i$ $<$ $|k|$)} \Comment{$\Ode{|k|}$}
+        \If {actual $\disFlecha$ caracteres[ord(k[i])] = NULL} \Comment{$\Ode{1}$}
+        	\State puntero(nodo) anterior $\gets$ actual
+            \State actual $\disFlecha$ caracteres[ord(k[i])] $\gets$ $i$Vacio() \Comment{$\Ode{1}$}
+            \State actual $\disFlecha$ padre $\gets$ anterior
+        \Else
+        \State actual $\gets$ (actual $\disFlecha$ caracteres[ord(k[i])]) \Comment{$\Ode{1}$}        
+        \EndIf
+        \State $i$ $\gets$ $i + 1$ \Comment{$\Ode{1}$}
+    \EndWhile
+        \State actual $\disFlecha$ significado $\gets$ $\&$copiar(s) \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iObtener}}{\paramIn{d}{estr}, \paramIn{k}{string}}{$\disFlecha$ res : $\sigma$}
+  \State nat $i$ $\gets$ 0 \Comment{$\Ode{1}$}
+  \State puntero actual $\gets$ d \Comment{$\Ode{1}$}
+  \While {$i$ $<$ $|k|$} \Comment{$\Ode{|k|}$}
+      \State actual $\gets$ (actual $\disFlecha$ caracteres[ord(k[i])]) \Comment{$\Ode{1}$}
+      \State $i$ $\gets$ $i+1$
+  \EndWhile
+  \State res $\gets$ *(actual $\disFlecha$ significado)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iBorrar}}{\paramInOut{d}{estr}, \paramIn{k}{string}}{}
+	\State puntero(nodo) actual $\gets$ d
+	\State \textbf{for} i $\gets$ 0 to $|k|$ \Comment{$\Ode{1}$}
+  	\State actual $\gets$ (actual\disFlecha caracteres[ord(k[i])]) \Comment{\Ode{1}}
+  	\State \textbf{end for}
+  	\State (actual\disFlecha significado) $\gets$ NULL
+  	var puntero(nodo) camino $\gets$ NULL
+  	\While {(actual\disFlecha significado = NULL) \textbf{or} todosNULL(actual\disFlecha caracteres)} \Comment{$\Ode{|k|}$}
+    	\State camino $\gets$ actual \Comment{$\Ode{1}$}
+    	\State actual $\gets$ (actual \disFlecha padre)
+    	\State delete camino
+  	\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iDefinido?}}{\paramIn{d}{estr}, \paramIn{k}{string}}{$\disFlecha$ res : bool}
+  \State nat $i$ $\gets$ 0 \Comment{$\Ode{1}$}
+  \State puntero actual $\gets$ d \Comment{$\Ode{1}$}
+  \State bool def $\gets$ \textsf{true} \Comment{$\Ode{1}$}
+  \While {($i$ $<$ $|k|$ \textbf{and} def)} \Comment{$\Ode{|k|}$}
+    \If {actual $\disFlecha$ caracteres[ord(k[i])] = NULL} \Comment{$\Ode{1}$}
+      \State def $\gets$ \textsf{false} \Comment{$\Ode{1}$}
+      \Else
+        \State actual $\gets$ actual $\disFlecha$ caracteres[ord(k[i])] \Comment{$\Ode{1}$}
+        \State $i$ $\gets$ $i+1$ \Comment{$\Ode{1}$}
+      \EndIf
+  \EndWhile
+  \State res $\gets$ def $\land$ $¬$(actual $\disFlecha$ significado(NULL)) \Comment{$\Ode{1}$}
+
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\newpage
+\disServiciosUsados
+\vspace*{-1em}
+ 
+\disRequerimientosSobreElTipo{}
+\disItemRequerimientosSobreElTipo{La funci\'on \textbf{$|$x$|$} debe tener complejidad $\Ode{1}$ en el caso peor.}
+\disItemRequerimientosSobreElTipo{La funci\'on \textbf{$|$x$|$} debe tener complejidad $\Ode{1}$ en el caso peor.}
+\disItemRequerimientosSobreElTipo{Las operaciones deben realizarse por referencia.}
+\disItemRequerimientosSobreElTipo{Debe proveer una operaci\'on \textbf{Copia} que devuelve una nueva instancia de la secuencia pero que es\\ \hspace*{5.75em}independiente de la actual, con complejidad $\Ode{n}$ en el caso peor.}
+\disItemRequerimientosSobreElTipo{Debe proveer un \textbf{iterador} para avanzar que comienza en el primero elemento de la secuencia.}
+\disItemRequerimientosSobreElTipo{Debe proveer un \textbf{iterador} para retroceder que comienza en el último elemento de la secuencia.}
+\disItemRequerimientosSobreElTipo{Las operaciones \textbf{CrearIt, Siguiente, Anterior, TieneSiguiente, TieneAnterior} deben tener complejidad \\
+\hspace*{5.75em}$\Ode{1}$ en el caso peor.}
+\vspace*{1em}
+\hspace*{2em}Donde $n$ es la longitud de la palabra.
+

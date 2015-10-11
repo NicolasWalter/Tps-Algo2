@@ -1,0 +1,156 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{Rastrillaje}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}Se usa el {\sc Tad CampusSeguro} especificado por la c\'atedra.
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
+\disSeExplicaCon{CampusSeguro}
+
+\disGenero{rastr}
+
+\disOperaciones{b\'asicas de Rastrillaje}
+
+\disDeclaraFuncion{Campus}{\paramIn{r}{rastr}}{res : campus}{true}{res $\igobs$ campus(r)}{\Ode{1}}{Devuelve el campus.}
+
+\disDeclaraFuncion{Estudiantes}{\paramIn{r}{rastr}}{res : conj(nombre)}{true}{res $\igobs$ estudiantes(r)}{\Ode{1}}{Devuelve el conjunto de estudiantes presentes en el campus.}
+
+\disDeclaraFuncion{Hippies}{\paramIn{r}{rastr}}{res : conj(nombre)}{true}{res $\igobs$ hippies(r)}{\Ode{1}}{Devuelve el conjunto de hippies presentes en el campus.}
+
+\disDeclaraFuncion{Agentes}{\paramIn{r}{rastr}}{res : conj(agente)}{true}{res $\igobs$ agentes(r)}{\Ode{1}}{Devuelve el conjunto de agentes presentes en el campus.}
+
+\disDeclaraFuncion{PosEstudianteYHippie}{\paramIn{r}{rastr}, \paramIn{id}{nombre}}{res : posicion}{id $\in$ (estudiantes(r) $\cup$ hippies(cs))}{res $\igobs$ posEstudianteYHippie(id,r)}{\Ode{1}}{Devuelve la posici\'on del estudiante/hippie pasado como par\'ametro.}
+
+\disDeclaraFuncion{PosAgente}{\paramIn{r}{rastr}, \paramIn{a}{agente}}{res : posicion}{a $\in$ posAgente(a,r)}{res $\igobs$ posAgente(a,r)}{\Ode{1}}{Devuelve la posici\'on del agente pasado como par\'ametro.}
+
+\disDeclaraFuncion{CantSanciones}{\paramIn{r}{rastr}, \paramIn{a}{agente}}{res : nat}{a $\in$ cantSanciones(a,r)}{res $\igobs$ cantSanciones(a,r)}{\Ode{1}}{Devuelve la cantidad de sanciones recibidas por el agente pasado como par\'ametro.}
+
+\disDeclaraFuncion{CantHippiesAtrapados}{\paramIn{r}{rastr}, \paramIn{a}{agente}}{res : nat}{a $\in$ agentes(r)}{res $\igobs$ cantHippiesAtrapados(a,r)}{\Ode{1}}{Devuelve la cantidad de hippies atrapados por el agente pasado como par\'ametro.}
+
+\disDeclaraFuncion{ComenzarRastrillaje}{\paramIn{c}{campus}, \paramIn{d}{dicc(agente,posicion)}}{res : rastr}{($\forall$ a : agente)(def?(a,d) $\impluego$ (posValida?(obtener(a,d))) $\land$ $\¬$ocupada?(obtener(a,d),c)) $\land$ ($\forall$ a, $a_{2}$ : agente)((def?(a,d) $\land$ def?($a_{2}$,d) $\land$ a $\not=a_{2}$) $\impluego$ obtener(a,d)$\not=$ obtener($a_{2}$,d))}{res $\igobs$ comenzarRastrillaje(c,d)}{\Ode{1}}{Crea un Rastrillaje.}
+
+\disDeclaraFuncion{IngresarEstudiante}{\paramInOut{r}{rastr}, \paramIn{e}{nombre}, \paramIn{p}{posicion}}{}{r = $r_{0}$ $\land$ e $\notin$ (estudiantes(r)$\cup$hippies(r)) $\land$ esIngreso?(p,campus(r)) $\land$ $\¬$estaOcupada?(p,r)}{r $\igobs$ ingresarEstudiante(e,p,$r_{0}$)}{\Ode{1}}{Modifica el rastrillaje, ingresando un estudiante al campus.}
+
+\disDeclaraFuncion{IngresarHippie}{\paramInOut{r}{rastr}, \paramIn{h}{nombre}, \paramIn{p}{posicion}}{}{r = $r_{0}$ $\land$ h $\notin$ (estudiantes(r)$\cup$hippies(r)) $\land$ esIngreso?(p,campus(r)) $\land$ $\¬$estaOcupada?(p,r)}{r $\igobs$ ingresarHippie(h,p,$r_{0}$)}{\Ode{1}}{Modifica el rastrillaje, ingresando un hippie al campus.}
+
+\disDeclaraFuncion{MoverEstudiante}{\paramInOut{r}{rastr}, \paramIn{e}{nombre}, \paramIn{dir}{direccion}}{}{r = $r_{0}$ $\land$ e $\in$ estudiantes(r) $\land$ (seRetira(e,dir,r) $\lor$ (posValida?(proxPosicion(posEstudianteYHippie(e,r),dir,campus(r)),campus(r)) $\land$ $\¬$estaOcupada?(proxPosicion(posEstudianteYHippie(e,r),dir,campus(r)),r)))}{r $\igobs$ moverEstudiante(e,d,$r_{0}$)}{\Ode{1}}{Modifica el rastrillaje, al mover un estudiante del campus.}
+
+\disDeclaraFuncion{MoverHippie}{\paramInOut{r}{rastr}, \paramIn{h}{nombre}}{}{r = $r_{0}$ $\land$ h $\in$ hippies(r) $\land$ $\¬$todasOcupadas?(vecinos(posEstudianteYHippie(h,r),campus(r)),r) }{r $\igobs$ moverHippie(r,$r_{0}$)}{\Ode{1}}{Modifica el rastrillaje, al mover un hippie del campus.}
+
+\disDeclaraFuncion{MoverAgente}{\paramInOut{r}{rastr}, \paramIn{a}{agente}}{}{r = $r_{0}$ $\land$ a $\in$ agentes(r) $\yluego$ cantSanciones(a,r) $\leq$ 3 $\land$ $\¬$todasOcupadas?(vecinos(posAgente(a,r),campus(r)),r)}{r $\igobs$ moverAgente(a,$r_{0}$)}{\Ode{1}}{Modifica el rastrillaje, al mover un agente del campus.}
+
+\disDeclaraFuncion{MasVigilante}{\paramIn{r}{rastr}}{res : agente}{true}{res $\igobs$ masViligante(r)}{\Ode{1}}{Devuelve el agente con mas capturas.}
+
+\disDeclaraFuncion{ConKSanciones}{\paramIn{r}{rastr}, \paramIn{k}{nat}}{res : conj(agente)}{true}{res $\igobs$ conKSanciones(k,r)}{\Ode{1}}{Devuelve el agente con mas capturas.}
+
+\disDeclaraFuncion{ConMismasSanciones}{\paramIn{r}{rastr}, \paramIn{a}{agente}}{res : conj(agente)}{a $\in$ agentes(r)}{res $\igobs$ conMismasSanciones(a,r)}{\Ode{1}}{Devuelve el conjunto de agentes con la misma cantidad de sanciones que a.}
+
+
+
+
+
+\disPautasDeImplementacion
+
+\disEstructuraDeRepresentacion
+
+\disSeRepresentaCon{campus}{estr}
+\disDondeEs{estr}{\disTuplaEstr{campus/campo, diccPromedio(placa ; datosAg)/agentes, conjLineal(nombre)/hippies, conjLineal(nombre)/estudiantes, diccString(nombre;posicion)/posCiviles, matriz(posicion;datosPos)/quienOcupa, itConj(placa)/masVigilante, lista(datosK))/agregoEn1, vector(datosK)/buscoEnLog}}
+
+\disDondeEs{datosAg}{\disTuplaEstr{nat/QSanciones, nat/premios, posicion/posActual, itConj(placa)/grupoSanciones, itLista(nat)/verK}}
+
+\disDondeEs{datosPos}{\disTuplaEstr{bool/ocupada?, clases/quienOcupa, itDicc(placa)/hayCana, itLista(nombre)/hayHoE}}
+
+\disDondeEs{clases}{enum\{agente,estudiante,hippie,obstaculo\}}
+
+\disDondeEs{datosK}{\disTuplaEstr{nat/K, conjLineal(placa)/grupoK}}
+
+\disJustificacionDeLaEstructuraElegida
+\newpage
+\disInvarianteDeRepresentacion
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Informal}}
+
+\hspace*{\disSubSubSecMargen}
+\begin{enumerate}
+\setlength{\itemindent}{3em}
+  \item El mapa debe tener tantas filas como indica la estructura, lo mismo con las columnas.
+
+\end{enumerate}
+
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
+\onehalfspace
+\disRep{estr}{e}{$true$ $\Longleftrightarrow$ 
+\\\hspace*{3.75em}(1) e.filas = longitud(e.mapa) $\yluego$ 
+($\forall$ i : nat)(i $\leq$ e.filas $\implies$ longitud(e.mapa[i])= e.columnas)}
+\disFuncionDeAbstraccion
+\vspace*{-1em}
+%\hspace*{\disSubSubSecMargen}{Texto}
+\disAbs{estr}{e}{campus}{c}{\Big(filas(c) = e.filas $\land$ columnas(c) = e.columnas $\yluego$ ($\forall$ p : posicion)(p.X $\leq$ e.filas $\land$
+\\\hspace*{3.75em} p.Y $\leq$ e.columnas $\impluego$ ocupada?(p,c) $\Leftrightarrow$ (e.mapa[f])[c]\Big) }
+
+
+%\disFuncionDeAbsFuncionesAux
+
+
+\newpage
+
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$CrearCampus}}{\paramIn{c}{nat}, \paramIn{f}{nat}}{$\disFlecha$ res : estr} \Comment{$\Ode{f^{2}*c^{2}}$}
+  \State var vector(vector(bool)) mapa $\gets$ vacia(vacia()) \Comment{$\Ode{1}$}
+  \State var nat i $\gets$ 0 \Comment{$\Ode{1}$}
+  \While {i$\leq$f} \Comment{$\Ode{f}$}
+    \State var vector(bool) nuevo $\gets$ vacia() \Comment{$\Ode{1}$}
+    \State var nat j $\gets$ 0 \Comment{$\Ode{1}$}
+    \While {j$\leq$c} \Comment{$\Ode{c}$}
+      \State AgregarAtras(nuevo, false) \Comment{$\Ode{c}$}
+      \State j++  \Comment{$\Ode{1}$}
+    \EndWhile
+    \State AgregarAtras(mapa, nuevo) \Comment{$\Ode{f}$}
+    \State i++ \Comment{$\Ode{1}$}
+  \EndWhile
+  \State res $\gets$ $<$ f, c, mapa$>$ \Comment{$\Ode{1}$}
+  
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+\end{algorithm}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
