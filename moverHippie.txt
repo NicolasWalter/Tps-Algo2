@@ -1,0 +1,113 @@
+function imoverHippie (inout e:estr, h:nombre, d:direccion){
+	var posicion actual <-- obtener (e.posCiviles, h)
+	var posicion prx <-- proxPosicion(e.campus, d, obtener(e.posCiviles,h))
+	var itConj(nombre) copia <-- e.quienOcupa[actual.X][actual.Y].hayHippieoEstudiante
+		QuienOcupa [actual.X][actual.Y] <-- <false, nadie, nuevoIt(), nuevoIt()>
+		QuienOcupa [p.X][p.Y] <-- <false, hippie, nuevoIt(), copia>
+		borrar (e.posCiviles, h)
+		definir(e.posCiviles, h, p)
+	var conj(posicion) Ps <-- vecinos(e.campus, p)
+	var itConj(posicion) it <-- crearIt(Ps)
+
+	while (haySiguiente(it)) do
+		if ocupada(e.campus, siguiente(it)) v !e.quienOcupa[siguiente(it).X][siguiente(it).Y].ocupada?
+			then avanzar(it)
+			else if esEstudiante(&e,siguiente(it) && esHippizable(e,siguiente(it))
+					then Hippizar(&e, siguiente(it))
+						 if (esCapturable(&e, siguiente(it)) then  capturarHippie(&e, siguiente(it)) endIf
+					else if esEstudiante(&e, siguiente(it)) && esCapturable(e, siguiente(it))
+							then var itConj(posicion) itAg <-- vecinos(e.campus, siguiente(it))
+							    while (haySiguiente(itAg)) do
+									if esAgente(&e, sig(itAg)) then sancionar(&e, sig(itAg)) endIf
+									avanzar(itAg)
+							else if esHippie(&e, siguiente(it)) && esCapturable(e, siguiente(it))
+								 then capturarHippie(&e,siguiente(it))
+							
+		avanzar(it)
+	endWhile
+                                        	
+
+											
+function esEstudiante (in e:estr, in p:posicion) --> res:bool
+	
+	res <-- e.quienOcupa[p.X][p.Y].quienOcupa == estudiante
+	
+	
+function esHippie (in e:estr, in p:posicion) --> res:bool
+	
+	res <-- e.quienOcupa[p.X][p.Y].quienOcupa == hippie
+	
+function esAgente (in e:estr, in p:posicion) --> res:bool
+	
+	res <-- e.quienOcupa[p.X][p.Y].quienOcupa == agente	
+	
+function Estudiantizar(inout e:Estr, p:posicion)
+	var nombre n <-- SiguienteoActual(e.quienOcupa[p.X][p.Y].hayHippieoEstudiante)
+	
+	eliminar(e.hippies, n)
+	var itConj(nombre) it <-- agregarRapido(e.estudiantes,n)
+	e.quienOcupa[p.X][p.Y].hayHippieoEstudiante<-- <true, estudiante, crearIt(), it>
+	
+function Hippizar(inout e:Estr, p:posicion)
+	var nombre n <-- SiguienteoActual(e.quienOcupa[p.X][p.Y].hayHippieoEstudiante)
+	
+	eliminar(e.estudiantes, n)
+	var itConj(nombre) it <-- agregarRapido(e.hippies,n)
+	e.quienOcupa[p.X][p.Y].hayHippieoEstudiante<-- <true, hippie, crearIt(), it>	
+	
+function esCapturable (in e:estr, in p:posicion) --> res:bool
+	var itConj(posicion) it <-- crear(vecinos(e.campus,p))
+	var nat Contador <-- 0
+	var bool hayGuardia <-- false
+	
+	while (haySiguiente(it)) do
+		if e.quienOcupa[p.X][p.Y].ocupada?
+			then contador++
+		if e.quienOcupa[siguiente(it).X][siguiente(it).Y].quienOcupa == agente
+			then hayGuardia <-- true
+		avanzar(it)
+	
+	endWhile
+	
+	res<--contador==4 && hayGuardia
+	
+	
+function esHippizable (in e:estr, in p:posicion) --> res:bool
+	var itConj(posicion) it <-- crear(vecinos(e.campus,p))
+	var nat Contador <-- 0
+	
+	
+	while (haySiguiente(it)) do
+		 if e.quienOcupa[siguiente(it).X][siguiente(it).Y].quienOcupa == hippie
+		  then contador++
+		avanzar(it)
+	
+	endWhile
+	
+	res <-- contador >= 2
+	
+function capturarHippie (inout e:estr, in p:posicion)
+	eliminarSiguiente(e.quienOcupa[p.X][p.Y].hayHippieoEstudiante) //ES ASI?
+	e.quienOcupa[p.X][p.Y] <-- <false, nadie, crearIt(), crearIt()>
+	var conj(posicion) v <-- vecinos(e.campus, p)
+	
+	while haySiguiente(it) do
+		if e.quienOcupa[siguiente(it).X][siguiente(it).Y].quienOcupa == agente
+			then recompensar(e,siguiente(it)) //HAY QUE HACER RECOMPENSAR
+		avanzar(it)
+	endWhile
+	
+function todasOcupadas (in e:estr, in p:conj(posicion))--> res:bool
+	var itConj(posicion) it <-- crear(p)
+	var nat contador <-- 0
+	while haySiguiente(it)
+		if  e.quienOcupa[siguiente(it).X][siguiente(it).Y].ocupada?
+			then contador++
+		avanzar (it)
+	endWhile
+
+	res <-- contador == 4
+	
+
+//Falta poder contar cuantos hippies y estudiantes hay (y si es estudiante o hippie)
+//Falta sumar recompensa y sancionar
