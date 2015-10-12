@@ -60,7 +60,11 @@
 \disEstructuraDeRepresentacion
 
 \disSeRepresentaCon{campus}{estr}
-\disDondeEs{estr}{\disTuplaEstr{campus/campo, diccPromedio(placa ; datosAg)/agentes, conjLineal(nombre)/hippies, conjLineal(nombre)/estudiantes, diccString(nombre;posicion)/posCiviles, matriz(posicion;datosPos)/quienOcupa, itConj(placa)/masVigilante, lista(datosK))/agregoEn1, vector(datosK)/buscoEnLog}}
+\disDondeEs{estr}{\disTuplaEstr{campus/campo, diccPromedio(placa ; datosAg)/agentes, conjLineal(datosHoE)/hippies, conjLineal(datosHoE)/estudiantes, diccString(nombre;posicion)/posCiviles, diccLineal(nombre;posicion)/posRapida, vector(vector(posicion;datosPos))/quienOcupa, itConj(placa)/masVigilante, lista(datosK))/agregoEn1, vector(datosK)/buscoEnLog}}
+
+\disDondeEs{datosAg}{\disTuplaEstr{nat/QSanciones, nat/premios, posicion/posActual, itConj(placa)/grupoSanciones, itLista(nat)/verK}}
+
+\disDondeEs{datosHoE}{\disTuplaEstr{nombre/ID, posActual/itDicc(nombre;posicion)}}
 
 \disDondeEs{datosAg}{\disTuplaEstr{nat/QSanciones, nat/premios, posicion/posActual, itConj(placa)/grupoSanciones, itLista(nat)/verK}}
 
