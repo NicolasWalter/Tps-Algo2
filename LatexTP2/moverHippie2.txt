@@ -1,14 +1,35 @@
+DIRECTIVAS!!!
+
+//MOVER AGENTE
+
+//PROXIMA POS
+
+//MOVER ESTUDIANTE
+
+//INGRESAR HIPPIE
+
+\\Walter hace el latex o te cago a tiros. puto. puto puto
+
+
+
+
+
+
+
+
+
+
+
 function imoverHippie (inout e:estr, h:nombre){
-	var posicion actual <-- obtener (e.posCiviles, h)
+	var posicion actual <-- obtener(e.posCiviles, h)
 	var posicion d <-- FUNCION A HACER DONDE TE DEVUELVE LA PROXIMA POSICION
-	var posicion prx <-- proxPosicion(e.campus, d, obtener(e.posCiviles,h))
-	var itConj(nombre) copia <-- e.quienOcupa[actual.X][actual.Y].hayHippieoEstudiante //SE PUEDE HACER ESTO AL FINAL?
-		QuienOcupa [actual.X][actual.Y] <-- <false, nadie, nuevoIt(), nuevoIt()>
+	var posicion prx <-- proxPosicion(e.campus, d, obtener(e.posCiviles,h)) // PASAR E.quienOcupa!!!!!!!!
+	var itConj(nombre) copia <-- copiar(e.quienOcupa[actual.X][actual.Y].hayHoe) //SE PUEDE HACER ESTO AL FINAL?
 		QuienOcupa [prx.X][prx.Y] <-- <true, hippie, nuevoIt(), copia>
+		QuienOcupa [actual.X][actual.Y] <-- <false, nadie, nuevoIt(), nuevoIt()>
 		definir(e.posCiviles, h, prx)
 	var conj(posicion) Ps <-- vecinos(e.campus, prx)
 	var itConj(posicion) it <-- crearIt(Ps)
-
 	while (haySiguiente(it)) do
 		if ocupada(e.campus, siguiente(it)) v !e.quienOcupa[siguiente(it).X][siguiente(it).Y].ocupada?
 			then avanzar(it)
@@ -17,86 +38,82 @@ function imoverHippie (inout e:estr, h:nombre){
 						 if esCapturable(e, siguiente(it)) then  capturarHippie(e, siguiente(it)) endIf
 					else if esEstudiante(e, siguiente(it)) && esCapturable(e, siguiente(it))
 							then var itConj(posicion) itAg <-- vecinos(e.campus, siguiente(it))
-							    while (haySiguiente(itAg)) do
+								while (haySiguiente(itAg)) do
 									if esAgente(e, sig(itAg)) then sancionar(e, sig(itAg)) endIf
 									avanzar(itAg)
 							else if esHippie(e, siguiente(it)) && esCapturable(e, siguiente(it))
-								 then capturarHippie(e,siguiente(it))
-							
+								then capturarHippie(e,siguiente(it))
 		avanzar(it)
-	endWhile
-                                        	
+endWhile
 
 											
 function esEstudiante (in e:estr, in p:posicion) --> res:bool
 	
-	res <-- e.quienOcupa[p.X][p.Y].quienOcupa == estudiante
-	
+	res <-- e.quienOcupa[p.X][p.Y].queHay == estudiante
+endFunction	
 	
 function esHippie (in e:estr, in p:posicion) --> res:bool
 	
-	res <-- e.quienOcupa[p.X][p.Y].quienOcupa == hippie
-	
+	res <-- e.quienOcupa[p.X][p.Y].queHay == hippie
+endFunction
+
 function esAgente (in e:estr, in p:posicion) --> res:bool
 	
-	res <-- e.quienOcupa[p.X][p.Y].quienOcupa == agente	
-	
+	res <-- e.quienOcupa[p.X][p.Y].queHay == agente	
+endFunction
+
 function Estudiantizar(inout e:Estr, p:posicion)
-	var nombre n <-- Siguiente(e.quienOcupa[p.X][p.Y].hayHippieoEstudiante).ID
-	
-	eliminarSiguiente(e.quienOcupa[p.X][p.Y].hayHippieoEstudiante)
-	var itConj(nombre) it <-- agregarRapido(e.estudiantes,n)
-	e.quienOcupa[p.X][p.Y].hayHippieoEstudiante<-- <true, estudiante, crearIt(), it>
+	var datosHoE dat <-- <Siguiente(e.quienOcupa[p.X][p.Y].hayHoE).ID, Siguiente(e.quienOcupa[p.X][p.Y].hayHoE).posActual> 
+	eliminarSiguiente(e.quienOcupa[p.X][p.Y].hayHoE)
+	var itConj(nombre) it <-- agregarRapido(e.estudiantes,dat)
+	e.quienOcupa[p.X][p.Y]<-- <true, estudiante, crearIt(), it>
+endFunction
 	
 function Hippizar(inout e:Estr, p:posicion)
-	var nombre n <-- Siguiente(e.quienOcupa[p.X][p.Y].hayHippieoEstudiante)
-	
-	eliminar(e.quienOcupa[p.X][p.Y].hayHippieoEstudiante)
-	var itConj(nombre) it <-- agregarRapido(e.hippies,n)
-	e.quienOcupa[p.X][p.Y].hayHippieoEstudiante<-- <true, hippie, crearIt(), it>	
-	
+	var datosHoE dat <-- <Siguiente(e.quienOcupa[p.X][p.Y].hayHoE).ID, Siguiente(e.quienOcupa[p.X][p.Y].hayHoE).posActual> 
+	eliminarSiguiente(e.quienOcupa[p.X][p.Y].hayHoe)
+	var itConj(nombre) it <-- agregarRapido(e.hippies,dat)
+	e.quienOcupa[p.X][p.Y]<-- <true, hippie, crearIt(), it>	
+endFunction
+
 function esCapturable (in e:estr, in p:posicion) --> res:bool
-	var itConj(posicion) it <-- crear(vecinos(e.campus,p))
+	var itConj(posicion) it <-- crearIt(vecinos(e.campus,p))
 	var nat Contador <-- 0
 	var bool hayGuardia <-- false
-	
 	while (haySiguiente(it)) do
 		if e.quienOcupa[p.X][p.Y].ocupada?
 			then contador++
+		endIf
 		if e.quienOcupa[siguiente(it).X][siguiente(it).Y].quienOcupa == agente
 			then hayGuardia <-- true
+		endIf
 		avanzar(it)
-	
 	endWhile
-	
 	res<--contador==4 && hayGuardia
-	
+endFunction	
 	
 function esHippizable (in e:estr, in p:posicion) --> res:bool
 	var itConj(posicion) it <-- crear(vecinos(e.campus,p))
 	var nat Contador <-- 0
-	
-	
 	while (haySiguiente(it)) do
-		 if e.quienOcupa[siguiente(it).X][siguiente(it).Y].quienOcupa == hippie
-		  then contador++
+		if e.quienOcupa[siguiente(it).X][siguiente(it).Y].quienOcupa == hippie
+		  	then contador++
+		endIf
 		avanzar(it)
-	
 	endWhile
-	
 	res <-- contador >= 2
-	
+endFunction	
+
 function capturarHippie (inout e:estr, in p:posicion)
-	var nombre n <-- siguiente(e.quienOcupa[p.X][p.Y].hayHippieoEstudiante).nombre
-	eliminarSiguiente(e.quienOcupa[p.X][p.Y].hayHippieoEstudiante)
-	e.quienOcupa[p.X][p.Y] <-- <false, nadie, crearIt(), crearIt()>
+	var nombre n <-- siguiente(e.quienOcupa[p.X][p.Y].hayHoe).ID
+	eliminarSiguiente(siguiente(e.quienOcupa[p.X][p.Y].hayHoe).posActual)
+	eliminarSiguiente(e.quienOcupa[p.X][p.Y].hayHoe)
 	borrar(n, e.posCiviles)
-	borrar(n, e.posRapida)
-	var conj(posicion) v <-- vecinos(e.campus, p)
-	
+	e.quienOcupa[p.X][p.Y] <-- <false, nadie, crearIt(), crearIt()>
+	var conj(posicion) v <-- vecinos(e.campus, p)	
 	while haySiguiente(it) do
 		if e.quienOcupa[siguiente(it).X][siguiente(it).Y].quienOcupa == agente
-			then recompensar(e,siguiente(it)) //HAY QUE HACER RECOMPENSAR
+			then recompensar(e,siguiente(it))
 		avanzar(it)
 	endWhile
 	
@@ -114,20 +131,15 @@ function todasOcupadas (in e:estr, in p:conj(posicion))--> res:bool
 
 //Falta sancionar
 
-function iRecompensar(inout e:estr, in a:posicion){
-	var placa p <-obtener(e.quienOcupa,a).hayCana
-	var datosAgente dat <- obtener(e.agentes,p)
-	var datosAgente nuevosDat<-(dat.#sanciones, dat.premios +1, dat.posActual, dat.grupoSanciones, dat.verK)
-	definir(e.agentes,p,nuevosDat)
-	if(dat.premios+1 > obtener(e.agentes,e.masVigilante).premios) then
-		e.masVigilante=p else
-		if(dat.premios+1 == obtener(e.agentes,e.masVigilante).premios)) then
-			if(p<e.masVigilante) then
-				e.masVigilante=p 
-			endIf
-		endIf
-	endIf
-}
+
+
+
+
+
+
+
+
+
 
 function iIngresarEstudiante (in n:Nombre, in p:Posicion, inout e:estr){
 	if(esHippizable(e,p)) then 
@@ -188,33 +200,39 @@ function iIngresarEstudiante (in n:Nombre, in p:Posicion, inout e:estr){
 						if esHippie(e, siguiente(it)) && esCapturable(e, siguiente(it))
 							then capturarHippie(&e,siguiente(it))
 						endIf
+					endIf
+			endIf
+		endWhile
+endFunction
 
 
-
-
-//fruta??
-//complejidad??
 function iRecompensar(inout e:estr, in a:posicion){
-	var placa p <-siguiente(quienOcupa[a.X][a.Y].hayCana)
-	var datosAgente dat <- obtener(e.agentes,p)
-	var datosAgente nuevosDat<-(dat.#sanciones, dat.premios +1, dat.posActual, dat.grupoSanciones, dat.verK)
-	definir(e.agentes,p,nuevosDat)
-	if(dat.premios+1 > obtener(e.agentes,siguiente(e.masVigilante)).premios) then
-		e.masVigilante<-p else
-		if(dat.premios+1 == obtener(e.agentes,siguiente(e.masVigilante)).premios)) then
-			if(p<siguiente(e.masVigilante)) then
-				e.masVigilante<-p 
+	var placa p <-- siguienteClave(quienOcupa[a.X][a.Y].hayCana)
+	var datosAgente dat <-- obtener(e.agentes,p)
+	dat.premios <-- dat.premios+1
+	if(dat.premios > obtener(e.agentes,siguienteClave(e.masVigilante)).premios) then
+		e.masVigilante <-- quienOcupa[a.X][a.Y].hayCana  else
+		if(dat.premios == obtener(e.agentes,siguiente(e.masVigilante)).premios)) then
+			if(p<siguienteClave(e.masVigilante)) then
+				e.masVigilante<- quienOcupa[a.X][a.Y].hayCana 
 			endIf
 		endIf
 	endIf
 }
-
-
-function iSancionar(inout e:estr, in a:posicion){
-
 	
+	
+function iSancionar(inout e:estr, in a:posicion){
+	var placa p <-- siguienteClave(quienOcupa[a.X][a.Y].hayCana)
+	var datosAgente dat <-- obtener(e.agentes,p)
+	dat.Qsanciones <-- dat.Qsanciones+1
+	eliminarSiguiente(dat.grupoSanciones)
+	avanzar(dat.verK)		
+	if (Siguiente(dat.verK).K == dat.Qsanciones) then
+		dat.grupoSanciones <- Agregar(siguiente(dat.verK).grupoK, p)
+	else
+		dat.grupoSanciones <- AgregarComoAnterior(dat.verK, <dat.Qsanciones, Agregar(Vacio(),p)>)
+	endIf		
 }
-
 
 
 

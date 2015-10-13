@@ -60,11 +60,11 @@
 \disEstructuraDeRepresentacion
 
 \disSeRepresentaCon{campus}{estr}
-\disDondeEs{estr}{\disTuplaEstr{campus/campo, diccPromedio(agente ; datosAg)/agentes, conjLineal(datosHoE)/hippies, conjLineal(datosHoE)/estudiantes, diccString(nombre;posicion)/posCiviles, diccLineal(nombre;posicion)/posRapida, vector(vector(datosPos))/quienOcupa, itConj(agente)/masVigilante, lista(datosK))/agregoEn1, vector(datosK)/buscoEnLog}}
+\disDondeEs{estr}{\disTuplaEstr{campus/campo, diccPromedio(agente ; datosAg)/agentes, arreglo(tupla(placa;posicion))/posAgentesLog, conjLineal(datosHoE)/hippies, conjLineal(datosHoE)/estudiantes, diccString(nombre;posicion)/posCiviles, diccLineal(nombre;posicion)/posRapida, vector(vector(datosPos))/quienOcupa, itConj(agente)/masVigilante, lista(datosK))/agregoEn1, vector(datosK)/buscoEnLog}}
 
-\disDondeEs{datosAg}{\disTuplaEstr{nat/QSanciones, nat/premios, posicion/posActual, itConj(agente)/grupoSanciones, itLista(nat)/verK}}
+\disDondeEs{datosAg}{\disTuplaEstr{nat/QSanciones, nat/premios, posicion/posActual, itConj(agente)/grupoSanciones, itLista(datosK)/verK}}
 
-\disDondeEs{datosHoE}{\disTuplaEstr{nombre/ID, posActual/itDicc(nombre;posicion)}}
+\disDondeEs{datosHoE}{\disTuplaEstr{nombre/ID, itDicc(nombre;posicion)/posActual}}
 
 \disDondeEs{datosPos}{\disTuplaEstr{bool/ocupada?, clases/queHay, itDicc(agente)/hayCana, itConj(nombre)/hayHoE}}
 
