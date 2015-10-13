@@ -45,7 +45,7 @@
 
 \disDeclaraFuncion{MoverAgente}{\paramInOut{r}{rastr}, \paramIn{a}{agente}}{}{r = $r_{0}$ $\land$ a $\in$ agentes(r) $\yluego$ cantSanciones(a,r) $\leq$ 3 $\land$ $\¬$todasOcupadas?(vecinos(posAgente(a,r),campus(r)),r)}{r $\igobs$ moverAgente(a,$r_{0}$)}{\Ode{1}}{Modifica el rastrillaje, al mover un agente del campus.}
 
-\disDeclaraFuncion{MasVigilante}{\paramIn{r}{rastr}}{res : agente}{true}{res $\igobs$ masViligante(r)}{\Ode{1}}{Devuelve el agente con mas capturas.}
+\disDeclaraFuncion{MasVigilante}{\paramIn{r}{rastr}}{res : agente}{true}{res $\igobs$ masVigilante(r)}{\Ode{1}}{Devuelve el agente con mas capturas.}
 
 \disDeclaraFuncion{ConKSanciones}{\paramIn{r}{rastr}, \paramIn{k}{nat}}{res : conj(agente)}{true}{res $\igobs$ conKSanciones(k,r)}{\Ode{1}}{Devuelve el agente con mas capturas.}
 
@@ -60,19 +60,17 @@
 \disEstructuraDeRepresentacion
 
 \disSeRepresentaCon{campus}{estr}
-\disDondeEs{estr}{\disTuplaEstr{campus/campo, diccPromedio(placa ; datosAg)/agentes, conjLineal(datosHoE)/hippies, conjLineal(datosHoE)/estudiantes, diccString(nombre;posicion)/posCiviles, diccLineal(nombre;posicion)/posRapida, vector(vector(posicion;datosPos))/quienOcupa, itConj(placa)/masVigilante, lista(datosK))/agregoEn1, vector(datosK)/buscoEnLog}}
+\disDondeEs{estr}{\disTuplaEstr{campus/campo, diccPromedio(agente ; datosAg)/agentes, conjLineal(datosHoE)/hippies, conjLineal(datosHoE)/estudiantes, diccString(nombre;posicion)/posCiviles, diccLineal(nombre;posicion)/posRapida, vector(vector(datosPos))/quienOcupa, itConj(agente)/masVigilante, lista(datosK))/agregoEn1, vector(datosK)/buscoEnLog}}
 
-\disDondeEs{datosAg}{\disTuplaEstr{nat/QSanciones, nat/premios, posicion/posActual, itConj(placa)/grupoSanciones, itLista(nat)/verK}}
+\disDondeEs{datosAg}{\disTuplaEstr{nat/QSanciones, nat/premios, posicion/posActual, itConj(agente)/grupoSanciones, itLista(nat)/verK}}
 
 \disDondeEs{datosHoE}{\disTuplaEstr{nombre/ID, posActual/itDicc(nombre;posicion)}}
 
-\disDondeEs{datosAg}{\disTuplaEstr{nat/QSanciones, nat/premios, posicion/posActual, itConj(placa)/grupoSanciones, itLista(nat)/verK}}
+\disDondeEs{datosPos}{\disTuplaEstr{bool/ocupada?, clases/queHay, itDicc(agente)/hayCana, itConj(nombre)/hayHoE}}
 
-\disDondeEs{datosPos}{\disTuplaEstr{bool/ocupada?, clases/quienOcupa, itDicc(placa)/hayCana, itLista(nombre)/hayHoE}}
+\disDondeEs{clases}{enum\{``agente'',``estudiante'',``hippie'',``obstaculo'',``nada''\}}
 
-\disDondeEs{clases}{enum\{agente,estudiante,hippie,obstaculo\}}
-
-\disDondeEs{datosK}{\disTuplaEstr{nat/K, conjLineal(placa)/grupoK}}
+\disDondeEs{datosK}{\disTuplaEstr{nat/K, conjLineal(agente)/grupoK}}
 
 \disJustificacionDeLaEstructuraElegida
 \newpage
@@ -109,23 +107,69 @@
 \floatname{algorithm}{}
 % WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
 % Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+
 \begin{algorithm}\phantom{[H]}
 \begin{algorithmic}[1]
-\Function {\textsc{$i$CrearCampus}}{\paramIn{c}{nat}, \paramIn{f}{nat}}{$\disFlecha$ res : estr} \Comment{$\Ode{f^{2}*c^{2}}$}
-  \State var vector(vector(bool)) mapa $\gets$ vacia(vacia()) \Comment{$\Ode{1}$}
-  \State var nat i $\gets$ 0 \Comment{$\Ode{1}$}
-  \While {i$\leq$f} \Comment{$\Ode{f}$}
-    \State var vector(bool) nuevo $\gets$ vacia() \Comment{$\Ode{1}$}
-    \State var nat j $\gets$ 0 \Comment{$\Ode{1}$}
-    \While {j$\leq$c} \Comment{$\Ode{c}$}
-      \State AgregarAtras(nuevo, false) \Comment{$\Ode{c}$}
-      \State j++  \Comment{$\Ode{1}$}
-    \EndWhile
-    \State AgregarAtras(mapa, nuevo) \Comment{$\Ode{f}$}
-    \State i++ \Comment{$\Ode{1}$}
-  \EndWhile
-  \State res $\gets$ $<$ f, c, mapa$>$ \Comment{$\Ode{1}$}
-  
+\Function {\textsc{$i$Campus}}{\paramIn{e}{estr}}{$\disFlecha$ res : campus} \Comment{$\Ode{1}$}
+  \State res $\gets$ e.campo
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Estudiantes}}{\paramIn{e}{estr}}{$\disFlecha$ res : itConj(nombre)} \Comment{$\Ode{1}$}
+  \State res $\gets$ crearIt (e.estudiantes)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Hippies}}{\paramIn{e}{estr}}{$\disFlecha$ res : itConj(nombre)} \Comment{$\Ode{1}$}
+  \State res $\gets$ crearIt (e.hippies)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Agentes}}{\paramIn{e}{estr}}{$\disFlecha$ res : itConj(agente)} \Comment{$\Ode{1}$}
+  \State res $\gets$ crearIt (e.agentes) 
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$posEstudiantesYHippie}}{\paramIn{n}{nombre} \paramIn{e}{estr}}{$\disFlecha$ res : posicion} \Comment{$\Ode{\longitud{n_{m}}}$}
+    \State res $\gets$ obtener(n,e.posCiviles)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$posAgente}}{\paramIn{a}{agente} \paramIn{e}{estr}}{$\disFlecha$ res : posicion} \Comment{$\Ode{1}(promedio)$}
+    \State res $\gets$ obtener(a,e.agentes).posActual
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$cantSanciones}}{\paramIn{a}{agente} \paramIn{e}{estr}}{$\disFlecha$ res : nat} \Comment{$\Ode{1}(promedio)$}
+    \State res $\gets$ obtener(a,e.agentes).Qsanciones
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{$i$cantHippiesAtrapados}}{\paramIn{a}{agente} \paramIn{e}{estr}}{$\disFlecha$ res : nat} \Comment{$\Ode{1}(promedio)$}
+    \State res $\gets$ obtener(a,e.agentes).premios
 \EndFunction
 \end{algorithmic}
 \end{algorithm}

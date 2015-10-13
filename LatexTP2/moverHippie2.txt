@@ -132,49 +132,41 @@ function iIngresarEstudiante (in n:Nombre, in p:Posicion, inout e:estr){
 	if(esHippizable(e,p)) then 
 		if(esCapturable(e,p)) then
 			var conj(posicion) v <-- vecinos(e.campus, p)
+			var itConj(posicion) it <-- crearIt(v)
 			while haySiguiente(it) do
-				if e.quienOcupa[siguiente(it).X][siguiente(it).Y].quienOcupa == agente then 
+				if e.quienOcupa[siguiente(it).X][siguiente(it).Y].queHay == "agente" then 
 					recompensar(e,siguiente(it)) //HAY QUE HACER RECOMPENSAR
 				avanzar(it)
 			endWhile
 		else 
-			definir(e.posCiviles,n,p)	
-			ag(n,e.hippies)
-			var itConj(nombre) it<- agregarRapido(e.hippies,n)a
-		
-
-
-			 ///////////////////////////////// %MAL, HAY QUE AGREGAR A LA MATRIZ definir(e.QuienOcupa,(True,hippie,crearIt(),ite))			
-		
-
-
+			definir(e.posCiviles,n,p)
+			var itDicc(nombre,posicion) iterPos <-- definirRapido(e.posRapida,n,p)
+			e.quienOcupa[p.X][p.Y] <-- <true,"hippie",crearIt(),agregar(e.hippies(<n,iterPos>))>
 			var conj(posicion) Ps <-- vecinos(e.campus, p)
 			var itConj(posicion) it <-- crearIt(Ps)
 			while (haySiguiente(it)) do
-					if esEstudiante(e,siguiente(it)) && esHippizable(e,siguiente(it))	then
-						Hippizar(e, siguiente(it))
-						if (esCapturable(e, siguiente(it)) then  
-						 	capturarHippie(e, siguiente(it)) endIf
+				if esEstudiante(e,siguiente(it)) && esHippizable(e,siguiente(it))	then
+					Hippizar(e, siguiente(it))
+					if (esCapturable(e, siguiente(it)) then  
+					 	capturarHippie(e, siguiente(it)) endIf
+				else 
+					if esEstudiante(e, siguiente(it)) && esCapturable(e, siguiente(it))	then 
+						var itConj(posicion) itAg <-- vecinos(e.campus, siguiente(it))
+						    while (haySiguiente(itAg)) do
+								if esAgente(e, sig(itAg)) then sancionar(e, sig(itAg)) endIf
+								avanzar(itAg)
 					else 
-						if esEstudiante(e, siguiente(it)) && esCapturable(e, siguiente(it))	then 
-							var itConj(posicion) itAg <-- vecinos(e.campus, siguiente(it))
-							    while (haySiguiente(itAg)) do
-									if esAgente(&e, sig(itAg)) then sancionar(&e, sig(itAg)) endIf
-									avanzar(itAg)
-						else 
-							if esHippie(&e, siguiente(it)) && esCapturable(e, siguiente(it))
-								 then capturarHippie(&e,siguiente(it))
-			avanzar(it)
+						if esHippie(e, siguiente(it)) && esCapturable(e, siguiente(it))
+							then capturarHippie(&e,siguiente(it))
+						endIf
+				endIf
+				avanzar(it)
 			endWhile
 	else
-		definir(e.posCiviles,n,p)	
-		ag(n,e.estudiantes)
-		var itConj(nombre) it<- agregarRapido(e.estudiantes,n)
-					
-
-					///////////////////////////////// %MAL HAY QUE AGREGAR A LA MATRIZ definir(e.QuienOcupa,(True,estudiante,crearIt(),ite))
-
-		var conj(posicion) Ps <-- vecinos(e.campus, p)
+		definir(e.posCiviles,n,p)
+		var itDicc(nombre,posicion) iterPos <-- definirRapido(e.posRapida,n,p)
+		e.quienOcupa[p.X][p.Y] <-- <true,"estudiante",crearIt(),agregar(e.estudiantes(<n,iterPos>))>
+		var conj(posicion) Ps <-- vecinos(e.campus,p)
 		var itConj(posicion) it <-- crearIt(Ps)
 		while (haySiguiente(it)) do
 			if(esHippie(e,siguiente(it)) && esEstudiantizable(e,siguiente(it))) then
@@ -186,10 +178,15 @@ function iIngresarEstudiante (in n:Nombre, in p:Posicion, inout e:estr){
 						avanzar(itAg)
 				endIf
 			else
-				if(esHippie(e,siguiente(it)) && esCapturable(e,siguiente(it))) then
-					capturarHippie(e,siguiente(it)) endIf
-
-
+				if esEstudiante(e, siguiente(it)) && esCapturable(e, siguiente(it))	then 
+						var itConj(posicion) itAg <-- vecinos(e.campus, siguiente(it))
+						    while (haySiguiente(itAg)) do
+								if esAgente(e, sig(itAg)) then sancionar(e, sig(itAg)) endIf
+								avanzar(itAg)
+					else 
+						if esHippie(e, siguiente(it)) && esCapturable(e, siguiente(it))
+							then capturarHippie(&e,siguiente(it))
+						endIf
 
 
 
