@@ -1,0 +1,180 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{DiccionarioProm($\sigma$)}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}Se usa el {\sc Tad Diccionario($\kappa$, $\sigma$)} especificado en el apunte de Tads b\'asicos.
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
+\disParametrosFormales{$\kappa,\sigma$}
+
+\disParametrosFormalesDeclaraFunc{\puntito = \puntito}{\paramIn{a_1}{\kappa}, \paramIn{a_2}{\kappa}}{res : bool}{true}{res \igobs (a_1 = a_2)}{\ThetaDe{equals(a_1, a_2)}}{funci\'on de igualdad de $\kappa$'s}
+\disParametrosFormalesDeclaraFunc{COPIAR}{\paramIn{k}{\kappa}}{res : \kappa}{true}{res \igobs k}{\ThetaDe{copy(k)}}{funci\'on de copia de $\kappa$'s}
+\disParametrosFormalesDeclaraFunc{COPIAR}{\paramIn{s}{\sigma}}{res : \sigma}{true}{res \igobs s}{\ThetaDe{copy(s)}}{funci\'on de copia de $\sigma$'s}
+
+\disSeExplicaCon{Diccionario($\kappa,\sigma$)}
+
+\disGenero{diccProm($\kappa$,$\sigma$)}
+
+\disOperaciones{b\'asicas de diccionario}
+
+\disDeclaraFuncion{Definido?}{\paramIn{d}{diccProm(\kappa,\sigma)}, \paramIn{k}{\kappa}}{res : bool}{true}{res \igobs def?(d, k)}{\Ode{Na}\ Na\ es\ la\ cantidad\ de\ agentes.}{Devuelve true si y s\'olo si $k$ est\'a definido en el diccionario.}
+
+\disDeclaraFuncion{Obtener}{\paramIn{d}{diccString(\kappa,\sigma)}, \paramIn{k}{\kappa}}{res : \sigma}{def?(d, k)}{alias(res \ $\igobs$ obtener(d, k))}{\Ode{Na}\ Na\ es\ la\ cantidad\ de\ agentes.}{Devuelve el significado de la clave $k$ en $d$.}
+\disComentAliasing{ res no es modificable.}
+
+
+\disDeclaraFuncion{Vacio}{\paramIn{cantClaves}{nat}}{res : diccString(\kappa,\sigma)}{true}{res $\igobs$ vacio()}{\Ode{Na}\ Na\ es\ la\ cantidad\ de\ agentes.}{Genera un diccionario vac\'io.}
+
+\disDeclaraProc{Definir}{\paramInOut{d}{diccProm(\kappa,\sigma)}, \paramIn{k}{\kappa}, \paramIn{s}{\sigma}}{d \igobs d_0}{d \igobs definir(k, s, d_0)}{\Ode{1}}{Define la clave $k$ con el significado $s$ en el diccionario.}
+
+%\disDeclaraFuncion{Borrar}{\paramInOut{d}{diccProm(\kappa,\sigma)}, \paramIn{k}{\kappa}}{res : bool}{d=$d_{0}$ \land def?(k,d)}{d \igobs borrar(k,$d_{0}$)}{\Ode{|k|}\ |k|\ es\ la\ longitud\ de\ la\ clave.}{Elimina la clave k del diccionario.}
+
+
+
+
+
+\disPautasDeImplementacion
+
+\disEstructuraDeRepresentacion
+
+\disSeRepresentaCon{diccProm(\kappa,\sigma)}{estr}
+\disDondeEs{estr}{\disTuplaEstr{nat/CantClaves, arreglo[CantClaves] $de \ lista (datos)$/tabla}}
+\disDondeEs{datos}{\disTuplaEstr{\kappa /clave, \sigma /significado}}
+\disJustificacionDeLaEstructuraElegida
+
+%\disEstructurasAlternativas
+
+\disInvarianteDeRepresentacion
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Informal}}
+
+\hspace*{\disSubSubSecMargen}
+\begin{itemize}
+% HACK: SGA 20/06/2011. Para identar correctmente los items.
+\setlength{\itemindent}{3em}
+  \item Todas las posiciones del arreglo de caracteres están definidas.
+  \item No hay claves de 0 caracteres. El significado de la raíz es NULL.
+  \item No hay ciclos en la estructura. Es decir, existe una cota superior sobre la cantidad de niveles posibles del árbol.
+  \item Dado un nodo cualquiera del trie, existe un único camino desde la raíz hasta el nodo.
+\end{itemize}
+
+\hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
+
+\disRep{estr}{e}{$true$ $\Longleftrightarrow$ 
+\\\hspace*{3.75em}(1)(\forall i:nat)(i<256 $\implies$ definido?(e $\rightarrow$ caracteres,i)) \yluego
+\\\hspace*{3.75em}(2)(e \rightarrow significado = NULL) \yluego
+\\\hspace*{3.75em}(2)($\exists$ n:nat)(finaliza(e,n)) \yluego
+\\\hspace*{3.75em}(3)($\forall$ p,q: puntero(nodo))(p $\in$ punteros(e) \land q \in (punteros(e) - \lbrace p\rbrace ) $\implies$ p\not=q) \yluego
+\\\hspace*{3.75em}}
+
+
+\disFuncionDeAbstraccion
+\vspace*{-1em}
+%\hspace*{\disSubSubSecMargen}{Texto}
+\disAbs{roseTree(estrDato)}{r}{dicc\_trie($\sigma$)}{d}{($\forall$ $k$ : secu($letra$))(def?(k, d) $\igobs$ esta?(k, r)) $\land$ (def?(c, d) $\implies$ (obtener(k, d) $\igobs$ buscar(k, r)))}
+
+
+\disFuncionDeAbsFuncionesAux
+
+
+\newpage
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iVacio}}{\paramIn{cantClaves}{nat} }{$\disFlecha$ res : estr} \Comment{$\Ode{cantClaves}$}
+	\State var arreglo(lista(datos)) tabla $\gets$ crearArreglo[cantClaves] \Comment{$\Ode{cantClaves}$}
+	\State \textbf{for} i $\gets$ 0 \textbf{to} cantClaves \textbf{do} \Comment{$\Ode{cantClaves}$}
+  	\State tabla[i] $\gets$ Vacia() \Comment{\Ode{1}}
+  	\State \textbf{end for}
+  	\State var datos nuevo $\gets$ $<$tabla,cantClaves$>$ \Comment{$\Ode{1}$}
+  	\State res $\gets$ \&nuevo \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iDefinir}}{\paramInOut{d}{estr}, \paramIn{k}{nat}, \paramIn{s}{\sigma}} \Comment{$\Ode{1}$}
+    \State nat $i$ $\gets$ fHash(k, e.cantClaves) \Comment{$\Ode{1}$}
+    \State e.tabla[i] $\gets$ AgAtras(e.tabla[i],$<$k,s$>$) \Comment{$\Ode{1}$}
+    
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iObtener}}{\paramIn{d}{estr}, \paramIn{k}{nat}}{$\disFlecha$ res : $\sigma$} \Comment{$\Ode{longitud(tabla[i])}$}
+  \State nat $i$ $\gets$ fHash(k, e.cantClaves) \Comment{$\Ode{1}$}
+  \State bool flag $\gets$ false \Comment{$\Ode{1}$}
+  \State nat $j$ $\gets$ 0 \Comment{$\Ode{1}$}
+
+  \While { $\neg$ flag $\wedge$ j $<$ longitud(tabla[i]) } \Comment{$\Ode{longitud(tabla[i])}$}
+	  \If {datos.clave.tabla[i][j]=k} \Comment{$\Ode{1}$}
+      \State res $\gets$ datos.significado.tabla[i][j] \Comment{$\Ode{1}$}
+      \State aux $\gets$ true \Comment{$\Ode{1}$}
+     % \Else
+      %  \State actual $\gets$ actual $\disFlecha$ caracteres[ord(k[i])] \Comment{$\Ode{1}$}
+       % \State $i$ $\gets$ $i+1$ \Comment{$\Ode{1}$}
+      \EndIf      
+      \State $j$ $\gets$ $j+1$
+  \EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{iDefinido?}}{\paramIn{d}{estr}, \paramIn{k}{nat}}{$\disFlecha$ res : bool} \Comment{$\Ode{longitud(tabla[i])}$}
+  \State nat $i$ $\gets$ fHash(k, e.cantClaves) \Comment{$\Ode{1}$}
+  \State nat $j$ $\gets$ 0 \Comment{$\Ode{1}$}
+  \State bool def $\gets$ \textsf{false} \Comment{$\Ode{1}$}
+  \While {($j$ $<$ longitud(tabla[i]) \textbf{and} $\neg$ def)} \Comment{$\Ode{longitud(tabla[i])}$}
+    \If {datos.clave.tabla[i][j]=k} \Comment{$\Ode{1}$}
+      \State def $\gets$ \textsf{true} \Comment{$\Ode{1}$}
+     
+      \EndIf
+  \EndWhile
+  \State res $\gets$ def  \Comment{$\Ode{1}$}
+
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}\phantom{[H]}
+\begin{algorithmic}[1]
+\Function {\textsc{fHash}}{\paramIn{k}{nat}, \paramIn{cantClaves}{nat}}{$\disFlecha$ res : nat} \Comment{$\Ode{1}$}
+  \State res $\gets$ k mod cantClaves \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\newpage
+\disServiciosUsados
+\vspace*{-1em}
+ 
+\disRequerimientosSobreElTipo{}
+\disItemRequerimientosSobreElTipo{La funci\'on \textbf{$|$x$|$} debe tener complejidad $\Ode{1}$ en el caso peor.}
+\disItemRequerimientosSobreElTipo{La funci\'on \textbf{$|$x$|$} debe tener complejidad $\Ode{1}$ en el caso peor.}
+\disItemRequerimientosSobreElTipo{Las operaciones deben realizarse por referencia.}
+\disItemRequerimientosSobreElTipo{Debe proveer una operaci\'on \textbf{Copia} que devuelve una nueva instancia de la secuencia pero que es\\ \hspace*{5.75em}independiente de la actual, con complejidad $\Ode{n}$ en el caso peor.}
+\disItemRequerimientosSobreElTipo{Debe proveer un \textbf{iterador} para avanzar que comienza en el primero elemento de la secuencia.}
+\disItemRequerimientosSobreElTipo{Debe proveer un \textbf{iterador} para retroceder que comienza en el último elemento de la secuencia.}
+\disItemRequerimientosSobreElTipo{Las operaciones \textbf{CrearIt, Siguiente, Anterior, TieneSiguiente, TieneAnterior} deben tener complejidad \\
+\hspace*{5.75em}$\Ode{1}$ en el caso peor.}
+\vspace*{1em}
+\hspace*{2em}Donde $n$ es la longitud de la palabra.
+
