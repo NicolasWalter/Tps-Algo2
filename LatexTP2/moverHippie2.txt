@@ -1,78 +1,130 @@
-DIRECTIVAS!!!
+function conMismasSanciones(in e:estr, in a:agente) --> res: conj(agente)
+	res <-- siguiente(obtener(e.agentes, a).grupoSanciones)
 
-
-
-
-//INGRESAR HIPPIE
-
-
-
-
-
-
-function moverEstudiante (inout e:estr, in d:direccion, in s:estudiante)
-	var posicion actual <-- obtener(e.posCiviles, s)
-	var posicion prx <-- proxPosicion(e.campus, d, obtener(e.posCiviles,s)) // PASAR E.quienOcupa!!!!!!!!
-	var itConj(nombre) copia <-- copiar(e.quienOcupa[actual.X][actual.Y].hayHoe) //SE PUEDE HACER ESTO AL FINAL?
-		definir(e.posCiviles, s, prx)
-		QuienOcupa [actual.X][actual.Y] <-- <false, nadie, nuevoIt(), nuevoIt()>
-		QuienOcupa [prx.X][prx.Y] <-- <true, estudiante, nuevoIt(), copia>
-	var conj(posicion) Ps <-- vecinos(e.campus, prx)
-	var itConj(posicion) it <-- crearIt(Ps)
-	//REDEFINIR EN POSRAPIDA
-	//REDEFINIR EN HoE
-	if ( esHippizable(e,prx) ) then 
-		hippizar(e, prx)
-		while (haySiguiente(it)) do
-			if ocupada(e.campus, siguiente(it)) v !e.quienOcupa[siguiente(it).X][siguiente(it).Y].ocupada?
-				then avanzar(it)
-				else if esEstudiante(e,siguiente(it)) && esHippizable(e,siguiente(it))
-						then Hippizar(e, siguiente(it))
-							 if esCapturable(e, siguiente(it)) then  capturarHippie(e, siguiente(it)) endIf
-						else if esEstudiante(e, siguiente(it)) && esCapturable(e, siguiente(it))
-								then var itConj(posicion) itAg <-- vecinos(e.campus, siguiente(it))
-									while (haySiguiente(itAg)) do
-										if esAgente(e, sig(itAg)) then sancionar(e, sig(itAg)) endIf
-										avanzar(itAg)
-								else if esHippie(e, siguiente(it)) && esCapturable(e, siguiente(it))
-									then capturarHippie(e,siguiente(it))
-			avanzar(it)
-		endWhile
+function conKSanciones(in e:estr, in k:nat) --> res: conj(agente)
+	if !e.huboNuevas then
+		var nat i <-- BusquedaBin(e.buscoEnLog, k)
+		res <-- e.buscoEnLog[i].grupoK
 	else
+		var itLista(datosK) itK <-- crearIt(e.agregoEn1)
+		while haySiguiente(itK) do
+			buscoEnLog[i] <-- siguiente(itK)
+			avanzar(itK)
+		endWhile
+		var nat i <-- BusquedaBin(e.buscoEnLog, k)
+		res <-- e.buscoEnLog[i].grupoK
+	endIF
+endFunction
+
+function ingresarHippie (in h:Nombre, in p:Posicion, inout e:estr)
+	definir(e.posCiviles,h,p)
+	var itDicc(nombre,posicion) iterPos <-- definirRapido(e.posRapida,h,p)
+	e.quienOcupa[p.X][p.Y] <-- <true,"hippie",crearIt(),agregar(e.hippies(<h,iterPos>))>
+	var conj(posicion) Ps <-- vecinos(e.campus,p)
+	var itConj(posicion) it <-- crearIt(Ps)			
+	if esCapturable(e,p) then
+		capturarHippie(e,p)
+	else 
 		while (haySiguiente(it)) do
-			if ocupada(e.campus, siguiente(it)) v !e.quienOcupa[siguiente(it).X][siguiente(it).Y].ocupada?
-			then avanzar(it)
-			else if esHippie(e,siguiente(it)) && esEstudiantizable(e,siguiente(it))
-					then Estudiantizar(e, siguiente(it))
-						if esCapturable(e, siguiente(it)) then
+				If ocupada(e.campus, siguiente(it)) v !e.quienOcupa[siguiente(it).X][siguiente(it).Y].ocupada?
+					then avanzar(it)
+				ELSE
+					if esEstudiante(e,siguiente(it)) && esHippizable(e,siguiente(it)) then 
+						Hippizar(e, siguiente(it))
+						if esCapturable(e, siguiente(it)) then  capturarHippie(e, siguiente(it)) endIf
+					else if esEstudiante(e, siguiente(it)) && esCapturable(e, siguiente(it)) then
 							var itConj(posicion) itAg <-- vecinos(e.campus, siguiente(it))
 							while (haySiguiente(itAg)) do
 								if esAgente(e, sig(itAg)) then sancionar(e, sig(itAg)) endIf
 								avanzar(itAg)
-								endIf
 							endWhile
-					else if esEstudiante(e, siguiente(it)) && esCapturable(e, siguiente(it))
-							then var itConj(posicion) itAg2 <-- vecinos(e.campus, siguiente(it))
-								while (haySiguiente(itAg2)) do
-									if esAgente(e, sig(itAg2)) then sancionar(e, sig(itAg2)) endIf
-									avanzar(itAg)
-							else if esHippie(e, siguiente(it)) && esCapturable(e, siguiente(it))
-								then capturarHippie(e,siguiente(it))
-			avanzar(it)
-	endWhile
+						else 
+							if esHippie(e, siguiente(it)) && esCapturable(e, siguiente(it)) then
+								capturarHippie(e,siguiente(it))
+							endIf
+						endIf
+					endIf
+				endIf				
+				avanzar(it)
+			endWhile
 
+end Function 
+
+
+function moverEstudiante (inout e:estr, in d:direccion, in s:estudiante) //FALTA EL CASO QUE SE VA A LA CASA LA CONCHA DE LA LORA
+	var posicion actual <-- obtener(e.posCiviles, s)
+	var posicion prx <-- proxPosicion(e.campus, d, actual)
+	If(seFue?(e.campus,prx)) then
+		borrar(e.posCiviles,s)
+		var itConj(datosHoe) dat <-- copia(e.quienOcupa[actual.X][actual.Y].hayHoE)
+		eliminarSiguiente(dat.posActual)
+		eliminarSiguiente(dat)
+		e.quienOcupa[actual.X][actual.Y] <-- <false,nada,crearIt(),crearIt()>
+	Else
+		var itConj(datosHoE) iterAHOI <-- copia(e.quienOcupa[actual.X][actual.Y].hayHoE)
+		eliminarSiguiente(siguiente(iterAHOI).posActual)
+		siguiente(iterAHOI).posActual <-- definirRapido(e.posRapida,s,prx)
+		e.quienOcupa[prx.X][prx.Y] <-- <true,"estudiante",crearIt(),iterAHOI>
+		e.quienOcupa [actual.X][actual.Y] <-- <false, "nada", nuevoIt(), nuevoIt()>
+		definir(e.posCiviles, s, prx)
+	
+		var conj(posicion) vc <-- vecinos(e.campus, prx)
+		var itConj(posicion) it <-- crearIt(vc)
+
+		If ( esHippizable(e,prx) ) then 
+			hippizar(e, prx)
+			while (haySiguiente(it)) do
+				If ocupada(e.campus, siguiente(it)) v !e.quienOcupa[siguiente(it).X][siguiente(it).Y].ocupada?
+					then avanzar(it)
+				ELSE
+					if esEstudiante(e,siguiente(it)) && esHippizable(e,siguiente(it)) then 
+						Hippizar(e, siguiente(it))
+						if esCapturable(e, siguiente(it)) then  capturarHippie(e, siguiente(it)) endIf
+					else if esEstudiante(e, siguiente(it)) && esCapturable(e, siguiente(it)) then
+							var itConj(posicion) itAg <-- vecinos(e.campus, siguiente(it))
+							while (haySiguiente(itAg)) do
+								if esAgente(e, sig(itAg)) then sancionar(e, sig(itAg)) endIf
+								avanzar(itAg)
+							endWhile
+						else 
+							if esHippie(e, siguiente(it)) && esCapturable(e, siguiente(it)) then
+								capturarHippie(e,siguiente(it))
+							endIf
+						endIf
+					endIf
+				endIf				
+				avanzar(it)
+			endWhile
+		Else
+			while (haySiguiente(it)) do
+				if ocupada(e.campus, siguiente(it)) v !e.quienOcupa[siguiente(it).X][siguiente(it).Y].ocupada?
+				then avanzar(it)
+				else if esHippie(e,siguiente(it)) && esEstudiantizable(e,siguiente(it))
+						then 	Estudiantizar(e, siguiente(it))
+						else if esEstudiante(e, siguiente(it)) && esCapturable(e, siguiente(it))
+								then var itConj(posicion) itAg2 <-- vecinos(e.campus, siguiente(it))
+									while (haySiguiente(itAg2)) do
+										if esAgente(e, sig(itAg2)) then sancionar(e, sig(itAg2)) endIf
+										avanzar(itAg)
+								else if esHippie(e, siguiente(it)) && esCapturable(e, siguiente(it))
+									then capturarHippie(e,siguiente(it))
+				avanzar(it)
+			endWhile
+		EndIf	
+	EndIf
+EndFunction
 
 function moverAgente(inout e:estr, in a:agente)
-	var posicion actual <-- obtener(e.agentes,a).posActual
-	var posicion d <-- FUNCION A HACER DONDE TE DEVUELVE LA PROX POSICION
-	var posicion prx <-- proxPosicion(e.campus, d, obtener(e.agentes,a).posActual)
-	var datosAg agenteA <-- <obtener(e.agentes,a).QSanciones, obtener(e.agentes,a).premios, prx, obtener(e.agentes,a).grupoSanciones , obtener(e.agentes,a).verK>
-		eliminarSiguiente(e.quienOcupa[actual.X][actual.Y].hayCana)
-	var itDicc(agente;datosAg) itA <-- definirRapido(e.agentes, agenteA)
+	var int j <-- BusquedaBin(e.AgentesLog,a)
+	var posicion actual <-- e.AgentesLog[j].pos
+	var direccion d <-- proxPosicionA(e,a)
+	var posicion prx <-- proxPosicion(e.campus, d, actual)
+	var datosAg datAux <-- obtener(e.agentes,a)
+	datAux.posActual <-- prx
+	var itDicc(placa,datosAg) itA <-- copia(e.quienOcupa[actual.X][actual.Y].hayCana)
 		e.quienOcupa[actual.X][actual.Y]<-- <false, nadie, nuevoIt(), nuevoIt()>
 		e.quienOcupa[prx.X][prx.Y] <-- <true, agente, itA, nuevoIt()>
 	var itConj(posicion) <-- crearIt(vecinos(e.campus, prx))
-		
 		while (haySiguiente(it)) do
 			if ocupada(e.campus, siguiente(it)) v !e.quienOcupa[siguiente(it).X][siguiente(it).Y].ocupada?
 			then avanzar(it)
@@ -91,17 +143,16 @@ function moverAgente(inout e:estr, in a:agente)
 		
 		
 
-function imoverHippie (inout e:estr, h:nombre){
+function imoverHippie (inout e:estr, h:nombre)
 	var posicion actual <-- obtener(e.posCiviles, h)
-	var posicion d <-- FUNCION A HACER DONDE TE DEVUELVE LA PROXIMA POSICION
-	var posicion prx <-- proxPosicion(e.campus, d, obtener(e.posCiviles,h)) // PASAR E.quienOcupa!!!!!!!!
-	var itConj(nombre) copia <-- copiar(e.quienOcupa[actual.X][actual.Y].hayHoe) //SE PUEDE HACER ESTO AL FINAL?
-		QuienOcupa [prx.X][prx.Y] <-- <true, hippie, nuevoIt(), copia>
-		QuienOcupa [actual.X][actual.Y] <-- <false, nadie, nuevoIt(), nuevoIt()>
-		definir(e.posCiviles, h, prx)
-		//REDEFINIR EN POSRAPIDA
-	var conj(posicion) Ps <-- vecinos(e.campus, prx)
-	var itConj(posicion) it <-- crearIt(Ps)
+	var direccion d <-- proxPosicionH(e,h)
+	var posicion prx <-- proxPosicion(e.campus, d, obtener(e.posCiviles,h))
+	definir(e.posCiviles, h, prx)
+	var itConj(nombre) itR <-- e.quienOcupa[actual.X][actual.Y].hayHoe
+	eliminarSiguiente(siguiente(itR).posActual)
+	siguiente(itR).posActual <-- definirRapido(e.posRapida, h, prx)
+	e.QuienOcupa [prx.X][prx.Y] <-- <true, hippie, nuevoIt(), itR>
+	e.QuienOcupa [actual.X][actual.Y] <-- <false, nadie, nuevoIt(), nuevoIt()>
 	while (haySiguiente(it)) do
 		if ocupada(e.campus, siguiente(it)) v !e.quienOcupa[siguiente(it).X][siguiente(it).Y].ocupada?
 			then avanzar(it)
@@ -201,18 +252,6 @@ function todasOcupadas (in e:estr, in p:conj(posicion))--> res:bool
 	res <-- contador == 4
 	
 
-//Falta sancionar
-
-
-
-
-
-
-
-
-
-
-
 function iIngresarEstudiante (in n:Nombre, in p:Posicion, inout e:estr){
 	if(esHippizable(e,p)) then 
 		if(esCapturable(e,p)) then
@@ -220,7 +259,7 @@ function iIngresarEstudiante (in n:Nombre, in p:Posicion, inout e:estr){
 			var itConj(posicion) it <-- crearIt(v)
 			while haySiguiente(it) do
 				if e.quienOcupa[siguiente(it).X][siguiente(it).Y].queHay == "agente" then 
-					recompensar(e,siguiente(it)) //HAY QUE HACER RECOMPENSAR
+					recompensar(e,siguiente(it))
 				avanzar(it)
 			endWhile
 		else 
@@ -256,25 +295,20 @@ function iIngresarEstudiante (in n:Nombre, in p:Posicion, inout e:estr){
 		while (haySiguiente(it)) do
 			if(esHippie(e,siguiente(it)) && esEstudiantizable(e,siguiente(it))) then
 				Estudiantizar(e,siguiente(it))
-				if(esCapturable(e,siguiente(it))) then
-					var itConj(posicion) itAg <-- vecinos(e.campus, siguiente(it))
-				    while (haySiguiente(itAg)) do
-				 		if esAgente(&e, sig(itAg)) then sancionar(&e, sig(itAg)) endIf
-						avanzar(itAg)
-				endIf
 			else
 				if esEstudiante(e, siguiente(it)) && esCapturable(e, siguiente(it))	then 
 						var itConj(posicion) itAg <-- vecinos(e.campus, siguiente(it))
 						    while (haySiguiente(itAg)) do
 								if esAgente(e, sig(itAg)) then sancionar(e, sig(itAg)) endIf
 								avanzar(itAg)
-					else 
+				else 
 						if esHippie(e, siguiente(it)) && esCapturable(e, siguiente(it))
 							then capturarHippie(&e,siguiente(it))
 						endIf
-					endIf
+				endIf
 			endIf
 		endWhile
+	endIF	
 endFunction
 
 
