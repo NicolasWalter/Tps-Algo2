@@ -102,7 +102,7 @@
 \floatname{algorithm}{}
 % WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
 % Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{iVacio}}{ }{$\disFlecha$ res : estr} \Comment{$\Ode{1}$}
 	\State var arreglo(puntero(nodo)) letras $\gets$ crearArreglo[256]
@@ -115,7 +115,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{iDefinir}}{\paramInOut{d}{estr}, \paramIn{k}{string}, \paramIn{s}{\sigma}}
     \State nat $i$ $\gets$ 0 \Comment{$\Ode{1}$}
@@ -135,7 +135,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{iObtener}}{\paramIn{d}{estr}, \paramIn{k}{string}}{$\disFlecha$ res : $\sigma$}
   \State nat $i$ $\gets$ 0 \Comment{$\Ode{1}$}
@@ -149,7 +149,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{iBorrar}}{\paramInOut{d}{estr}, \paramIn{k}{string}}{}
 	\State puntero(nodo) actual $\gets$ d
@@ -167,7 +167,7 @@
 \end{algorithm}
 
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{iDefinido?}}{\paramIn{d}{estr}, \paramIn{k}{string}}{$\disFlecha$ res : bool}
   \State nat $i$ $\gets$ 0 \Comment{$\Ode{1}$}

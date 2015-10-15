@@ -89,7 +89,7 @@
 \floatname{algorithm}{}
 % WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
 % Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$CrearCampus}}{\paramIn{c}{nat}, \paramIn{f}{nat}}{$\disFlecha$ res : estr} \Comment{$\Ode{f^{2}*c^{2}}$}
   \State var vector(vector(bool)) mapa $\gets$ vacia(vacia()) \Comment{$\Ode{1}$}
@@ -110,7 +110,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$AgregarObstaculo}}{\paramInOut{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : estr} \Comment{$\Ode{longitud(e.mapa[p.X]}$}
   \State Agregar(e.mapa[p.X], p.Y, true) \Comment{$\Ode{longitud(e.mapa[p.X])}$}
@@ -118,7 +118,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$Filas?}}{\paramIn{e}{estr}}{$\disFlecha$ res : nat} \Comment{$\Ode{1}$}
   \State res $\gets$ e.filas  \Comment{$\Ode{1}$}
@@ -126,7 +126,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$Columnas?}}{\paramIn{e}{estr}}{$\disFlecha$ res : nat} \Comment{$\Ode{1}$}
   \State res $\gets$ e.columnas  \Comment{$\Ode{1}$}
@@ -134,7 +134,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$Ocupada?}}{\paramIn{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : bool} \Comment{$\Ode{1}$}
   \State res $\gets$ (e.mapa[p.X])[p.Y]  \Comment{$\Ode{1}$}
@@ -142,7 +142,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$PosValida?}}{\paramIn{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : bool} \Comment{$\Ode{1}$}
   \State res $\gets$ (0 $<$ p.X) $\land$ (p.X $\leq$ e.filas) $\land$ (0 $<$ p.Y) $\land$ (p.Y $\leq$ e.columnas) \Comment{$\Ode{1}$}
@@ -150,7 +150,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$EsIngreso?}}{\paramIn{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : bool} \Comment{$\Ode{1}$}
   \State res $\gets$ (p.Y = 1) $\lor$ (p.Y = e.filas) \Comment{$\Ode{1}$}
@@ -158,7 +158,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$Vecinos}}{\paramIn{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : conj(posicion)} \Comment{$\Ode{1}$}
   \State var conj(posicion) nuevo $\gets$ vacio() \Comment{$\Ode{1}$}
@@ -179,7 +179,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$VecinosComunes}}{\paramIn{e}{estr}, \paramIn{p}{posicion}, \paramIn{p2}{posicion}}{$\disFlecha$ res : conj(posicion)} \Comment{$\Ode{1}$}
     \State  var conj(posicion) v $\gets$ vecinos(e,p) \Comment{$\Ode{1}$}
@@ -197,7 +197,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$VecinosValidos}}{\paramIn{e}{estr}, \paramIn{ps}{conj(posicion)}} {$\disFlecha$ res : conj(posicion)} \Comment{$\Ode{1}$}
     \State  var conj(posicion) nuevo $\gets$ vacio() \Comment{$\Ode{1}$}
@@ -213,7 +213,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$Distancia}}{\paramIn{e}{estr}, \paramIn{p}{posicion}, \paramIn{p2}{posicion}}{$\disFlecha$ res : nat} \Comment{$\Ode{1}$}
     \State res $\gets$ $\mid$p.X - p2.X$\mid$ + $\mid$p.Y - p2.Y$\mid$ \Comment{$\Ode{1}$}    
@@ -221,7 +221,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$ProxPosicion}}{\paramIn{e}{estr}, \paramIn{d}{direccion}, \paramIn{p}{posicion}}{$\disFlecha$ res : posicion} \Comment{$\Ode{1}$}
 		  \State var posicion p2 $\gets$ p	      
@@ -244,7 +244,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$IngresosMasCercanos}}{\paramIn{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : conj(posicion)} \Comment{$\Ode{1}$}
 		  \State var conj(posicion) nuevo $\gets$ Vacio()	      \Comment{$\Ode{1}$}

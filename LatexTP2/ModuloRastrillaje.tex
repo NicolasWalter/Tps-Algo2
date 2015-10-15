@@ -108,7 +108,7 @@
 % WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
 % Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$Campus}}{\paramIn{e}{estr}}{$\disFlecha$ res : campus} \Comment{$\Ode{1}$}
   \State res $\gets$ e.campo
@@ -117,7 +117,7 @@
 \end{algorithm}
 
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$Estudiantes}}{\paramIn{e}{estr}}{$\disFlecha$ res : itConj(nombre)} \Comment{$\Ode{1}$}
   \State res $\gets$ crearIt (e.estudiantes)
@@ -126,7 +126,7 @@
 \end{algorithm}
 
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$Hippies}}{\paramIn{e}{estr}}{$\disFlecha$ res : itConj(nombre)} \Comment{$\Ode{1}$}
   \State res $\gets$ crearIt (e.hippies)
@@ -134,7 +134,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$Agentes}}{\paramIn{e}{estr}}{$\disFlecha$ res : itConj(agente)} \Comment{$\Ode{1}$}
   \State res $\gets$ crearIt (e.agentes) 
@@ -142,7 +142,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$posEstudiantesYHippie}}{\paramIn{n}{nombre} \paramIn{e}{estr}}{$\disFlecha$ res : posicion} \Comment{$\Ode{\longitud{n_{m}}}$}
     \State res $\gets$ obtener(n,e.posCiviles)
@@ -150,7 +150,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$posAgente}}{\paramIn{a}{agente} \paramIn{e}{estr}}{$\disFlecha$ res : posicion} \Comment{$\Ode{1}(promedio)$}
     \State res $\gets$ obtener(a,e.agentes).posActual
@@ -158,7 +158,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$cantSanciones}}{\paramIn{a}{agente} \paramIn{e}{estr}}{$\disFlecha$ res : nat} \Comment{$\Ode{1}(promedio)$}
     \State res $\gets$ obtener(a,e.agentes).Qsanciones
@@ -166,7 +166,7 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{$i$cantHippiesAtrapados}}{\paramIn{a}{agente} \paramIn{e}{estr}}{$\disFlecha$ res : nat} \Comment{$\Ode{1}(promedio)$}
     \State res $\gets$ obtener(a,e.agentes).premios

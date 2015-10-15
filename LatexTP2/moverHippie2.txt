@@ -9,6 +9,7 @@ DIRECTIVAS!!!
 
 
 
+
 function moverEstudiante (inout e:estr, in d:direccion, in s:estudiante)
 	var posicion actual <-- obtener(e.posCiviles, s)
 	var posicion prx <-- proxPosicion(e.campus, d, obtener(e.posCiviles,s)) // PASAR E.quienOcupa!!!!!!!!
@@ -43,7 +44,7 @@ function moverEstudiante (inout e:estr, in d:direccion, in s:estudiante)
 			then avanzar(it)
 			else if esHippie(e,siguiente(it)) && esEstudiantizable(e,siguiente(it))
 					then Estudiantizar(e, siguiente(it))
-						 if esCapturable(e, siguiente(it)) then
+						if esCapturable(e, siguiente(it)) then
 							var itConj(posicion) itAg <-- vecinos(e.campus, siguiente(it))
 							while (haySiguiente(itAg)) do
 								if esAgente(e, sig(itAg)) then sancionar(e, sig(itAg)) endIf

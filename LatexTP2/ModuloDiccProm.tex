@@ -44,8 +44,8 @@
 \disEstructuraDeRepresentacion
 
 \disSeRepresentaCon{diccProm(\kappa,\sigma)}{estr}
-\disDondeEs{estr}{\disTuplaEstr{nat/CantClaves, arreglo[CantClaves] $de \ lista (datos)$/tabla}}
-\disDondeEs{datos}{\disTuplaEstr{\kappa /clave, \sigma /significado}}
+\disDondeEs{estr}{\disTuplaEstr{nat/CantClaves, arreglo $de \ lista (datos)$/tabla}}
+\disDondeEs{datos}{\disTuplaEstr{$\kappa$/clave, $\sigma$/significado}}
 \disJustificacionDeLaEstructuraElegida
 
 %\disEstructurasAlternativas
@@ -89,45 +89,36 @@
 \floatname{algorithm}{}
 % WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
 % Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
-\Function {\textsc{iVacio}}{\paramIn{cantClaves}{nat} }{$\disFlecha$ res : estr} \Comment{$\Ode{cantClaves}$}
-	\State var arreglo(lista(datos)) tabla $\gets$ crearArreglo[cantClaves] \Comment{$\Ode{cantClaves}$}
-	\State \textbf{for} i $\gets$ 0 \textbf{to} cantClaves \textbf{do} \Comment{$\Ode{cantClaves}$}
-  	\State tabla[i] $\gets$ Vacia() \Comment{\Ode{1}}
+\Function {\textsc{iVacio}}{\paramIn{n}{nat} }{$\disFlecha$ res : estr} \Comment{$\Ode{cantClaves}$}
+	\State var arreglo(lista(datos)) tabla $\gets$ crearArreglo[n] \Comment{$\Ode{cantClaves}$}
+	\State \textbf{for} i $\gets$ 0 \textbf{to} n \textbf{do} \Comment{$\Ode{cantClaves}$}
+  	\State tabla[i] $\gets$ Vacia() \Comment{$\Ode{1}$}
   	\State \textbf{end for}
-  	\State var datos nuevo $\gets$ $<$tabla,cantClaves$>$ \Comment{$\Ode{1}$}
-  	\State res $\gets$ \&nuevo \Comment{$\Ode{1}$}
+  	\State res $\gets$ $<$n,tabla$>$ \Comment{$\Ode{1}$}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{iDefinir}}{\paramInOut{d}{estr}, \paramIn{k}{nat}, \paramIn{s}{\sigma}} \Comment{$\Ode{1}$}
     \State nat $i$ $\gets$ fHash(k, e.cantClaves) \Comment{$\Ode{1}$}
-    \State e.tabla[i] $\gets$ AgAtras(e.tabla[i],$<$k,s$>$) \Comment{$\Ode{1}$}
-    
+    \State e.tabla[i] $\gets$ AgregarAtras(e.tabla[i],$<$k,s$>$) \Comment{$\Ode{1}$}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{iObtener}}{\paramIn{d}{estr}, \paramIn{k}{nat}}{$\disFlecha$ res : $\sigma$} \Comment{$\Ode{longitud(tabla[i])}$}
   \State nat $i$ $\gets$ fHash(k, e.cantClaves) \Comment{$\Ode{1}$}
-  \State bool flag $\gets$ false \Comment{$\Ode{1}$}
-  \State nat $j$ $\gets$ 0 \Comment{$\Ode{1}$}
-
-  \While { $\neg$ flag $\wedge$ j $<$ longitud(tabla[i]) } \Comment{$\Ode{longitud(tabla[i])}$}
-	  \If {datos.clave.tabla[i][j]=k} \Comment{$\Ode{1}$}
-      \State res $\gets$ datos.significado.tabla[i][j] \Comment{$\Ode{1}$}
-      \State aux $\gets$ true \Comment{$\Ode{1}$}
-     % \Else
-      %  \State actual $\gets$ actual $\disFlecha$ caracteres[ord(k[i])] \Comment{$\Ode{1}$}
-       % \State $i$ $\gets$ $i+1$ \Comment{$\Ode{1}$}
-      \EndIf      
-      \State $j$ $\gets$ $j+1$
+  \State var itLista(datos) it $\gets$ crearIt(tabla[i])
+  \While {haySiguiente(it)} 
+  \If {siguiente(it).clave = k}
+    \State res $\gets$ siguiente(it).significado
+  \EndIf
   \EndWhile
 \EndFunction
 \end{algorithmic}
@@ -135,25 +126,23 @@
 
 
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{iDefinido?}}{\paramIn{d}{estr}, \paramIn{k}{nat}}{$\disFlecha$ res : bool} \Comment{$\Ode{longitud(tabla[i])}$}
   \State nat $i$ $\gets$ fHash(k, e.cantClaves) \Comment{$\Ode{1}$}
-  \State nat $j$ $\gets$ 0 \Comment{$\Ode{1}$}
-  \State bool def $\gets$ \textsf{false} \Comment{$\Ode{1}$}
-  \While {($j$ $<$ longitud(tabla[i]) \textbf{and} $\neg$ def)} \Comment{$\Ode{longitud(tabla[i])}$}
-    \If {datos.clave.tabla[i][j]=k} \Comment{$\Ode{1}$}
-      \State def $\gets$ \textsf{true} \Comment{$\Ode{1}$}
-     
-      \EndIf
+  \State var itLista(datos) it $\gets$ crearIt(tabla[i])
+  \State bool aux $\gets$ false
+  \While {haySiguiente(it)} 
+  \If {siguiente(it).clave = k}
+    \State aux $\gets$ true
+  \EndIf
   \EndWhile
-  \State res $\gets$ def  \Comment{$\Ode{1}$}
-
+  \State res $\gets$ aux
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}\phantom{[H]}
+\begin{algorithm}[H]
 \begin{algorithmic}[1]
 \Function {\textsc{fHash}}{\paramIn{k}{nat}, \paramIn{cantClaves}{nat}}{$\disFlecha$ res : nat} \Comment{$\Ode{1}$}
   \State res $\gets$ k mod cantClaves \Comment{$\Ode{1}$}
@@ -165,7 +154,7 @@
 \newpage
 \disServiciosUsados
 \vspace*{-1em}
- 
+
 \disRequerimientosSobreElTipo{}
 \disItemRequerimientosSobreElTipo{La funci\'on \textbf{$|$x$|$} debe tener complejidad $\Ode{1}$ en el caso peor.}
 \disItemRequerimientosSobreElTipo{La funci\'on \textbf{$|$x$|$} debe tener complejidad $\Ode{1}$ en el caso peor.}
