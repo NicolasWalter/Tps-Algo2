@@ -87,8 +87,7 @@
 \hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
 \onehalfspace
 \disRep{estr}{e}{$true$ $\Longleftrightarrow$ 
-\\\hspace*{3.75em}(1) e.filas = longitud(e.mapa) $\yluego$ 
-($\forall$ i : nat)(i $\leq$ e.filas $\implies$ longitud(e.mapa[i])= e.columnas)}
+\\\hspace*{3.75em}(1)(2)(3) ($\forall$ a,a2: Agente)(def?(a,e.agentes) $\wedge$ def?(a2,e.agentes)) $\impluego$ \\ (obtener(a,e.agentes).Qsanciones=siguiente(obtener(a,e.agentes).verK).K \\ $\wedge$ obtener(a,e.agentes).grupoSanciones=siguiente(obtener(a,e.agentes).verK).grupoK \\ $\wedge$ (a2 $\in$ obtener(a,e.agentes).grupoSanciones) $\Longleftrightarrow$ (obtener(a,e.agentes).Qsanciones = obtener(a2,e.agentes).Qsanciones) $\wedge$ (4) PosValida(e,obtener(a,e.agentes).PosActual)) $\wedge$ (5) TodasLasPlacas(e,e.PosAgentesLog())}
 \disFuncionDeAbstraccion
 \vspace*{-1em}
 %\hspace*{\disSubSubSecMargen}{Texto}
