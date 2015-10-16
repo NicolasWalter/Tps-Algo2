@@ -1,26 +1,28 @@
-function masVigilante(in e:estr) --> res:agente O(1)
+xfunction masVigilante(in e:estr) --> res:agente O(1)
 	res <-- siguiente(e.masVigilante) 
 
-function conMismasSanciones(in e:estr, in a:agente) --> res: conj(agente) O(1)
+xfunction conMismasSanciones(in e:estr, in a:agente) --> res: conj(agente) O(1)
 	res <-- siguiente(obtener(e.agentes, a).grupoSanciones) 
 
-function conKSanciones(in e:estr, in k:nat) --> res: conj(agente) //O(N) la 1ra vez , O(log n) mientras no haya sanciones
-	if !e.huboNuevas then 		O(1)
-		var nat i <-- BusquedaBin(e.buscoEnLog, k) O(log n)
-		res <-- e.buscoEnLog[i].grupoK O(1)
-	else
-		var itLista(datosK) itK <-- crearIt(e.agregoEn1) O(1)
-		while haySiguiente(itK) do O(n)
-			buscoEnLog[i] <-- siguiente(itK) O(1)
-			avanzar(itK)
-		endWhile
-		var nat i <-- BusquedaBin(e.buscoEnLog, k) O (log n + n) => O(n)
-		res <-- e.buscoEnLog[i].grupoK O(1)
-		e.hayNuevas <-- false
-	endIF
+xfunction conKSanciones(in e:estr, in k:nat) --> res: conj(agente) //O(N) la 1ra vez , O(log n) mientras no haya sanciones
+		if !e.huboNuevas then 		O(1)
+			var nat i <-- BusquedaBin(e.buscoEnLog, k) O(log n)
+				if(e.buscoEnLog[i]==k) then
+			res <-- e.buscoEnLog[i].grupoK O(1)
+				else res <-- vacio()
+		else
+			var itLista(datosK) itK <-- crearIt(e.agregoEn1) O(1)
+			while haySiguiente(itK) do O(n)
+				buscoEnLog[i] <-- siguiente(itK) O(1)
+				avanzar(itK)
+			endWhile
+			var nat i <-- BusquedaBin(e.buscoEnLog, k) O (log n + n) => O(n)
+			res <-- e.buscoEnLog[i].grupoK O(1)
+			e.hayNuevas <-- false
+		endIF
 endFunction
 
-function ingresarHippie (in h:Nombre, in p:Posicion, inout e:estr) O(|Nm|)
+xfunction ingresarHippie (in h:Nombre, in p:Posicion, inout e:estr) O(|Nm|)
 	definir(e.posCiviles,h,p) 	O(|Nm|)
 	var itDicc(nombre,posicion) iterPos <-- definirRapido(e.posRapida,h,p) O(1) //Segun la explicacion de DIccLIneal si se sabe que no esta definido, se puede en O(1)
 	e.quienOcupa[p.X][p.Y] <-- <true,"hippie",crearIt(),agregarRapido(e.hippies,<h,iterPos>)> O(1) //Cambie agregar por agregarRapido
@@ -51,14 +53,14 @@ function ingresarHippie (in h:Nombre, in p:Posicion, inout e:estr) O(|Nm|)
 				endIf				
 				avanzar(it)
 			endWhile
-
+		endIF
 end Function 
 
 
 function moverEstudiante (inout e:estr, in d:direccion, in s:estudiante) O(|Nm|)
 	var posicion actual <-- obtener(e.posCiviles, s) O(1)
 	var posicion prx <-- proxPosicion(e.campus, d, actual) O(1)
-	If(seFue?(e.campus,prx)) then 
+	If(seFue?(e.campus,actual,prx)) then 
 		borrar(e.posCiviles,s)  O(|Nm|)
 		var itConj(datosHoe) dat <-- copia(e.quienOcupa[actual.X][actual.Y].hayHoE) O(1)
 		eliminarSiguiente(dat.posActual) O(1)
@@ -137,6 +139,7 @@ function moverAgente(inout e:estr, in a:agente) O(|Nm|) + O(log Na) + O(Ne)
 								while (haySiguiente(itAg)) do
 									if esAgente(e, sig(itAg)) then sancionar(e, sig(itAg)) endIf
 									avanzar(itAg)
+								endWhile
 					else if esHippie(e,siguiente(it)) && esCapturable(e,siguiente(it))
 						 then capturarHippie(e,siguiente(it))  O(|Nm|)
 						 end if

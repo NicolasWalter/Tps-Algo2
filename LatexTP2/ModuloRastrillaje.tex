@@ -173,26 +173,194 @@
 \end{algorithmic}
 \end{algorithm}
 
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$masVigilante}}{\paramIn{r}{rastr}}{$\disFlecha$ res : agente} \Comment{$\Ode{1}$}
+    \State res $\gets$ siguiente(e.masVigilante)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
 
 
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$conMismasSanciones}}{\paramIn{r}{rastr} \paramIn{a}{agente}}{$\disFlecha$ res : conj(agente)} \Comment{$\Ode{1}$}
+    \State res $\gets$ siguiente(obtener(e.agentes,a).grupoSanciones)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$conKSanciones}}{\paramIn{r}{rastr} \paramIn{k}{nat}}{$\disFlecha$ res : conj(agente)} \Comment{$\Ode{n}$ la primera vez, luego mientras no haya sanciones $\Ode{log n}$}
+	\If {$\neg$e.huboNuevas} \Comment{$\Ode{1}$}
+		 \State var nat i $\gets$ BusquedaBin(e.buscoEnLog, k) \Comment{$\Ode{log n}$}
+		 \State res $\gets$ e.buscoEnLog$_{[i]}$.grupoK \Comment{$\Ode{1}$}
+	\Else
+		 \State var itLista(datosK) itK $\gets$ crearIt(e.agregoEn1) \Comment{$\Ode{1}$}
+		 \While {haySiguiente(it)} \Comment{$\Ode{1}$}
+		 	\State buscoEnLog $_{[i]}$ $\gets$ siguiente(itK) \Comment{$\Ode{1}$}
+		 	\State avanzar(itK)
+		 \EndWhile
+		 \State var nat i $\gets$ BusquedaBin (e.buscoEnLog, k) \Comment{$\Ode{log n}$}
+		 \State res $\gets$ e.buscoEnLog$_{[i]}$.grupoK \Comment{$\Ode{1}$}
+		 \State e.hayNuevas $\gets$ false \Comment{$\Ode{1}$}
+	\EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
 
 
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$ingresarHippie}}{\paramInOut{r}{rastr} \paramIn{p}{posicion} \paramIn{h:nombre}}{} \Comment{$\Ode{\vert Nm \vert}$}
+	\State definir(e.posCiviles, h,p) \Comment{$\Ode{\vert Nm \vert}$}
+	\State var itDicc(nombre,posicion) iterPos $\gets$ definirRapido(e.posRapida,h,p) \Comment{$\Ode{1}$}
+	\State e.quienOcupa$_{[p.X]}$ $_{[p.Y]}$ $\gets$ $<$ true, "hippie", crearIt(), agregarRapido(e.hippies,$<$h,iterPos$>$)$>$ \Comment{$\Ode{1}$}
+	\State var conj(posicion) Ps $\gets$ vecinos(e.campus,p) \Comment{$\Ode{1}$}
+	\State var itConj(posicion) $\gets$ crearIt(ps) \Comment{$\Ode{1}$}
+	\If {esCapturable(e,p)} \Comment{$\Ode{1}$}
+		\State capturarHippie(e,p) \Comment{$\Ode{\vert Nm \vert}$}
+	\Else
+		\While {haySiguiente(it)} \Comment{$\Ode{1}$}
+			\If {ocupada(e.campus, siguiente(it)) $\vee$ $\neg$e.quienOcupa$_{[siguiente(it).X]}$ $_{[siguiente(it).Y]}$.ocupada?} \Comment{$\Ode{1}$}
+				\State avanzar(it) \Comment{$\Ode{1}$}
+			\Else
+				\If {esEstudiante(e,siguiente(it)) $\wedge$ esHippizable(e,siguiente(it))} \Comment{$\Ode{1}$}
+					\State Hippizar(e, siguiente(it)) \Comment{$\Ode{1}$}
+					\If {esCapturable(e,siguiente(it)}	 \Comment{$\Ode{1}$}
+						\State capturarHippie(e,siguiente(it))  \Comment{$\Ode{\vert Nm \vert}$}
+					\EndIf 
+				\Else 
+					\If {esEstudiante(e,siguiente(it)) $\wedge$ esCapturable(e,siguiente(it))} \Comment{$\Ode{1}$}
+						\State var itConj(posicion) itAg $\gets$ vecinos(e.campus, siguiente(it)) \Comment{$\Ode{1}$}
+						\While {haySiguiente(itAg)} \Comment{$\Ode{1}$}
+							\If {esAgente(siguiente(itAg)} \Comment{$\Ode{1}$}
+								\State sancionar(e,siguiente(itAg)) \Comment{$\Ode{1}$}
+							\EndIf
+							\State avanzar(itAg)
+						\EndWhile
+   					 \EndIf
+				\EndIf
+			\EndIf
+			\State avanzar(it)
+		\EndWhile
+	\EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
 
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$moverEstudiante}}{\paramInOut{r}{rastr}, \paramIn{d}{direccion}, \paramIn{s}{estudiante}} \Comment{$\Ode{\vert Nm \vert}$}
+	\State actual $\gets$ obtener(e.posCiviles,s)  \Comment{$\Ode{1}$}
+	\State prx $\gets$ proxPosicion(e.campus, d, actual)  \Comment{$\Ode{1}$}
+	\If {seFue?(e.campus,actual, prx)}
+		\State borrar(e.posCiviles, s) \Comment{$\Ode{\vert Nm \vert}$}
+		\State var itConj(datosHoE) dat $\gets$ copia(e.quienOcupa$_{[actual.X]}$ $_{[actual.Y]}$.hayHoE) \Comment{$\Ode{1}$}
+		\State eliminarSiguiente(dat, posActual) \Comment{$\Ode{1}$}
+		\State eliminarSiguiente(dat) \Comment{$\Ode{1}$}
+		\State e.quienOcupa$_{[actual.X]}$ $_{[actual.Y]}$ $\gets$ $<$ false, "nada", crearIt(), crearIt() $>$ \Comment{$\Ode{1}$}
+	\Else
+		\State var itConj(datosHoE) iterAHOI $\gets$ copia(e.quienOcupa$_{[actual.X]}$ $_{[actual.Y]}$.hayHoE) \Comment{$\Ode{1}$}
+		\State eliminarSiguiente(siguiente(iterAHOI).posActual) \Comment{$\Ode{1}$}
+		\State siguiente(iterAHOI).posActual $\gets$ definirRapido(e.posRApida,s,prx) \Comment{$\Ode{1}$}
+		\State e.quienOcupa$_{[prx.X]}$ $_{[prx.Y]}$ $\gets$ $<$true, " estudiante", crearIt(), iterAHOI$>$ \Comment{$\Ode{1}$}
+		\State e.quienOcupa$_{[actual.X]}$ $_{[actual.Y]}$ $\gets$ $<$false, "nada", crearIt(), crearIt()$>$ \Comment{$\Ode{1}$}
+		\State definir(e.posCiviles, s, prx) \COmment{$\Ode{\vert Nm \vert}$}
+		\State var conj(posicion) vc $\gets$ vecinos(e.campus, prx) \Comment{$\Ode{1}$}
+		\State var itConj(posicion) it $\gets$ crearIt(vc) \Comment{$\Ode{1}$}
+		
+		\If {esHippizable(e,prx)} \Comment{$\Ode{1}$}
+			\State hippizar(e, prx) \Comment{$\Ode{1}$}
+			\While {haySiguiente(it} \Comment{$\Ode{1}$}
+				\If {ocupada(e.campus, siguiente(it)) $\vee$ $\neg$e.quienOcupa$_{[siguiente(it).X]}$ $_{[siguiente(it).Y]}$.ocupada?}
+					\State avanzar(it)
+				\Else \If {esEstudiante(e,siguiente(it)) $\wedge$ esHippizable(e,siguiente(it))} \Comment{$\Ode{1}$}
+						 \State Hippizar(e, siguiente(it))  \Comment{$\Ode{1}$}
+						 \If {esCapturable(e, siguiente(it))}  \Comment{$\Ode{1}$}
+						 	\State capturarHippie(e,siguiente(it)  \Comment{$\Ode{\vert Nm \vert}$}
+						 \EndIf
+					  \Else \If {esEstudiante(e,siguiente(it) $\wedge$ esCapturable(e,siguiente(it)} \Comment{$\Ode{1}$}
+					  			\State var itConj(posicion) itAg $\gets$ vecinos(e.campus, siguiente(it)) \Comment{$\Ode{1}$}
+					  			\While {haySiguiente(itAg)} \Comment{$\Ode{1}$}
+					  				\If {esAgente(e,siguiente(itAg)} \Comment{$\Ode{1}$}
+					  					\State sancionar(e,siguiente(itAg)) \Comment{$\Ode{1}$}
+					  				\EndIf
+					  			\State avanzar(itAg)
+					  			\EndWhile
+					  		\Else
+					  			\If {esHippie(e,siguiente(it)) $\wedge$ esCapturable(s,siguiente(it)} \Comment{$\Ode{1}$}
+					  				\State capturarHippie(e,siguiente(it))  \Comment{$\Ode{\vert Nm \vert}$}
+					  			\EndIf	
+					  		\EndIf
+					  	\EndIf
+					\EndIf
+			\EndWhile
+		\Else
+			\While {haySiguiente(it)}
+			\If {ocupada(e.campus, siguiente(it))$\vee$ $\neg$e.quienOcupa$_{[siguiente(it).X]}$ $_{[siguiente(it).Y]}$.ocupada?} \Comment{$\Ode{1}$}
+					\State avanzar(it)
+				\Else
+					\If {esHippie(e, siguiente(it)) $\wedge$ esEstudiantizable(e,siguiente(it))} \Comment{$\Ode{1}$}
+						\State Estudiantizar(e, siguiente(it)) \Comment{$\Ode{1}$}
+					\Else
+						\If {esEstudiante(e,siguiente(it)) $\wedge$ esCapturable(e, siguiente(it))} \Comment{$\Ode{1}$}
+							\State var itConj(posicion) itAg2 $\gets$ vecinos(e.campus, siguiente(it)) \Comment{$\Ode{1}$}
+							\While {haySiguiente(itAg2)} \Comment{$\Ode{1}$}
+								\If {esAgente(e,siguiente(itAg2))} \Comment{$\Ode{1}$}
+									\State sancionar(e,siguiente(itAg2)) \Comment{$\Ode{1}$}
+								\EndIf
+								\State avanzar(itAg2)
+							\EndWhile
+							\newpage
+						\Else
+							\If {esHippie(e, siguiente(it)) $\wedge$ esCapturable(e,siguiente(it))} \Comment{$\Ode{1}$}
+								\State capturarHippie(e, siguiente(it))  \Comment{$\Ode{\vert Nm \vert}$}
+							\EndIf
+						\EndIf
+					\EndIf
+				\EndIf
+				\State avanzar(it)
+			\EndWhile
+		\EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$moverAgente}}{\paramInOut{r}{rastr} \paramIn{a}{agente}}{} \Comment{$\Ode{\vert Nm \vert}$ $+$ $\Ode{log Na}$ $+$ $\Ode{Ne}$}
+    \State var nat j $\gets$ BusquedaBin(e.AgentesLog,a) \Comment{$\Ode{log n}$}
+    \State var posicion actual $\gets$ e.AgentesLog$_{[j]}$ \Comment{$\Ode{1}$}
+    \State var direccion d $\gets$ proxPosicionA(e,a) \Comment{$\Ode{Ne}$}
+    \State var posicion prx $\gets$ proxPosicion(e.campus, d, actual) \Comment{$\Ode{1}$}
+    \State var datosAg datAux $\gets$ obtener(e.agentes, a) \Comment{$\Ode{1}$}
+    \State datAux.posActual $\gets$ prx \Comment{$\Ode{1}$}
+    \State var itDicc(placa,datosAg) itA $\gets$ copia(e.quienOcupa$_{[actual.X]}$ $_{[actual.Y]}$.hayCana) \Comment{$\Ode{1}$}
+    \State e.quienOcupa$_{[actual.X]}$ $_{[actual.Y]}$ $\gets$ $<$false, "nadie", crearIt(), crearIt()$>$ \Comment{$\Ode{1}$}
+    \State e.quienOcupa$_{[prx.X]}$ $_{[prx.Y]}$ $\gets$ $<$true, " agente", itA, crearIt()$>$ \Comment{$\Ode{1}$}
+    \State var itConj(posicion) $\gets$ crearIt(vecinos(e.campus, prx)) \Comment{$\Ode{1}$}
+    \While {haySiguiente(it)} \Comment{$\Ode{1}$}
+    	\If {ocupada(e.campus, siguiente(it)) $\vee$ $\neg$e.quienOcupa$_{[siguiente(it).X]}$ $_{[siguiente(it).Y]}$.ocupada?}
+    		\State avanzar(it)
+    	\Else
+    		\If {esEstudiante(e, siguiente(it)) $\wedge$ esCapturable(e, siguiente(it))} \Comment{$\Ode{1}$}
+    			\State var itConj(posicion) itAg $\gets$ vecinos(e.campus, siguiente(it)) \Comment{$\Ode{1}$}
+    			\While {haySiguiente(itAg)}  \Comment{$\Ode{1}$}
+    				\If {esAgente(e,sig(itAg))}  \Comment{$\Ode{1}$}
+    					\State sancionar(e, siguiente(itAg))  \Comment{$\Ode{1}$}
+    				\EndIf
+	    			\State avanzar(itAg)
+    			\EndWhile
+    		\Else
+    			\If {esHippie(e,siguiente(it)) $\wedge$ esCapturable(e,siguiente(it))}  \Comment{$\Ode{1}$}
+    				\State capturarHippie(e, siguiente(it))  \Comment $\Ode{\vert Nm \vert}$
+    			\EndIf
+    		\EndIf
+    	\EndIf	
+    	\State avanzar(it)
+    \EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
