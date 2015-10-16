@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.12.22)  15 OCT 2015 16:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.12.22)  16 OCT 2015 16:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1027,13 +1027,13 @@ LaTeX Warning: Reference `LastPage' on page 12 undefined on input line 76.
 
 [12]
 
-LaTeX Warning: Reference `LastPage' on page 13 undefined on input line 101.
+LaTeX Warning: Reference `LastPage' on page 13 undefined on input line 103.
 
 [13]
 ! Undefined control sequence.
 <argument> \longitud 
                      {n_{m}}
-l.146 ...icion} \Comment{$\Ode{\longitud{n_{m}}}$}
+l.148 ...icion} \Comment{$\Ode{\longitud{n_{m}}}$}
                                                   
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1285,105 +1285,26 @@ LaTeX Warning: Reference `LastPage' on page 20 undefined on input line 42.
 [20]
 \openout2 = `ModuloDiccProm.aux'.
 
- (./ModuloDiccProm.tex
+ (./ModuloDiccProm.tex)
+Runaway argument?
+{\Ode {CantClaves}\}{Genera un diccionario vac\'io.} \par \disDeclaraProc \ETC.
+! File ended while scanning use of \disDeclaraFuncion.
+<inserted text> 
+                \par 
+l.43 \include{ModuloDiccProm}
+                             
+I suspect you have forgotten a `}', causing me
+to read past where you wanted me to stop.
+I'll try to recover; but if the error is serious,
+you'd better type `E' or `X' now and fix your file.
 
-LaTeX Warning: Reference `LastPage' on page 21 undefined on input line 34.
+
+LaTeX Warning: Reference `LastPage' on page 21 undefined on input line 43.
 
 [21
 
 
-]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.73 \\\hspace*{3.75em}}
-                        
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.73 \\\hspace*{3.75em}}
-                        
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.73 \\\hspace*{3.75em}}
-                        
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.73 \\\hspace*{3.75em}}
-                        
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.73 \\\hspace*{3.75em}}
-                        
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.73 \\\hspace*{3.75em}}
-                        
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.73 \\\hspace*{3.75em}}
-                        
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-\disRep ...rgen }Rep({\emph {#2}}) $\equiv $ ({#3}
-                                                  )\par 
-l.73 \\\hspace*{3.75em}}
-                        
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.73 \\\hspace*{3.75em}}
-                        
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-LaTeX Warning: Reference `LastPage' on page 22 undefined on input line 79.
-
-[22]
-
-LaTeX Warning: Reference `LastPage' on page 23 undefined on input line 85.
-
-[23]
-
-LaTeX Warning: Reference `LastPage' on page 24 undefined on input line 154.
-
-[24])
-
-LaTeX Warning: Reference `LastPage' on page 25 undefined on input line 43.
-
-[25] (./informe.aux (./caratula.aux)
+] (./informe.aux (./caratula.aux)
 LaTeX Info: Redefining \. on input line 7.
 LaTeX Info: Redefining \% on input line 7.
  (./ModuloCampus.aux)
@@ -1395,21 +1316,20 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 LaTeX Warning: There were undefined references.
 
  )
-(\end occurred inside a group at level 4)
+(\end occurred inside a group at level 3)
 
-### simple group (level 4) entered at line 73 ({)
 ### simple group (level 3) entered at line 86 ({)
 ### semi simple group (level 2) entered at line 88 (\begingroup)
 ### semi simple group (level 1) entered at line 71 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 5266 strings out of 493109
- 72563 string characters out of 6135009
- 168618 words of memory out of 5000000
- 8562 multiletter control sequences out of 15000+600000
+ 5264 strings out of 493109
+ 72535 string characters out of 6135009
+ 168619 words of memory out of 5000000
+ 8560 multiletter control sequences out of 15000+600000
  11627 words of font info for 44 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,16n,43p,634b,655s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,16n,43p,978b,569s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmbsy10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmbx10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/
@@ -1429,10 +1349,10 @@ r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></u
 sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
 r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr
 /local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on informe.pdf (25 pages, 628228 bytes).
+Output written on informe.pdf (21 pages, 622492 bytes).
 PDF statistics:
- 164 PDF objects out of 1000 (max. 8388607)
- 114 compressed objects within 2 object streams
+ 151 PDF objects out of 1000 (max. 8388607)
+ 105 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
