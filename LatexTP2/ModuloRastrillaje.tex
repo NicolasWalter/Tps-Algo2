@@ -594,3 +594,157 @@
 \EndFunction
 \end{algorithm}
 \end{algorithmic}
+
+
+
+%                                    NUEVAS WEAS PATO
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$ProxPosicionH}}{\paramInOut{e}{rastr} \paramIn{h}{nombre}}{} \Comment{$\Ode{\longitud{N_{e}}}$}
+	\State var itConj(datosHoE) it$\gets$ crearIt(e.estudiantes) \Comment{$\Ode{1}$}
+	\State var posicion menorD $\gets$ obtener(e.posRapida,h)	\Comment{$\Ode{1}$}
+	\State var direccion direcc \Comment{$\Ode{1}$}
+	\If {($\neg$ haySiguiente(it)) } \Comment{$\Ode{1}$}
+		\If { (menorD.Y $\leq$ e.campus.filas/2) } \Comment{$\Ode{1}$}
+			\If { ($\neg$ ocupadaD(e,p,abajo)) } \Comment{$\Ode{1}$}
+				\State res$\gets$Abajo \Else \Comment{$\Ode{1}$}
+				\If { ($\neg$ ocupadaD(e,p,derecha)) } \Comment{$\Ode{1}$}
+					\State res$\gets$Derecha \Else \Comment{$\Ode{1}$}
+					\If { ($\neg$ ocupadaD(e,p,izquierda)) } \Comment{$\Ode{1}$}
+						\State res$\gets$izquierda \Else \Comment{$\Ode{1}$}
+						\State res$\gets$arriba \Comment{$\Ode{1}$}
+					\EndIf
+				\EndIf
+			\EndIf
+		\Else
+			\If {($\neg$ ocupadaD(e,p,Arriba)) } \Comment{$\Ode{1}$}
+				\State res$\gets$Arriba \Else \Comment{$\Ode{1}$}
+				\If {($\neg$ ocupadaD(e,p,derecha)) } \Comment{$\Ode{1}$}
+					\State res$\gets$Derecha \Else \Comment{$\Ode{1}$}
+					\If {($\neg$ ocupadaD(e,p,izquierda)) } \Comment{$\Ode{1}$}
+						\State res$\gets$izquierda \Else \Comment{$\Ode{1}$}
+						\State res$\gets$Abajo \Comment{$\Ode{1}$}
+					\EndIf
+				\EndIf
+			\EndIf
+		\EndIf
+	\Else
+		\State menorD$\gets$SiguienteSignificado(siguiente(it).posActual) \Comment{$\Ode{1}$}
+		\State var posicion otraPos \Comment{$\Ode{1}$}
+		\While{haySiguiente(it)} \Comment{$\Ode{\longitud{N_{e}}}$}
+			\State otraPos$\gets$SiguienteSignificado(siguiente(it).posActual) \Comment{$\Ode{1}$}
+			\If {(distancia(e,p,otraPos) $<$ distancia(e,p,menorD)) } \Comment{$\Ode{1}$}
+				\State menorD$\gets$otraPos \Comment{$\Ode{1}$}
+			\EndIf
+		\EndWhile
+		\State res$\gets$VecinoMasCercanoA(e,p,menorD) \Comment{$\Ode{1}$}
+	\EndIf	
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$ProxPosicionA}}{\paramInOut{e}{rastr} \paramIn{a}{placa}}{} \Comment{$\Ode{\longitud{N_{h}}}$}
+	\State var itConj(datosHoe) it $\gets$  crearIt(e.hippies) \Comment{$\Ode{1}$}
+	\State var posicion menorD  $\gets$  obtener(e.posRapida,a) \Comment{$\Ode{1}$}
+	\State var direccion direcc \Comment{$\Ode{1}$}
+	\If{ ($\neg$ haySiguiente(it)) } \Comment{$\Ode{1}$}
+		\If{ (menorD.Y $\leq$ e.campus.filas/2) } \Comment{$\Ode{1}$}
+			\If{ ($\neg$ ocupadaD(e,p,abajo)) } \Comment{$\Ode{1}$}
+				\State res $\gets$ Abajo \Else \Comment{$\Ode{1}$}
+				\If{ ($\neg$ ocupadaD(e,p,derecha)) } \Comment{$\Ode{1}$}
+					\State res $\gets$ Derecha \Else \Comment{$\Ode{1}$}
+					\If{ ($\neg$ ocupadaD(e,p,izquierda)) } \Comment{$\Ode{1}$}
+						\State res $\gets$ izquierda \Else \Comment{$\Ode{1}$}
+						\State res $\gets$ arriba \Comment{$\Ode{1}$}
+					\EndIf
+				\EndIf
+			\EndIf
+		\Else 
+			\If{ ($\neg$ ocupadaD(e,p,Arriba)) } \Comment{$\Ode{1}$}
+				\State res $\gets$ Arriba \Else \Comment{$\Ode{1}$}
+				\If{ ($\neg$ ocupadaD(e,p,derecha)) } \Comment{$\Ode{1}$}
+					\State res $\gets$ Derecha \Else \Comment{$\Ode{1}$}
+					\If{ ($\neg$ ocupadaD(e,p,izquierda)) } \Comment{$\Ode{1}$}
+						\State res $\gets$ izquierda \Else \Comment{$\Ode{1}$}
+						\State res $\gets$ Abajo \Comment{$\Ode{1}$}
+					\EndIf
+				\EndIf
+			\EndIf
+		\EndIf
+	\Else
+		\State menorD $\gets$ siguiente(it) \Comment{$\Ode{1}$}
+		\State var posicion otraPos \Comment{$\Ode{1}$}
+		\While{haySiguiente(it)} \Comment{$\Ode{\longitud{N_{h}}}$}
+			\State otraPos $\gets$ SiguienteSignificado(siguiente(it).posActual) \Comment{$\Ode{1}$}
+			\If{(distancia(e,p,otraPos)$<$distancia(e,p,menorD)) } \Comment{$\Ode{1}$}
+				\State menorD $\gets$ otraPos \Comment{$\Ode{1}$}
+			\EndIf
+		\EndWhile
+		\State res $\gets$ VecinoMasCercanoA(e,p,menorD)	 \Comment{$\Ode{1}$}
+	\EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$VecinoMasCercano}}{\paramIn{e}{rastr} \paramIn{p}{posicion} \paramIn{p2}{posicion} } {$\disFlecha$ res : direccion} \Comment{$\Ode{1}$}
+	\State var conj(posicion) Ps $\gets$ vecinos(e.campus, p) \Comment{$\Ode{1}$}
+	\State var itConj(posicion) it $\gets$ crearIt(Ps) \Comment{$\Ode{1}$}
+	\State var posicion destino$\gets$ siguiente(it) \Comment{$\Ode{1}$}
+	\While{haySiguiente(it)} \Comment{$\Ode{1}$}
+		\If{($\neg$e.quienOcupa[siguiente(it).X][siguiente(it).Y].ocupada?)} \Comment{$\Ode{1}$}
+			\If{(distancia(e,p,siguiente(it))$<$distancia(e,p,destino))} \Comment{$\Ode{1}$}
+				\State destino$\gets$ siguiente(it) \Comment{$\Ode{1}$}
+			\EndIf
+		\EndIf
+		\State avanzar(it) \Comment{$\Ode{1}$}
+	\EndWhile
+	\If{(destino.X$\neq$p.X) } \Comment{$\Ode{1}$}
+		\If{(destino.y$>$p.Y) } \Comment{$\Ode{1}$}
+			\State res$\gets$ Arriba \Else \Comment{$\Ode{1}$}
+			\State res$\gets$ Abajo \Comment{$\Ode{1}$}
+		\EndIf
+	\Else
+		\If{(destino.x$>$p.x) } \Comment{$\Ode{1}$}
+			\State res$\gets$ Derecha \Else \Comment{$\Ode{1}$}
+			\State res$\gets$ Izquierda \Comment{$\Ode{1}$}
+		\EndIf
+	\EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$SeFue}}{\paramIn{e}{rastr} \paramIn{p}{posicion} \paramIn{destino}{posicion} } {$\disFlecha$ res : bool} \Comment{$\Ode{1}$}
+
+	\State res $\gets$ (p.Y$==$e.campus.alto $-$1 $\wedge$ destino.y$==$e.campus.alto) $\vee$(p.Y$==$0 && destino.y$==-$1) \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$BusquedaBin}}{\paramIn{v}{vector(datosK)} \paramIn{obj}{nat}} {$\disFlecha$ res : nat} \Comment{$\Ode{log_{2}(longitud(v))}$}
+	\State var int i$\gets$ 0 \Comment{$\Ode{1}$}
+	\State var int d$\gets$ longitud(v)-1 \Comment{$\Ode{1}$}
+	\While{(i $+1<$ d)}\Comment{$\Ode{log_{2}(longitud(v))}$}
+		\State var int m$\gets$  (i$+$d)$/2$ \Comment{$\Ode{1}$}
+		\If{(v[m].k$<$obj)} \Comment{$\Ode{1}$}
+			\State i$\gets$ m \Else \Comment{$\Ode{1}$}
+			\State d$\gets$ m \Comment{$\Ode{1}$}
+		\EndIf
+	\EndWhile
+	\If{(v[i].k$==$obj)} \Comment{$\Ode{1}$}
+		\State res$\gets$ i \Else \Comment{$\Ode{1}$}
+		\State res$\gets$ d \Comment{$\Ode{1}$}
+	\EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
