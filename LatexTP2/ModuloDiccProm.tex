@@ -1,3 +1,16 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{DiccionarioProm}
+% La especificación
+\disEspecificacion
+\hspace*{\disSubSecMargen}Se usa el {\sc Tad DiccionarioM} (Nota al corrector: leer observaciones).
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+
 \disSeExplicaCon{DiccionarioM($\kappa,\sigma$)}
 
 \disGenero{diccProm($\kappa$,$\sigma$)}
@@ -7,6 +20,9 @@
 \disDeclaraFuncion{Definido?}{\paramIn{d}{diccProm(\kappa,\sigma)}, \paramIn{k}{\kappa}}{res : bool}{true}{res \igobs def?(d, k)}{\Ode{n}\ n\ es\ la\ cantidad\ de\ claves.}{Devuelve true si y s\'olo si $k$ est\'a definido en el diccionario.}
 
 \disDeclaraFuncion{Obtener}{\paramIn{d}{diccProm(\kappa,\sigma)}, \paramIn{k}{\kappa}}{res : \sigma}{def?(d, k)}{alias(res \ $\igobs$ obtener(d, k))}{\Ode{n}\ n\ es\ la\ cantidad\ de\ claves.}{Devuelve el significado de la clave $k$ en $d$.}
+\disComentAliasing{ se devuelve una referencia al significado de la clave.}
+
+\disDeclaraFuncion{Claves}{\paramIn{d}{diccProm(\kappa,\sigma)}}{res : itConj($\kappa$)}{true}{res \igobs claves(d)}{\Ode{1}}{Devuelve el conjunto con las claves definidas en d.}
 
 \disDeclaraFuncion{Vacio}{\paramIn{n}{nat}}{res : diccProm(\kappa,\sigma)}{true}{res $\igobs$ vacio(n)}{\Ode{n}}{Genera un diccionario vac\'io, donde n acota superiormente a la cantidad de claves.}
 
@@ -20,7 +36,7 @@
 \disEstructuraDeRepresentacion
 
 \disSeRepresentaCon{diccProm(\kappa,\sigma)}{estr}
-\disDondeEs{estr}{\disTuplaEstr{nat/clavesMax, arreglo $de \ lista (datos)$/tabla}}
+\disDondeEs{estr}{\disTuplaEstr{conjLineal($\kappa$)/Cclaves, nat/clavesMax, arreglo $de \ lista (datos)$/tabla}}
 \disDondeEs{datos}{\disTuplaEstr{$\kappa$/clave, $\sigma$/significado}}
 \disJustificacionDeLaEstructuraElegida
 
@@ -36,20 +52,33 @@
   \item clavesMax es mayor que cero.
   \item La longitud del arreglo es igual a clavesMax.
   \item Todas las posiciones del arreglo estan definidas.
+  \item Todos los elementos de Cclaves estan definidos en la tabla y viceversa.  
+  \item Todas las claves de la tabla estan definidos en Cclaves.  
+
 \end{itemize}
 
 \hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
 
 \disRep{estr}{e}{$true$ $\Longleftrightarrow$ 
 \\\hspace*{3.75em}(1) e.clavesMax $>$ 0 \yluego
-\\\hspace*{3.75em}(2) longitud(e.tabla) == e.clavesMax \land
-\\\hspace*{3.75em}(3) ($\forall$ i: nat)(i $\leq$ e.clavesMax \impluego definido?(e.tabla,i))}
+\\\hspace*{3.75em}(2) longitud(e.tabla) == e.clavesMax $\land$
+\\\hspace*{3.75em}(3) ($\forall$ i: nat)(i $\leq$ e.clavesMax \impluego definido?(e.tabla,i)) $\land$
+\\\hspace*{3.75em}(3) ($\forall$ k: $\kappa$)(k $\in$ e.Cclaves \implies ($\exists$ j : nat)(estaEn?(e.tabla[j],k))) $\land$
+\\\hspace*{3.75em}(4) ($\forall$ i: nat)($\forall$ k: $\kappa$)(i \< e.clavesMax \yluego estaEn?(e.tabla[i],k) \implies k $\in$ e.Ccclaves )
+}
+
+\singlespace
+\disFuncionDeAbsFuncionesAux
+\tadOperacion{\tadNombreFuncion{\hspace*{3.7em}estaEn?}}{lista(datos), $\kappa$}{bool}{}
+\tadAxioma{\hspace*{2.3em}estaEn?(l,k)}{($\exists$ i : nat)(i$<$longitud(l) \impluego l[i].clave == k)}\mbox{}
+
+
 
 
 \disFuncionDeAbstraccion
 \vspace*{-1em}
 %\hspace*{\disSubSubSecMargen}{Texto}
-\disAbs{estr}{e}{DiccionarioProm($\kappa$, $\sigma$)}{d}{()}
+\disAbs{estr}{e}{DiccionarioProm($\kappa$, $\sigma$)}{d}{cla}
 
 
 \disFuncionDeAbsFuncionesAux
@@ -90,7 +119,7 @@
   \State var itLista(datos) it $\gets$ crearIt(tabla[i])
   \While {haySiguiente(it)} 
   \If {siguiente(it).clave = k}
-    \State res $\gets$ siguiente(it).significado
+    \State res $\gets$ &siguiente(it).significado
   \EndIf
   \EndWhile
 \EndFunction
@@ -123,6 +152,13 @@
 \end{algorithmic}
 \end{algorithm}
 
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{iClaves}}{\paramIn{d}{estr} }{$\disFlecha$ res : itConj($\kappa$)} \Comment{$\Ode{clavesMax}$}
+  \State res $\gets$ crearIt(e.Cclaves)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
 
 \newpage
 \disServiciosUsados

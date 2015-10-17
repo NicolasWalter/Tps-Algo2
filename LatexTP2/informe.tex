@@ -32,14 +32,16 @@
  %\section{Observaciones}
 
  	\begin{enumerate}
- 	    \item \textbf{TAD} PC \textbf{ES} NAT
-	    \item \textbf{TAD} INTERFAZ \textbf{ES} NAT
-	    \item \textbf{TAD} PRIORIDAD \textbf{ES} NAT
-	    \item \textbf{TAD} PAQUETE \textbf{ES} TUPLA(NAT,PRIORIDAD,PC,PC)
+ 	    \item \textbf{TAD} POSICION \textbf{ES} TUPLA(X:NAT, Y:NAT)
+	    \item \textbf{TAD} DIRECCION \textbf{ES} ENUM\{ IZQ,DER,ARRIBA,ABAJO\}
+	    \item \textbf{TAD} AGENTE \textbf{ES} NAT
+	    \item \textbf{TAD} NOMBRE \textbf{ES} STRING
+	    \item Suponemos que contamos con el TAD DiccionarioM, donde la funcion vacio() toma como par\'ametro un 'k', cuyo valor acota superiormente a la cantidad de claves.
 	\end{enumerate}
-\include{ModuloCampus}
-\include{ModuloRastrillaje}
-\include{ModuloDiccString}
+
+%\include{ModuloCampus}
+%\include{ModuloRastrillaje}
+%\include{ModuloDiccString}
 \include{ModuloDiccProm}
 
 
