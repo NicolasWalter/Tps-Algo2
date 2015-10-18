@@ -266,6 +266,12 @@
 				\State e.quienOcupa$_{[p.X]}$ $_{[p.Y]}$ $\gets$ $<$ true,$"$estudiante",crearIt(), agregarRapido(e.estudiantes,$<$n,iterPos$>$)$>$
 				\State var conj(posicion) Ps $\gets$ vecinos(e.campus, p) \Comment{$\Ode{1}$}
 				\State var itConj(posicion) it $\gets$ crearIt(ps) \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]			
 				\While {haySiguiente(it)}
 					\If {esHippie(e,siguiente(it)) $\wedge$ esEstudiantizable(e,siguiente(it))} \Comment{$\Ode{1}$}
 						\State Estudiantizar(e,siguiente(it)) \Comment{$\Ode{1}$}
@@ -286,7 +292,7 @@
 					\EndIf
 				\EndWhile
 			\EndIf
-\EndFunction
+\textbf{endFunction}
 \end{algorithmic}
 \end{algorithm}
 
@@ -440,7 +446,6 @@
     	\EndIf	
     	\State avanzar(it)
     \EndWhile
-    
 \EndFunction
 \end{algorithmic}
 \end{algorithm}

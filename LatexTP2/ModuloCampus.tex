@@ -77,8 +77,6 @@
 
 %\disFuncionDeAbsFuncionesAux
 
-\newpage
-
 \disAlgoritmos
 %\hspace*{\disSubSubSecMargen}{Texto}
 % HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
@@ -158,11 +156,11 @@
 \begin{algorithmic}[1]
 \Function {\textsc{$i$Vecinos}}{\paramIn{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : conj(posicion)} \Comment{$\Ode{1}$}
   \State var conj(posicion) nuevo $\gets$ vacio() \Comment{$\Ode{1}$}
-  \State Agregar(nuevo, (p.X+1,p.Y))
-  \State Agregar(nuevo, (p.X-1,p.Y))
-  \State Agregar(nuevo, (p.X,p.Y+1))
-  \State Agregar(nuevo, (p.X,p.Y-1))
-  \State var $itConj(posicion)$ it $\gets$ crearIt(nuevo)
+  \State Agregar(nuevo, (p.X+1,p.Y))  \Comment{$\Ode{1}$}
+  \State Agregar(nuevo, (p.X-1,p.Y))  \Comment{$\Ode{1}$}
+  \State Agregar(nuevo, (p.X,p.Y+1))  \Comment{$\Ode{1}$}
+  \State Agregar(nuevo, (p.X,p.Y-1))  \Comment{$\Ode{1}$}
+  \State var $itConj(posicion)$ it $\gets$ crearIt(nuevo) \Comment{$\Ode{1}$}
     \While {haySiguiente(it)} \Comment{$\Ode{c}$}
       \If {$i$PosValida?(e,siguiente(it))} \Comment{$\Ode{1}$}
         \State avanzar(it) \Comment{$\Ode{1}$}
