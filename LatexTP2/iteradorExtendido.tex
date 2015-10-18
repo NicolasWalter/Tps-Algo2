@@ -1,0 +1,42 @@
+% Diseño del tipo T
+\newpage
+
+% Diseño del Tipo
+\disDisenio{Iterador sobre Lista Extendido($\alpha)$}
+% La especificación
+
+\disAspectosDeLaInterfaz
+
+\disInterfaz
+Se extiende la interfaz del Iterador sobre Lista dada en el apunte de m\'odulos b\'asicos, el cual recorrer\'a, una lista de tuplas, por lo que las operaciones Siguiente y Anterior, devuelven el primer elemento.
+
+\disOperaciones{b\'asicas del Iterador Extendido}
+
+\disDeclaraFuncion{Siguiente}{\paramIn{it}{itListaE(\alpha)}}{res: \alpha}{HaySiguiente?(it)}{alias(res \igobs $\Pi_{1}$(Siguiente(it)))}{\Ode{1}}{Devuelve el elemento siguiente a la posici\'on del iterador.Res es modificable si y s\'olo si it es modificable.}
+
+\disDeclaraFuncion{Anterior}{\paramIn{it}{itListaE(\alpha)}}{res: \alpha}{HayAnterior?(it)}{alias(res \igobs $\Pi_{1}$(Anterior(it)))}{\Ode{1}}{Devuelve el elemento siguiente a la posici\'on del iterador. Res es modificable si y s\'olo si it es modificable.}
+
+
+\disAlgoritmos
+%\hspace*{\disSubSubSecMargen}{Texto}
+% HACK: SGA 28/05/2011. Para quitar el titulo Algorithm del caption \floatname{algorithm}{}
+\floatname{algorithm}{}
+% WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
+% Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$Siguiente}}{\paramIn{it}{itListaE(\alpha)}}{$\disFlecha$ res: \alpha} \Comment{$\Ode{1}$}
+	\State res $\gets$ $\Pi_{1}$(it.siguiente\rightarrow dato) \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+	
+	
+\begin{algorithm}[H]
+\begin{algorithmic}[1]	
+\Function {\textsc{$i$Anterior}}{\paramIn{it}{itListaE(\alpha)}}{$\disFlecha$ res: $\alpha$} \Comment{$\Ode{1}$}
+	\State res $\gets$ $\Pi_{1}$(SiguienteReal(it)\rightarrow anterior\rightarrow dato)	\Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
