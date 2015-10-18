@@ -219,6 +219,50 @@
 
 \begin{algorithm}[H]
 \begin{algorithmic}[1]
+\Function {\textsc{$i$ComenzarRastrillaje}}{\paramIn{c}{campus} \paramIn{d}{dicc(placa,posicion)}}{$\disFlecha$ res : estr} \Comment{$\Ode{1}$}
+    \State var diccPromedio(placa,datosAg) dprom $\gets$ vacio($\#$claves(d))	\Comment{$\Ode{\#claves(d)}$}
+    \State var lista(datosK) Klista $\gets$ vacia()								\Comment{$\Ode{1}$}	
+    \State var vector(vector(datosPos)) map $\gets$ vacia()						\Comment{$\Ode{1}$}
+    \State \textbf{for} i=0 \textbf{to} filas?(c) \textbf{do}					\Comment{$\Ode{columnas?(c)^{2}*filas?(c)^{2}}$}
+    	\State var vector(datosPos) filita $\gets$ vacia()						\Comment{$\Ode{1}$}
+    	\State \textbf{for} j=0 \textbf{to} columnas?(c) \textbf{do} 			\Comment{$\Ode{columnas?(c)}$}
+		\If {ocupada?(c,(j,i))}													\Comment{$\Ode{1}$}
+			\State AgAtras(filita,$<$true,$"obstaculo"$,crearIt(),crearIt()$>$)	\Comment{$\Ode{columnas?(c)}$}
+		\Else
+			\State AgAtras(filita,$<$false,$"nada"$,crearIt(),crearIt()$>$)		\Comment{$\Ode{columnas?(c)}$}
+		\EndIf
+		\State \textbf{EndFor}										
+		\State AgAtras(map,filita)												\Comment{$\Ode{filas?(c)}$}
+	\State \textbf{EndFor}
+	\State var Arreglo($<$placa,posicion$>$) arr $\gets$ crearArreglo[$\#$claves(d)]	\Comment{$\Ode{\#claves(d)}$}
+	\State var itDicc(placa,posicion) iter $\gets$ crearIt(d)							\Comment{$\Ode{1}$}
+    \State var itLista(datosK) itk $\gets$ AgregarAtras(Klista,$<$0,vacio$>$)			\Comment{$\Ode{1}$}
+	\While {haySiguiente(iter)}															\Comment{$\Ode{\#claves(d)}$}	
+		\State AgregarOrdenado(arr,$<$SiguienteClave(iter),SiguienteSignificado(iter)$>$)	\Comment{$\Ode{(\#claves(d))^{2}}$}
+		\State var datosAg datosN $\gets$ $<$0,0,SiguienteSignificado(iter),Agregar(Siguiente(itK).grupoK,SiguienteClave(iter)),itK$>$
+		\State
+		\State map[SiguienteSignificado(iter.X)][SiguienteSignificado(iter.Y)] $\gets$ $<$true,$"agente"$,definirRapido(dprom,
+		\\\hspace*{3em}SiguienteClave(iter),datosN),crearIt()$>$ 	\Comment{$\Ode{1}$}
+		\State
+		\State avanzar(iter)	\Comment{$\Ode{1}$}
+	\EndWhile
+	\State var conj(datosHoE) hip $\gets$ vacio()	\Comment{$\Ode{1}$}
+	\State var conj(datosHoE) est $\gets$ vacio()	\Comment{$\Ode{1}$}
+	\State var diccString(nombre,posicion) diccS $\gets$ vacio()	\Comment{$\Ode{1}$}
+	\State var diccLineal(nombre,posicion) diccL $\gets$ vacio()	\Comment{$\Ode{1}$}
+	\State var itConj(placa) masV $\gets$ crearIt(dprom)	\Comment{$\Ode{1}$}
+	\State var bool hayNuevasS $\gets$ true	\Comment{$\Ode{1}$}
+	\State var vector(datosK) paraLog $\gets$ vacia()	\Comment{$\Ode{1}$}
+	\State res $\gets$ $<$c,dprom,arr,hip,est,diccS,diccL,map,masV,kLista,paraLog,hayNuevasS$>$	\Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
 \Function {\textsc{$i$ingresarEstudiante}}{\paramInOut {e}{estr}, \paramIn {n}{nombre}, \paramIn {p}{posicion}} \Comment{$\Ode{\mid Nm \mid}$}
 \If {esHippizable(e,p)} \Comment{$\Ode{1}$}
 		\If {esCapturable(e,p)} \Comment{$\Ode{1}$}
@@ -228,7 +272,7 @@
 				\If {e.quienOcupa$_{[siguiente(it).X]}$ $_{[siguiente(it).Y]}$.queHay == $"$agente"} \Comment{$\Ode{1}$}
 					\State recompensar(e, siguiente(it)) \Comment{$\Ode{1}$}
 				\EndIf
-				\State avanzar(it)
+				\State avanzar(it)	\Comment{$\Ode{1}$}
 			\EndWhile
 		\Else
 			\State definir(e.posCiviles, n, p)  \Comment{$\Ode{\mid Nm \mid}$}
@@ -249,7 +293,7 @@
 							\If {esAgente(e, siguiente(itAg))} \Comment{$\Ode{1}$}
 								\State sancionar(e,siguiente(itAg)) \Comment{$\Ode{1}$}
 							\EndIf
-							\State avanzar(itAg)
+							\State avanzar(itAg)	\Comment{$\Ode{1}$}
 						\EndWhile
 					\Else
 						\If {esHippie(e, siguiente(it)) $\wedge$ esCapturable(e,siguiente(it))}  \Comment{$\Ode{1}$}
@@ -257,7 +301,7 @@
 						\EndIf
 					\EndIf
 				  \EndIf
-					\State avanzar(it)
+					\State avanzar(it)	\Comment{$\Ode{1}$}
 				\EndWhile
 			  \EndIf
 			\Else
@@ -282,7 +326,7 @@
 								\If {esAgente(e,siguiente(itAg))} \Comment{$\Ode{1}$}
 									\State Sancionar(e,siguiente(itAg)) \Comment{$\Ode{1}$}
 								\EndIf
-								\State avanzar(itAg)
+								\State avanzar(itAg)	\Comment{$\Ode{1}$}
 							\EndWhile
 						\Else
 							\If {esHippie(e,siguiente(it) $\wedge$ esCapturable(e,siguiente(it))} \Comment{$\Ode{1}$}
@@ -323,12 +367,12 @@
 							\If {esAgente(siguiente(itAg)} \Comment{$\Ode{1}$}
 								\State sancionar(e,siguiente(itAg)) \Comment{$\Ode{1}$}
 							\EndIf
-							\State avanzar(itAg)
+							\State avanzar(itAg)	\Comment{$\Ode{1}$}
 						\EndWhile
    					 \EndIf
 				\EndIf
 			\EndIf
-			\State avanzar(it)
+			\State avanzar(it)	\Comment{$\Ode{1}$}
 		\EndWhile
 	\EndIf
 \EndFunction
@@ -360,7 +404,7 @@
 			\State hippizar(e, prx) \Comment{$\Ode{1}$}
 			\While {haySiguiente(it} \Comment{$\Ode{1}$}
 				\If {ocupada(e.campus, siguiente(it)) $\vee$ $\neg$e.quienOcupa$_{[siguiente(it).X]}$ $_{[siguiente(it).Y]}$.ocupada?}
-					\State avanzar(it)
+					\State avanzar(it)	\Comment{$\Ode{1}$}
 				\Else \If {esEstudiante(e,siguiente(it)) $\wedge$ esHippizable(e,siguiente(it))} \Comment{$\Ode{1}$}
 						 \State Hippizar(e, siguiente(it))  \Comment{$\Ode{1}$}
 						 \If {esCapturable(e, siguiente(it))}  \Comment{$\Ode{1}$}
@@ -372,7 +416,7 @@
 					  				\If {esAgente(e,siguiente(itAg)} \Comment{$\Ode{1}$}
 					  					\State sancionar(e,siguiente(itAg)) \Comment{$\Ode{1}$}
 					  				\EndIf
-					  			\State avanzar(itAg)
+					  			\State avanzar(itAg)	\Comment{$\Ode{1}$}
 					  			\EndWhile
 					  		\Else
 					  			\If {esHippie(e,siguiente(it)) $\wedge$ esCapturable(s,siguiente(it))} \Comment{$\Ode{1}$}
@@ -385,7 +429,7 @@
 		\Else
 			\While {haySiguiente(it)}
 			\If {ocupada(e.campus, siguiente(it))$\vee$ $\neg$e.quienOcupa$_{[siguiente(it).X]}$ $_{[siguiente(it).Y]}$.ocupada?} \Comment{$\Ode{1}$}
-					\State avanzar(it)
+					\State avanzar(it)	\Comment{$\Ode{1}$}
 				\Else
 					\If {esHippie(e, siguiente(it)) $\wedge$ esEstudiantizable(e,siguiente(it))} \Comment{$\Ode{1}$}
 						\State Estudiantizar(e, siguiente(it)) \Comment{$\Ode{1}$}
@@ -396,7 +440,7 @@
 								\If {esAgente(e,siguiente(itAg2))} \Comment{$\Ode{1}$}
 									\State sancionar(e,siguiente(itAg2)) \Comment{$\Ode{1}$}
 								\EndIf
-								\State avanzar(itAg2)
+								\State avanzar(itAg2)	\Comment{$\Ode{1}$}
 							\EndWhile
 							\newpage
 						\Else
@@ -406,7 +450,7 @@
 						\EndIf
 					\EndIf
 				\EndIf
-				\State avanzar(it)
+				\State avanzar(it)	\Comment{$\Ode{1}$}
 			\EndWhile
 		\EndIf
 \EndFunction
@@ -428,7 +472,7 @@
     \State var itConj(posicion) $\gets$ crearIt(vecinos(e.campus, prx)) \Comment{$\Ode{1}$}
     \While {haySiguiente(it)} \Comment{$\Ode{1}$}
     	\If {ocupada(e.campus, siguiente(it)) $\vee$ $\neg$e.quienOcupa$_{[siguiente(it).X]}$ $_{[siguiente(it).Y]}$.ocupada?}
-    		\State avanzar(it)
+    		\State avanzar(it)	\Comment{$\Ode{1}$}
     	\Else
     		\If {esEstudiante(e, siguiente(it)) $\wedge$ esCapturable(e, siguiente(it))} \Comment{$\Ode{1}$}
     			\State var itConj(posicion) itAg $\gets$ vecinos(e.campus, siguiente(it)) \Comment{$\Ode{1}$}
@@ -436,7 +480,7 @@
     				\If {esAgente(e,siguiente(itAg))}  \Comment{$\Ode{1}$}
     					\State sancionar(e, siguiente(itAg))  \Comment{$\Ode{1}$}
     				\EndIf
-	    			\State avanzar(itAg)
+	    			\State avanzar(itAg)	\Comment{$\Ode{1}$}
     			\EndWhile
     		\Else
     			\If {esHippie(e,siguiente(it)) $\wedge$ esCapturable(e,siguiente(it))}  \Comment{$\Ode{1}$}
@@ -444,7 +488,7 @@
     			\EndIf
     		\EndIf
     	\EndIf	
-    	\State avanzar(it)
+    	\State avanzar(it)	\Comment{$\Ode{1}$}
     \EndWhile
 \EndFunction
 \end{algorithmic}
@@ -464,7 +508,7 @@
 	\State e.quienOcupa$_{[actual.X]}$ $_{[actual.Y]}$ $\gets$ $<$false, "nadie", crearIt(), crearIt()$>$ \Comment{$\Ode{1}$}
 	\While {haySiguiente(it)}
 		\If {ocupada(e.campus, siguiente(it)) $\vee$ $\neg$e.quienOcupa$_{[siguiente(it).X]}$ $_{[siguiente(it).Y]}$.ocupada?} \Comment{$\Ode{1}$}
-			\State avanzar(it)
+			\State avanzar(it)	\Comment{$\Ode{1}$}
 		\Else
 			\If {esEstudiante(e,siguiente(it)) $\wedge$ esHippizable(e, siguiente(it))} \Comment{$\Ode{1}$}
 				\State hippizar(e, siguiente(it)) \Comment{$\Ode{1}$}
@@ -476,9 +520,9 @@
 				 	\State var itConj(posicion) itAg $\gets$ vecinos(e.campus, siguiente(it)) \Comment{$\Ode{1}$}
 				 	\While {haySiguiente(itAg)}
 				 		\If {esAgente(e,siguiente(itAg))} 
-				 			\State sancionar(e, siguiente(itAg))
+				 			\State sancionar(e, siguiente(itAg))	\Comment{$\Ode{1}$}
 				 		\EndIf
-				 		\State avanzar(itAg)
+				 		\State avanzar(itAg)	\Comment{$\Ode{1}$}
 				 	\EndWhile
 				 \Else
 				 	\If {esHippie(e,siguiente(it)) $\wedge$ esCapturable(e,siguiente(it))} \Comment{$\Ode{1}$}
@@ -487,7 +531,7 @@
 				 \EndIf
 			\EndIf
 		\EndIf
-		\State avanzar(it)
+		\State avanzar(it)	\Comment{$\Ode{1}$}
 	\EndWhile
 \EndFunction
 \end{algorithmic}
@@ -552,8 +596,8 @@
 		\EndIf
 		\If {e.quienOcupa$_{[siguiente(it).X]}$ $_{[siguiente(it).Y]}$.quienOcupa== $"$agente" } \Comment{$\Ode{1}$}
    			\State  hayGuardia $\gets$ true \Comment{$\Ode{1}$}
-   		\EndIF
-   		\State avanzar(it)
+   		\EndIf
+   		\State avanzar(it)	\Comment{$\Ode{1}$}
    	\EndWhile
    	\State res $\gets$ contador == 4 $\wedge$ hayGuardia \Comment{$\Ode{1}$}
 \EndFunction
@@ -568,7 +612,7 @@
     	\If {e.quienOcupa$_{[siguiente(it).X]}$ $_{[siguiente(it).Y]}$.quienOcupa == "hippie"} \Comment{$\Ode{1}$}
     		\State contador $+$ $+$ \Comment{$\Ode{1}$}
     	\EndIf
-    	\State avanzar(it)
+    	\State avanzar(it)	\Comment{$\Ode{1}$}
      \EndWhile
     \State res $\gets$ contador $\geqslant$ 2 \Comment{$\Ode{1}$}
 \EndFunction
@@ -587,7 +631,7 @@
     	\If {e.quienOcupa$_{[siguiente(it).X]}$ $_{[siguiente(it).Y]}$.quienOcupa == $"$agente"} \Comment{$\Ode{1}$}
     		\State recompensar(e, siguiente(it)) \Comment{$\Ode{1}$}
     	\EndIf
-    	\State avanzar(it)
+    	\State avanzar(it)	\Comment{$\Ode{1}$}
      \EndWhile
 \EndFunction
 \end{algorithmic}
@@ -604,7 +648,7 @@
 		    \State contador $+$ $+$ \Comment{$\Ode{1}$}
 		\EndIf
 	\EndWhile
-	\State res $\gets$ contador == 4
+	\State res $\gets$ contador == 4	\Comment{$\Ode{1}$}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}	

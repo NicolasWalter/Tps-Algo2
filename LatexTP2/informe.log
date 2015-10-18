@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.8.31)  18 OCT 2015 15:57
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.8.31)  18 OCT 2015 17:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -328,8 +328,7 @@ Cargando package 'dis' v0.035 (18/05/2011)
 ) (./informe.aux (./caratula.aux)
 LaTeX Info: Redefining \. on input line 7.
 LaTeX Info: Redefining \% on input line 7.
- (./ModuloCampus.aux) (./ModuloRastrillaje.aux) (./ModuloDiccString.aux) (./Mod
-uloDiccProm.aux))
+ (./ModuloRastrillaje.aux))
 \openout1 = `informe.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
@@ -488,118 +487,17 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 36.
 
 
-LaTeX Warning: Reference `LastPage' on page 2 undefined on input line 46.
+LaTeX Warning: Reference `LastPage' on page 2 undefined on input line 47.
 
 [2
 
 ]
-\openout2 = `ModuloCampus.aux'.
-
- (./ModuloCampus.tex
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 16.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.20 ...}{Crea un campus de c columnas y f filas.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.20 ...}{Crea un campus de c columnas y f filas.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.29 ...rue$ sii p esta ocupada por un obstaculo.}
-                                                  
-? 
-! Undefined control sequence.
-<recently read> \Â
-                  
-l.29 ...rue$ sii p esta ocupada por un obstaculo.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.29 ...rue$ sii p esta ocupada por un obstaculo.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.29 ...rue$ sii p esta ocupada por un obstaculo.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.29 ...rue$ sii p esta ocupada por un obstaculo.}
-                                                  
-? 
-
-LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 34.
-
-[3
-
-]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.38 ...cinos son a lo sumo 4, o sea, constantes.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.38 ...cinos son a lo sumo 4, o sea, constantes.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.38 ...cinos son a lo sumo 4, o sea, constantes.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.38 ...cinos son a lo sumo 4, o sea, constantes.}
-                                                  
-? 
-
-! LaTeX Error: \mathcal allowed only in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.38 ...cinos son a lo sumo 4, o sea, constantes.}
-                                                  
-? 
-
-LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 80.
-
-[4]
-
-LaTeX Warning: Reference `LastPage' on page 5 undefined on input line 175.
-
-[5]
-
-LaTeX Warning: Reference `LastPage' on page 6 undefined on input line 240.
-
-[6])
-
-LaTeX Warning: Reference `LastPage' on page 7 undefined on input line 46.
-
-[7]
 \openout2 = `ModuloRastrillaje.aux'.
 
  (./ModuloRastrillaje.tex
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 16.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
@@ -647,25 +545,24 @@ l.30 ...La complejidad se da en el caso promedio.}
 l.30 ...La complejidad se da en el caso promedio.}
                                                   
 ? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.32 ...La complejidad se da en el caso promedio.}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.32 ...La complejidad se da en el caso promedio.}
+                                                  
+? 
 
-LaTeX Warning: Reference `LastPage' on page 8 undefined on input line 32.
+LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 34.
 
-[8
-
+[3
 
 ]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.32 ...La complejidad se da en el caso promedio.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.32 ...La complejidad se da en el caso promedio.}
-                                                  
-? 
 ! Missing $ inserted.
 <inserted text> 
                 $
@@ -888,10 +785,6 @@ l.44 ...strillaje, al mover un hippie del campus.}
 l.44 ...strillaje, al mover un hippie del campus.}
                                                   
 ? 
-
-LaTeX Warning: Reference `LastPage' on page 9 undefined on input line 46.
-
-[9]
 ! Missing $ inserted.
 <inserted text> 
                 $
@@ -963,6 +856,10 @@ l.46 ...strillaje, al mover un agente del campus.}
                                                   
 ? 
 
+LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 50.
+
+[4]
+
 ! LaTeX Error: \mathcal allowed only in math mode.
 
 See the LaTeX manual or LaTeX Companion for explanation.
@@ -995,13 +892,13 @@ l.52 ...con la misma cantidad de sanciones que a.}
                                                   
 ? 
 
-LaTeX Warning: Reference `LastPage' on page 10 undefined on input line 65.
+LaTeX Warning: Reference `LastPage' on page 5 undefined on input line 73.
 
-[10]
+[5]
 
-LaTeX Warning: Reference `LastPage' on page 11 undefined on input line 76.
+LaTeX Warning: Reference `LastPage' on page 6 undefined on input line 76.
 
-[11]
+[6]
 Overfull \hbox (14.43208pt too wide) in paragraph at lines 88--89
 []\OT1/cmr/m/n/10 Todas las po-si-cio-nes de los agen-tes son los sig-ni-fi-ca-
 dos del dic-cio-na-rio .[]gentes[] tam-bien se ven en "posAgentesLog[]
@@ -1022,21 +919,27 @@ l.98 ...wedge$ ag $\in$ e.buscoEnLog[i].grupoK)) }
                                                   
 ? 
 
-LaTeX Warning: Reference `LastPage' on page 12 undefined on input line 99.
+LaTeX Warning: Reference `LastPage' on page 7 undefined on input line 102.
 
-[12]
+[7]
 
-LaTeX Warning: Reference `LastPage' on page 13 undefined on input line 108.
+LaTeX Warning: Reference `LastPage' on page 8 undefined on input line 108.
 
-[13]
+[8]
 
-LaTeX Warning: Reference `LastPage' on page 14 undefined on input line 219.
+LaTeX Warning: Reference `LastPage' on page 9 undefined on input line 219.
 
-[14]
+[9]
+Overfull \hbox (7.77861pt too wide) in paragraph at lines 242--243
+[] \OT1/cmr/m/n/10 var da-to-sAg da-tosN $\OMS/cmsy/m/n/10  $ $\OML/cmm/m/it/10
+ <$\OT1/cmr/m/n/10 0,0,SiguienteSignificado(iter),Agregar(Siguiente(itK).grupoK
+,SiguienteClave(iter)),itK$\OML/cmm/m/it/10 >$ 
+ []
+
 ! Missing number, treated as zero.
 <to be read again> 
                    \ALG@b@2@EndFunction@0 
-l.269 \EndFunction
+l.313 \EndFunction
                   
 ? 
 
@@ -1046,69 +949,69 @@ See the algorithmicx package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.270 \end{algorithmic}
+l.314 \end{algorithmic}
                        
 ? 
 
-LaTeX Warning: Reference `LastPage' on page 15 undefined on input line 272.
+LaTeX Warning: Reference `LastPage' on page 10 undefined on input line 316.
 
-[15]
+[10]
 ! Missing \endcsname inserted.
 <to be read again> 
                    \ALG@currentblock@0 
-l.275 				\While
+l.319 				\While
                  {haySiguiente(it)}
 ? 
 ! Extra \endcsname.
 \ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
                                                   \relax \def \ALG@thisblock...
-l.275 				\While
+l.319 				\While
                  {haySiguiente(it)}
 ? 
 ! Missing \endcsname inserted.
 <to be read again> 
                    \ALG@currentblock@0 
-l.294 			\EndIf
+l.338 			\EndIf
                
 ? 
 ! Extra \endcsname.
 \ALG@makenobeginrepeat ...LG@thisblock \endcsname 
                                                   \relax \def \ALG@thisblock...
-l.294 			\EndIf
+l.338 			\EndIf
                
 ? 
 ! Missing number, treated as zero.
 <to be read again> 
                    \ALG@b@2@EndIf@0 
-l.294 			\EndIf
+l.338 			\EndIf
                
 ? 
 ! Missing number, treated as zero.
 <to be read again> 
                    \ALG@currentblock@0 
-l.296 \end{algorithmic}
+l.340 \end{algorithmic}
                        
 ? 
 ! Missing = inserted for \ifnum.
 <to be read again> 
                    \ALG@currentblock@0 
-l.296 \end{algorithmic}
+l.340 \end{algorithmic}
                        
 ? 
 ! Missing number, treated as zero.
 <to be read again> 
                    \ALG@currentblock@0 
-l.296 \end{algorithmic}
+l.340 \end{algorithmic}
                        
 ? 
 
-LaTeX Warning: Reference `LastPage' on page 16 undefined on input line 298.
+LaTeX Warning: Reference `LastPage' on page 11 undefined on input line 342.
 
-[16]
+[11]
 ! Argument of \paramIn has an extra }.
 <inserted text> 
                 \par 
-l.301 ...\paramIn{p}{posicion} \paramIn{h:nombre}}
+l.345 ...\paramIn{p}{posicion} \paramIn{h:nombre}}
                                                   {} \Comment{$\Ode{\vert Nm...
 
 ? 
@@ -1116,18 +1019,18 @@ Runaway argument?
 ! Paragraph ended before \paramIn was complete.
 <to be read again> 
                    \par 
-l.301 ...\paramIn{p}{posicion} \paramIn{h:nombre}}
+l.345 ...\paramIn{p}{posicion} \paramIn{h:nombre}}
                                                   {} \Comment{$\Ode{\vert Nm...
 
 ? 
 ! Undefined control sequence.
-l.355 ...te definir(e.posCiviles, s, prx) \COmment
+l.399 ...te definir(e.posCiviles, s, prx) \COmment
                                                   {$\Ode{\vert Nm \vert}$}
 ? 
 ! Missing number, treated as zero.
 <to be read again> 
                    \ALG@b@2@EndFunction@0 
-l.412 \EndFunction
+l.456 \EndFunction
                   
 ? 
 
@@ -1137,501 +1040,167 @@ See the algorithmicx package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.413 \end{algorithmic}
+l.457 \end{algorithmic}
                        
 ? 
 
-LaTeX Warning: Reference `LastPage' on page 17 undefined on input line 415.
+LaTeX Warning: Reference `LastPage' on page 12 undefined on input line 459.
 
-[17]
+[12]
 Overfull \vbox (163.86412pt too high) has occurred while \output is active []
 
 
 
-LaTeX Warning: Reference `LastPage' on page 18 undefined on input line 415.
+LaTeX Warning: Reference `LastPage' on page 13 undefined on input line 459.
 
-[18]
+[13]
 ! Missing \endcsname inserted.
 <to be read again> 
                    \ALG@currentblock@0 
-l.418 \Function
+l.462 \Function
                 {\textsc{$i$moverAgente}}{\paramInOut{e}{estr} \paramIn{a}{a...
 
 ? 
 ! Extra \endcsname.
 \ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
                                                   \relax \def \ALG@thisblock...
-l.418 \Function
+l.462 \Function
                 {\textsc{$i$moverAgente}}{\paramInOut{e}{estr} \paramIn{a}{a...
 
 ? 
 ! Missing number, treated as zero.
 <to be read again> 
                    \ALG@currentblock@0 
-l.450 \end{algorithmic}
+l.494 \end{algorithmic}
                        
 ? 
 ! Missing = inserted for \ifnum.
 <to be read again> 
                    \ALG@currentblock@0 
-l.450 \end{algorithmic}
+l.494 \end{algorithmic}
                        
 ? 
 ! Missing number, treated as zero.
 <to be read again> 
                    \ALG@currentblock@0 
-l.450 \end{algorithmic}
+l.494 \end{algorithmic}
                        
 ? 
 
-LaTeX Warning: Reference `LastPage' on page 19 undefined on input line 495.
+LaTeX Warning: Reference `LastPage' on page 14 undefined on input line 539.
 
-[19]
-Underfull \hbox (badness 10000) in paragraph at lines 525--526
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 569--570
 [] \OT1/cmr/m/n/10 var da-tos-HoE dat $\OMS/cmsy/m/n/10  $ $\OML/cmm/m/it/10 <$
 \OT1/cmr/m/n/10 Siguiente(e.quienOcupa$[]$ $[]$.hayHoE).ID, Siguiente(e.quienOc
 upa$[]$
  []
 
 
-LaTeX Warning: Reference `LastPage' on page 20 undefined on input line 532.
+LaTeX Warning: Reference `LastPage' on page 15 undefined on input line 576.
 
-[20]
-Underfull \hbox (badness 10000) in paragraph at lines 536--537
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 580--581
 [] \OT1/cmr/m/n/10 var da-tos-HoE dat $\OMS/cmsy/m/n/10  $ $\OML/cmm/m/it/10 <$
 \OT1/cmr/m/n/10 Siguiente(e.quienOcupa$[]$ $[]$.hayHoE).ID, Siguiente(e.quienOc
 upa$[]$
  []
 
-! Undefined control sequence.
-l.555    		\EndIF
-                 
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@b@2@EndWhile@0 
-l.557    	\EndWhile
-                   
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@b@2@EndFunction@0 
-l.559 \EndFunction
-                  
-? 
 
-! Package algorithmicx Error: Some blocks are not closed!!!.
+LaTeX Warning: Reference `LastPage' on page 16 undefined on input line 639.
 
-See the algorithmicx package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.560 \end{algorithmic}
-                       
-? 
-! Missing \endcsname inserted.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.565 \Function
-                {\textsc{$i$esHippizable}}{\paramInOut{e}{estr} \paramIn{p}{...
-
-? 
-! Extra \endcsname.
-\ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
-                                                  \relax \def \ALG@thisblock...
-l.565 \Function
-                {\textsc{$i$esHippizable}}{\paramInOut{e}{estr} \paramIn{p}{...
-
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.575 \end{algorithmic}
-                       
-? 
-! Missing = inserted for \ifnum.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.575 \end{algorithmic}
-                       
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.575 \end{algorithmic}
-                       
-? 
-
-LaTeX Warning: Reference `LastPage' on page 21 undefined on input line 595.
-
-[21]
+[16]
 ! Undefined control sequence.
 <recently read> \disFlechas 
                             
-l.599 ...\paramIn{p}{conj(posicion)}}{$\disFlechas
+l.643 ...\paramIn{p}{conj(posicion)}}{$\disFlechas
                                                   $ res:bool} \Comment{$\Ode...
 
 ? 
 ! Undefined control sequence.
 <argument> \longitud 
                      {N_{e}}
-l.683 ...e(it)} \Comment{$\Ode{\longitud{N_{e}}}$}
+l.727 ...e(it)} \Comment{$\Ode{\longitud{N_{e}}}$}
                                                   
 ? 
 
-LaTeX Warning: Reference `LastPage' on page 22 undefined on input line 694.
+LaTeX Warning: Reference `LastPage' on page 17 undefined on input line 738.
 
-[22]
+[17]
 ! Undefined control sequence.
 <argument> \longitud 
                      {N_{h}}
-l.728 ...e(it)} \Comment{$\Ode{\longitud{N_{h}}}$}
+l.772 ...e(it)} \Comment{$\Ode{\longitud{N_{h}}}$}
                                                   
 ? 
 
-LaTeX Warning: Reference `LastPage' on page 23 undefined on input line 739.
+LaTeX Warning: Reference `LastPage' on page 18 undefined on input line 783.
 
-[23]
+[18]
 
-LaTeX Warning: Reference `LastPage' on page 24 undefined on input line 768.
+LaTeX Warning: Reference `LastPage' on page 19 undefined on input line 812.
 
-[24]
+[19]
 ! Misplaced alignment tab character &.
-l.774 ...ino.y$==$e.campus.alto) $\vee$(p.Y$==$0 &
+l.818 ...ino.y$==$e.campus.alto) $\vee$(p.Y$==$0 &
                                                   & destino.y$==-$1) \Commen...
 
 ? 
 ! Misplaced alignment tab character &.
-l.774 ...no.y$==$e.campus.alto) $\vee$(p.Y$==$0 &&
+l.818 ...no.y$==$e.campus.alto) $\vee$(p.Y$==$0 &&
                                                    destino.y$==-$1) \Comment...
 
 ? 
 )
 
-LaTeX Warning: Reference `LastPage' on page 25 undefined on input line 47.
+LaTeX Warning: Reference `LastPage' on page 20 undefined on input line 47.
 
-[25]
+[20]
 
-LaTeX Warning: Reference `LastPage' on page 26 undefined on input line 47.
+LaTeX Warning: Reference `LastPage' on page 21 undefined on input line 47.
 
-[26]
-\openout2 = `ModuloDiccString.aux'.
-
- (./ModuloDiccString.tex
-
-LaTeX Font Warning: Font shape `OT1/cmr/bx/sc' undefined
-(Font)              using `OT1/cmr/bx/n' instead on input line 16.
-
-LaTeX Font Info:    Font shape `OMS/cmr/bx/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/b/n' tried instead on input line 16.
-
-LaTeX Warning: Reference `LastPage' on page 27 undefined on input line 34.
-
-[27
-
-
-]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.36 ...ave.}{Elimina la clave k del diccionario.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.36 ...ave.}{Elimina la clave k del diccionario.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.36 ...ave.}{Elimina la clave k del diccionario.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.36 ...ave.}{Elimina la clave k del diccionario.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.50 ...nza a la posicion siguiente del iterador.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.50 ...nza a la posicion siguiente del iterador.}
-                                                  
-? 
-
-LaTeX Warning: Reference `LastPage' on page 28 undefined on input line 60.
-
-[28]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.86 \\\hspace*{3.75em}}
-                        
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.86 \\\hspace*{3.75em}}
-                        
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.86 \\\hspace*{3.75em}}
-                        
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.86 \\\hspace*{3.75em}}
-                        
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.86 \\\hspace*{3.75em}}
-                        
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.86 \\\hspace*{3.75em}}
-                        
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.86 \\\hspace*{3.75em}}
-                        
-? 
-! Extra }, or forgotten $.
-\disRep ...rgen }Rep({\emph {#2}}) $\equiv $ ({#3}
-                                                  )\par 
-l.86 \\\hspace*{3.75em}}
-                        
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.86 \\\hspace*{3.75em}}
-                        
-? 
-
-LaTeX Warning: Reference `LastPage' on page 29 undefined on input line 98.
-
-[29]
-
-! LaTeX Error: \mathcal allowed only in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.110 ... letras[i] $\gets$ NULL \Comment{\Ode{1}}
-                                                  
-? 
-
-! LaTeX Error: \mathcal allowed only in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.157 ... caracteres[ord(k[i])]) \Comment{\Ode{1}}
-                                                  
-? 
-
-! Package algorithmicx Error: Some blocks are not closed!!!.
-
-See the algorithmicx package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.166 \end{algorithmic}
-                       
-? 
-! Missing \endcsname inserted.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.172 \Function
-                {\textsc{iDefinido?}}{\paramIn{d}{estr}, \paramIn{k}{string}...
-
-? 
-! Extra \endcsname.
-\ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
-                                                  \relax \def \ALG@thisblock...
-l.172 \Function
-                {\textsc{iDefinido?}}{\paramIn{d}{estr}, \paramIn{k}{string}...
-
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.187 \end{algorithmic}
-                       
-? 
-! Missing = inserted for \ifnum.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.187 \end{algorithmic}
-                       
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.187 \end{algorithmic}
-                       
-? 
-
-LaTeX Warning: Reference `LastPage' on page 30 undefined on input line 189.
-
-[30]
-
-LaTeX Warning: Reference `LastPage' on page 31 undefined on input line 190.
-
-[31])
-
-LaTeX Warning: Reference `LastPage' on page 32 undefined on input line 48.
-
-[32]
-\openout2 = `ModuloDiccProm.aux'.
-
- (./ModuloDiccProm.tex
-! Missing $ inserted.
-<inserted text> 
-                $
-l.25 ...l conjunto con las claves definidas en d.}
-                                                  
-? 
-! Extra }, or forgotten $.
-<recently read> \egroup 
-                        
-l.25 ...l conjunto con las claves definidas en d.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.25 ...l conjunto con las claves definidas en d.}
-                                                  
-? 
-
-LaTeX Font Warning: Font shape `OT1/cmss/bx/it' undefined
-(Font)              using `OT1/cmss/bx/n' instead on input line 25.
-
-LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 25.
-
-LaTeX Warning: Reference `LastPage' on page 33 undefined on input line 39.
-
-[33
-
-
-]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.68 }
-      
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.68 }
-      
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.68 }
-      
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.68 }
-      
-? 
-
-Overfull \hbox (14.99998pt too wide) in paragraph at lines 73--73
-[]| \OT1/cmr/m/it/10 estaEn?(l,k)| $\OMS/cmsy/m/n/10 ^^Q$| [] 
- []
-
-
-LaTeX Warning: Reference `LastPage' on page 34 undefined on input line 87.
-
-[34]
-! Misplaced alignment tab character &.
-l.122     \State res $\gets$ &
-                              siguiente(it).significado
-? 
-
-LaTeX Warning: Reference `LastPage' on page 35 undefined on input line 163.
-
-[35])
-
-LaTeX Warning: Reference `LastPage' on page 36 undefined on input line 49.
-
-[36] (./informe.aux (./caratula.aux)
+[21] (./informe.aux (./caratula.aux)
 LaTeX Info: Redefining \. on input line 7.
 LaTeX Info: Redefining \% on input line 7.
- (./ModuloCampus.aux)
-(./ModuloRastrillaje.aux) (./ModuloDiccString.aux) (./ModuloDiccProm.aux))
-
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
+ (./ModuloRastrillaje.aux))
 
 LaTeX Warning: There were undefined references.
 
  )
-(\end occurred inside a group at level 4)
+(\end occurred inside a group at level 1)
 
-### simple group (level 4) entered at line 25 ({)
-### simple group (level 3) entered at line 86 ({)
-### semi simple group (level 2) entered at line 94 (\begingroup)
-### semi simple group (level 1) entered at line 67 (\begingroup)
+### semi simple group (level 1) entered at line 94 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 5225 strings out of 493304
- 71254 string characters out of 6139871
- 175058 words of memory out of 5000000
- 8518 multiletter control sequences out of 15000+600000
- 11627 words of font info for 44 fonts, out of 8000000 for 9000
+ 5179 strings out of 493304
+ 70493 string characters out of 6139871
+ 174824 words of memory out of 5000000
+ 8495 multiletter control sequences out of 15000+600000
+ 10125 words of font info for 38 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,16n,43p,1576b,725s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,16n,43p,1576b,400s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mbsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on informe.pdf (36 pages, 677930 bytes).
+mbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx
+10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on informe.pdf (21 pages, 618189 bytes).
 PDF statistics:
- 206 PDF objects out of 1000 (max. 8388607)
- 143 compressed objects within 2 object streams
+ 151 PDF objects out of 1000 (max. 8388607)
+ 105 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
