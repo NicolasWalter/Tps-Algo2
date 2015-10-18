@@ -108,8 +108,8 @@
 
 \begin{algorithm}[H]
 \begin{algorithmic}[1]
-\Function {\textsc{$i$AgregarObstaculo}}{\paramInOut{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : estr} \Comment{$\Ode{longitud(e.mapa[p.X]}$}
-  \State Agregar(e.mapa[p.X], p.Y, true) \Comment{$\Ode{longitud(e.mapa[p.X])}$}
+\Function {\textsc{$i$AgregarObstaculo}}{\paramInOut{e}{estr}, \paramIn{p}{posicion}}{$\disFlecha$ res : estr} \Comment{$\Ode{1}$}
+  \State e.mapa[p.X][p.Y] $\gets$ true \Comment{$\Ode{1}$}
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
