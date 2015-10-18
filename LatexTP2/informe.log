@@ -1,21 +1,14 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.8.30)  17 OCT 2015 17:20
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.8.31)  18 OCT 2015 04:34
 entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
 **informe.tex
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\informe.tex
+(./informe.tex
 LaTeX2e <2011/06/27>
-Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
-abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
-croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
-lician, german, german-x-2013-05-26, greek, gujarati, hindi, hungarian, iceland
-ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
- lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
-german-x-2013-05-26, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
-ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
-an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
-ishmax, welsh, loaded.
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls"
+Babel <3.9h> and hyphenation patterns for 78 languages loaded.
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size10.clo"
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
@@ -30,22 +23,22 @@ File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\geometry\geometry.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2010/09/12 v5.6 Page Geometry
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks14
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ifvtex.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifvtex.sty
 Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
 \Gm@cnth=\count87
@@ -60,42 +53,35 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layouthoffset=\dimen109
 \Gm@layoutvoffset=\dimen110
 \Gm@dimlist=\toks15
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\geometry\geometry.cfg"))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\babel.sty"
-Package: babel 2008/07/08 v3.8m The Babel package
-
-*************************************
-* Local config file bblopts.cfg used
-*
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\bblopts.cfg"
-File: bblopts.cfg 2006/07/31 v1.0 MiKTeX 'babel' configuration
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\spanish.ldf"
-Language: spanish.ldf 2009/01/02 v5.0h Spanish support from the babel system
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2013/12/03 3.9h The Babel package
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\babel.def"
-File: babel.def 2008/07/08 v3.8m Babel common definitions
+(/usr/share/texlive/texmf-dist/tex/generic/babel-spanish/spanish.ldf
+Language: spanish.ldf 2014/01/29 v5.0m Spanish support from the babel system
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
+File: babel.def 2013/12/03 3.9h Babel common definitions
 \babel@savecnt=\count90
 \U@D=\dimen111
 )
 \es@datefmt=\count91
 \es@quottoks=\toks16
 \es@quotdepth=\count92
-Package babel Info: Making " an active character on input line 492.
-Package babel Info: Making . an active character on input line 585.
-Package babel Info: Making < an active character on input line 630.
-Package babel Info: Making > an active character on input line 630.
+Package babel Info: Making " an active character on input line 496.
+Package babel Info: Making . an active character on input line 599.
+Package babel Info: Making < an active character on input line 644.
+Package babel Info: Making > an active character on input line 644.
 ))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\inputenc.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2008/03/30 v1.1d Input encoding file
 \inpenc@prehook=\toks17
 \inpenc@posthook=\toks18
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\latin1.def"
+(/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def
 File: latin1.def 2008/03/30 v1.1d Input encoding file
 ))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\fancyhdr\fancyhdr.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 \fancy@headwidth=\skip43
 \f@ncyO@elh=\skip44
 \f@ncyO@erh=\skip45
@@ -105,31 +91,29 @@ File: latin1.def 2008/03/30 v1.1d Input encoding file
 \f@ncyO@erf=\skip49
 \f@ncyO@olf=\skip50
 \f@ncyO@orf=\skip51
-)
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\caratula.sty
+) (./caratula.sty
 Package: caratula 2005/08/09 v0.3 Para componer caratulas de TPs del DC
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
-File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
 Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
 \Gread@gobject=\count93
@@ -139,29 +123,29 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
 Cargando package 'caratula' v0.3 (2005/08/09)
 \intlist=\toks19
-) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\aed2-symb\aed2-symb.sty"
+) (/home/nicolas/texmf/tex/latex/aed2-symb/aed2-symb.sty
 Package: aed2-symb 2004/04/17 - Para componer simbolitos frecuentemente usados 
 en AED2
 
 Cargando package 'aed2-symb'
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip52
 
 For additional information on amsmath, use the `?' option.
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amstext.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks20
 \ex@=\dimen114
 ))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
 \pmbraise@=\dimen115
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
 \inf@bad=\count94
@@ -202,26 +186,26 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\xspace.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2009/10/20 v1.13 Space after command names (DPC,MH)
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\xargs\xargs.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/xargs/xargs.sty
 Package: xargs 2008/03/22 v1.1  extended macro definitions  (mpg)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\xkeyval\xkeyval.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
 Package: xkeyval 2012/10/14 v2.6b package option processing (HA)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\xkeyval\xkeyval.tex"
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
 \XKV@toks=\toks25
 \XKV@tempa@toks=\toks26
 \XKV@depth=\count106
@@ -231,20 +215,20 @@ File: xkeyval.tex 2012/10/14 v2.6b key=value parser (HA)
 \xargs@toksa=\toks27
 \xargs@toksb=\toks28
 ))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\aed2-itef\aed2-itef.sty"
+(/home/nicolas/texmf/tex/latex/aed2-itef/aed2-itef.sty
 Package: aed2-itef 2010/03/16 - if-then-else-fi en lenguaje de TADs.
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ifthen.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
 Cargando package 'itef' (2010/03/16)
 \itefIndentacion=\skip55
 \itef@widthUnaLinea=\skip56
 \itef@linewidth=\skip57
-) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\aed2-tad\aed2-tad.sty"
+) (/home/nicolas/texmf/tex/latex/aed2-tad/aed2-tad.sty
 Package: aed2-tad 2011/04/04 - Para especificar TADs en formato AED2
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\calc.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count108
 \calc@Bcount=\count109
@@ -257,8 +241,7 @@ LaTeX Info: Redefining \addtolength on input line 77.
 \calc@Ccount=\count110
 \calc@Cskip=\skip60
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\aed2-tokenizer\aed2-tokenizer.sty
-"
+(/home/nicolas/texmf/tex/latex/aed2-tokenizer/aed2-tokenizer.sty
 Package: aed2-tokenizer 2010/03/12
 )
 Package aed2-tad Info: Cargando package 'tad' (04/04/2011) on input line 26.
@@ -281,11 +264,12 @@ Package aed2-tad Info: Cargando package 'tad' (04/04/2011) on input line 26.
 \tadOperacion@textwidth=\skip76
 \tadAxioma@lenEquiv=\skip77
 \tadAxioma@lenDerecha=\skip78
-) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\algorithms\algorithm.sty"
+)
+(/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\float\float.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count111
 \float@exts=\toks29
@@ -296,10 +280,10 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@every@algorithm=\toks31
 \c@algorithm=\count112
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\algorithmicx\algpseudocode.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 Package: algpseudocode 
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\algorithmicx\algorithmicx.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
@@ -315,18 +299,17 @@ Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
 \ALG@tmplength=\skip81
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
-) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\setspace\setspace.sty"
+) (/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\color.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
-)
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\dis.sty
+) (./dis.sty
 Package: dis 2011/05/18 v0.035 Para diseniar TADs en formato AED2
 
 Cargando package 'dis' v0.035 (18/05/2011)
@@ -342,12 +325,13 @@ Cargando package 'dis' v0.035 (18/05/2011)
 \tabRep=\skip91
 \disSeparacionOperacion=\skip92
 \disDescripcionOperacionMargen=\skip93
-) (C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\informe.aux
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\caratula.aux)
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\ModuloCampus.aux)
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\ModuloRastrillaje.aux)
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\ModuloDiccString.aux)
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\ModuloDiccProm.aux))
+) (./informe.aux (./caratula.aux)
+LaTeX Info: Redefining \. on input line 7.
+LaTeX Info: Redefining \% on input line 7.
+ (./ModuloCampus.aux) (./ModuloRastrillaje.aux) (./ModuloDiccString.aux) (./Mod
+uloDiccProm.aux))
+\openout1 = `informe.aux'.
+
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
 LaTeX Font Info:    ... okay on input line 14.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
@@ -395,7 +379,9 @@ LaTeX Font Info:    ... okay on input line 14.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+LaTeX Info: Redefining \. on input line 14.
+LaTeX Info: Redefining \% on input line 14.
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count120
 \scratchdimen=\dimen125
@@ -408,8 +394,54 @@ LaTeX Font Info:    ... okay on input line 14.
 \MPnumerator=\count124
 \makeMPintoPDFobject=\count125
 \everyMPtoPDFconversion=\toks33
-) (C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\caratula.tex
-<logo_dc.jpg, id=1, 215.6055pt x 83.5923pt>
+) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+\openout2 = `caratula.aux'.
+
+
+(./caratula.tex <logo_dc.jpg, id=1, 215.6055pt x 83.5923pt>
 File: logo_dc.jpg Graphic file (type jpg)
  <use logo_dc.jpg>
 Package pdftex.def Info: logo_dc.jpg used on input line 13.
@@ -420,12 +452,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 13--13
  []
 
 LaTeX Font Info:    Try loading font information for U+msa on input line 13.
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 13.
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 <logo_uba.jpg, id=2, 225.4824pt x 231.7458pt>
@@ -446,58 +478,88 @@ Overfull \hbox (26.46268pt too wide) in paragraph at lines 13--13
 [1
 
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/Tapon/Documents/
-GitHub/Tps-Algo2/LatexTP2/logo_dc.jpg> <C:/Users/Tapon/Documents/GitHub/Tps-Alg
-o2/LatexTP2/logo_uba.jpg>])
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./logo_dc.jpg> <./logo_uba
+.jpg>])
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 36.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 36.
 
 
-LaTeX Warning: Reference `LastPage' on page 2 undefined on input line 42.
+LaTeX Warning: Reference `LastPage' on page 2 undefined on input line 46.
 
 [2
 
-] (C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\ModuloCampus.tex
+]
+\openout2 = `ModuloCampus.aux'.
+
+ (./ModuloCampus.tex
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 16.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.31 ...rue$ sii p esta ocupada por un obstaculo.}
+l.20 ...}{Crea un campus de c columnas y f filas.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.20 ...}{Crea un campus de c columnas y f filas.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.29 ...rue$ sii p esta ocupada por un obstaculo.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Undefined control sequence.
 <recently read> \Â
                   
-l.31 ...rue$ sii p esta ocupada por un obstaculo.}
+l.29 ...rue$ sii p esta ocupada por un obstaculo.}
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.31 ...rue$ sii p esta ocupada por un obstaculo.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.31 ...rue$ sii p esta ocupada por un obstaculo.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.31 ...rue$ sii p esta ocupada por un obstaculo.}
-                                                  
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 36.
+! Missing $ inserted.
+<inserted text> 
+                $
+l.29 ...rue$ sii p esta ocupada por un obstaculo.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.29 ...rue$ sii p esta ocupada por un obstaculo.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.29 ...rue$ sii p esta ocupada por un obstaculo.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 34.
 
 [3
 
@@ -505,27 +567,35 @@ LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 36.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.40 ...ecinos son a lo sumo 4, o sea, constantes}
+l.38 ...cinos son a lo sumo 4, o sea, constantes.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.40 ...ecinos son a lo sumo 4, o sea, constantes}
+l.38 ...cinos son a lo sumo 4, o sea, constantes.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.40 ...ecinos son a lo sumo 4, o sea, constantes}
+l.38 ...cinos son a lo sumo 4, o sea, constantes.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.40 ...ecinos son a lo sumo 4, o sea, constantes}
+l.38 ...cinos son a lo sumo 4, o sea, constantes.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 
 ! LaTeX Error: \mathcal allowed only in math mode.
 
@@ -533,87 +603,96 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.40 ...ecinos son a lo sumo 4, o sea, constantes}
+l.38 ...cinos son a lo sumo 4, o sea, constantes.}
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.42 ...cinos son a lo sumo 4, o sea, constantes.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.42 ...cinos son a lo sumo 4, o sea, constantes.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.42 ...cinos son a lo sumo 4, o sea, constantes.}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.42 ...cinos son a lo sumo 4, o sea, constantes.}
-                                                  
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
-! LaTeX Error: \mathcal allowed only in math mode.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.42 ...cinos son a lo sumo 4, o sea, constantes.}
-                                                  
-? 
-
-LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 75.
+LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 80.
 
 [4]
 
-LaTeX Warning: Reference `LastPage' on page 5 undefined on input line 84.
+LaTeX Warning: Reference `LastPage' on page 5 undefined on input line 80.
 
 [5]
 
-LaTeX Warning: Reference `LastPage' on page 6 undefined on input line 181.
+LaTeX Warning: Reference `LastPage' on page 6 undefined on input line 177.
 
 [6]
 
-LaTeX Warning: Reference `LastPage' on page 7 undefined on input line 246.
+LaTeX Warning: Reference `LastPage' on page 7 undefined on input line 242.
 
 [7])
 
-LaTeX Warning: Reference `LastPage' on page 8 undefined on input line 42.
+LaTeX Warning: Reference `LastPage' on page 8 undefined on input line 46.
 
-[8] (C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\ModuloRastrillaje.tex
+[8]
+\openout2 = `ModuloRastrillaje.aux'.
+
+ (./ModuloRastrillaje.tex
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.28 ...studiante/hippie pasado como par\'ametro.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.28 ...studiante/hippie pasado como par\'ametro.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.30 ...i\'on del agente pasado como par\'ametro.}
+l.28 ...studiante/hippie pasado como par\'ametro.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.30 ...i\'on del agente pasado como par\'ametro.}
+l.28 ...studiante/hippie pasado como par\'ametro.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.30 \disDeclaraFuncion
+                       {PosAgente}{\paramIn{r}{rastr}, \paramIn{a}{agente}}{...
+
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.30 ...La complejidad se da en el caso promedio.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.30 ...La complejidad se da en el caso promedio.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 
 LaTeX Warning: Reference `LastPage' on page 9 undefined on input line 32.
 
@@ -624,129 +703,213 @@ LaTeX Warning: Reference `LastPage' on page 9 undefined on input line 32.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.32 ...as por el agente pasado como par\'ametro.}
+l.32 ...La complejidad se da en el caso promedio.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.32 ...as por el agente pasado como par\'ametro.}
+l.32 ...La complejidad se da en el caso promedio.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.34 ...os por el agente pasado como par\'ametro.}
+l.34 ...La complejidad se da en el caso promedio.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.34 ...os por el agente pasado como par\'ametro.}
+l.34 ...La complejidad se da en el caso promedio.}
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.36 ...llaje(c,d)}{\Ode{1}}{Crea un Rastrillaje.}
-                                                  
-? 
-! Undefined control sequence.
-<recently read> \Â
-                  
-l.36 ...llaje(c,d)}{\Ode{1}}{Crea un Rastrillaje.}
-                                                  
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.36 ...llaje(c,d)}{\Ode{1}}{Crea un Rastrillaje.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+<recently read> \Â
+                  
+l.36 ...llaje(c,d)}{\Ode{1}}{Crea un Rastrillaje.}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.36 ...llaje(c,d)}{\Ode{1}}{Crea un Rastrillaje.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.38 ...laje, ingresando un estudiante al campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Undefined control sequence.
 <recently read> \Â
                   
 l.38 ...laje, ingresando un estudiante al campus.}
                                                   
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.38 ...laje, ingresando un estudiante al campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.38 ...laje, ingresando un estudiante al campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.38 ...laje, ingresando un estudiante al campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.38 ...laje, ingresando un estudiante al campus.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.38 ...laje, ingresando un estudiante al campus.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.40 ...trillaje, ingresando un hippie al campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Undefined control sequence.
 <recently read> \Â
                   
 l.40 ...trillaje, ingresando un hippie al campus.}
                                                   
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.40 ...trillaje, ingresando un hippie al campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.40 ...trillaje, ingresando un hippie al campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.40 ...trillaje, ingresando un hippie al campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.40 ...trillaje, ingresando un hippie al campus.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.40 ...trillaje, ingresando un hippie al campus.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.42 ...llaje, al mover un estudiante del campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Undefined control sequence.
 <recently read> \Â
                   
 l.42 ...llaje, al mover un estudiante del campus.}
                                                   
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.42 ...llaje, al mover un estudiante del campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 
 Underfull \hbox (badness 10000) in paragraph at lines 42--42
-[]\OT1/cmss/bx/n/10 Pre $\OMS/cmsy/m/n/10 $  f $\OML/cmm/m/it/10 r \OT1/cmr/m/
-n/10 =$r$[]$ $\OMS/cmsy/m/n/10 ^$ \OT1/cmr/m/n/10 e $\OMS/cmsy/m/n/10 2$ \OT1/c
-mr/m/n/10 es-tu-dian-tes(r) $\OMS/cmsy/m/n/10 ^$ \OT1/cmr/m/n/10 (se-Re-ti-ra(e
-,dir,r) $\OMS/cmsy/m/n/10 _$ \OT1/cmr/m/n/10 (pos-
+[]\OT1/cmss/bx/n/10 Pre $\OMS/cmsy/m/n/10 ^^Q$  f $\OML/cmm/m/it/10 r \OT1/cmr/
+m/n/10 =$r$[]$ $\OMS/cmsy/m/n/10 ^$ \OT1/cmr/m/n/10 e $\OMS/cmsy/m/n/10 2$ \OT1
+/cmr/m/n/10 es-tu-dian-tes(r) $\OMS/cmsy/m/n/10 ^$ \OT1/cmr/m/n/10 (se-Re-ti-ra
+(e,dir,r) $\OMS/cmsy/m/n/10 _$ \OT1/cmr/m/n/10 (pos-
  []
 
 
@@ -760,43 +923,104 @@ Underfull \hbox (badness 10000) in paragraph at lines 42--42
                 $
 l.42 ...llaje, al mover un estudiante del campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.42 ...llaje, al mover un estudiante del campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42 ...llaje, al mover un estudiante del campus.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42 ...llaje, al mover un estudiante del campus.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.44 ...strillaje, al mover un hippie del campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Undefined control sequence.
 <recently read> \Â
                   
 l.44 ...strillaje, al mover un hippie del campus.}
                                                   
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.44 ...strillaje, al mover un hippie del campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.44 ...strillaje, al mover un hippie del campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.44 ...strillaje, al mover un hippie del campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.44 ...strillaje, al mover un hippie del campus.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: \mathcal allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.44 ...strillaje, al mover un hippie del campus.}
+                                                  
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.44 ...strillaje, al mover un hippie del campus.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 
 LaTeX Warning: Reference `LastPage' on page 10 undefined on input line 46.
 
@@ -806,25 +1030,34 @@ LaTeX Warning: Reference `LastPage' on page 10 undefined on input line 46.
                 $
 l.46 ...strillaje, al mover un agente del campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Undefined control sequence.
 <recently read> \Â
                   
 l.46 ...strillaje, al mover un agente del campus.}
                                                   
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.46 ...strillaje, al mover un agente del campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 
 Underfull \hbox (badness 10000) in paragraph at lines 46--46
-[]\OT1/cmss/bx/n/10 Pre $\OMS/cmsy/m/n/10 $  f $\OML/cmm/m/it/10 r \OT1/cmr/m/
-n/10 =$r$[]$ $\OMS/cmsy/m/n/10 ^$ \OT1/cmr/m/n/10 a $\OMS/cmsy/m/n/10 2$ \OT1/c
-mr/m/n/10 agen-tes(r) $\OMS/cmsy/m/n/10 ^[]$ \OT1/cmr/m/n/10 can-tSan-cio-nes(a
-,r) $\OMS/cmsy/m/n/10 $ \OT1/cmr/m/n/10 3 $\OMS/cmsy/m/n/10 ^$
+[]\OT1/cmss/bx/n/10 Pre $\OMS/cmsy/m/n/10 ^^Q$  f $\OML/cmm/m/it/10 r \OT1/cmr/
+m/n/10 =$r$[]$ $\OMS/cmsy/m/n/10 ^$ \OT1/cmr/m/n/10 a $\OMS/cmsy/m/n/10 2$ \OT1
+/cmr/m/n/10 agen-tes(r) $\OMS/cmsy/m/n/10 ^[]$ \OT1/cmr/m/n/10 can-tSan-cio-nes
+(a,r) $\OMS/cmsy/m/n/10 ^^T$ \OT1/cmr/m/n/10 3 $\OMS/cmsy/m/n/10 ^$
  []
 
 ! Missing $ inserted.
@@ -832,25 +1065,97 @@ mr/m/n/10 agen-tes(r) $\OMS/cmsy/m/n/10 ^[]$ \OT1/cmr/m/n/10 can-tSan-cio-nes(a
                 $
 l.46 ...strillaje, al mover un agente del campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.46 ...strillaje, al mover un agente del campus.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.46 ...strillaje, al mover un agente del campus.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: \mathcal allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.46 ...strillaje, al mover un agente del campus.}
+                                                  
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: \mathcal allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.46 ...strillaje, al mover un agente del campus.}
+                                                  
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.46 ...strillaje, al mover un agente del campus.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: \mathcal allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.50 ...mientras no haya sanciones, \Ode{log Na}.}
+                                                  
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: \mathcal allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.50 ...mientras no haya sanciones, \Ode{log Na}.}
+                                                  
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.52 ...con la misma cantidad de sanciones que a.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.52 ...con la misma cantidad de sanciones que a.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 
 LaTeX Warning: Reference `LastPage' on page 11 undefined on input line 65.
 
@@ -859,320 +1164,336 @@ LaTeX Warning: Reference `LastPage' on page 11 undefined on input line 65.
 LaTeX Warning: Reference `LastPage' on page 12 undefined on input line 76.
 
 [12]
-
-LaTeX Warning: Reference `LastPage' on page 13 undefined on input line 103.
-
-[13]
-! Undefined control sequence.
-<argument> \longitud 
-                     {n_{m}}
-l.148 ...icion} \Comment{$\Ode{\longitud{n_{m}}}$}
-                                                  
-? 
-
-LaTeX Warning: Reference `LastPage' on page 14 undefined on input line 214.
-
-[14]
-! Argument of \paramIn has an extra }.
+! Argument of \IF has an extra }.
 <inserted text> 
                 \par 
-l.218 ...\paramIn{p}{posicion} \paramIn{h:nombre}}
-                                                  {} \Comment{$\Ode{\vert Nm...
+l.95 ...wedge$ ag $\in$ e.buscoEnLog[i].grupoK)) }
+                                                  
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
 
-? 
 Runaway argument?
-! Paragraph ended before \paramIn was complete.
+ $\Pi _{4}$(e.quienOcupa[i][j])=itvacio ~\LFI 
+! Paragraph ended before \IF was complete.
 <to be read again> 
                    \par 
-l.218 ...\paramIn{p}{posicion} \paramIn{h:nombre}}
-                                                  {} \Comment{$\Ode{\vert Nm...
-
-? 
-! Undefined control sequence.
-l.272 ...te definir(e.posCiviles, s, prx) \COmment
-                                                  {$\Ode{\vert Nm \vert}$}
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@b@2@EndFunction@0 
-l.329 \EndFunction
-                  
-? 
-
-! Package algorithmicx Error: Some blocks are not closed!!!.
-
-See the algorithmicx package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
+l.95 ...wedge$ ag $\in$ e.buscoEnLog[i].grupoK)) }
                                                   
-l.330 \end{algorithmic}
-                       
-? 
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
 
-LaTeX Warning: Reference `LastPage' on page 15 undefined on input line 332.
+
+LaTeX Warning: Reference `LastPage' on page 13 undefined on input line 99.
+
+[13]
+
+LaTeX Warning: Reference `LastPage' on page 14 undefined on input line 105.
+
+[14]
+
+LaTeX Warning: Reference `LastPage' on page 15 undefined on input line 216.
 
 [15]
-Overfull \vbox (163.86412pt too high) has occurred while \output is active []
 
-
-
-LaTeX Warning: Reference `LastPage' on page 16 undefined on input line 332.
+LaTeX Warning: Reference `LastPage' on page 16 undefined on input line 289.
 
 [16]
-! Missing \endcsname inserted.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.335 \Function
-                {\textsc{$i$moverAgente}}{\paramInOut{r}{rastr} \paramIn{a}{...
-
-? 
-! Extra \endcsname.
-\ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
-                                                  \relax \def \ALG@thisblock...
-l.335 \Function
-                {\textsc{$i$moverAgente}}{\paramInOut{r}{rastr} \paramIn{a}{...
-
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.368 \end{algorithmic}
-                       
-? 
-! Missing = inserted for \ifnum.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.368 \end{algorithmic}
-                       
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.368 \end{algorithmic}
-                       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 398--399
-[] \OT1/cmr/m/n/10 var da-tos-HoE dat $\OMS/cmsy/m/n/10  $ $\OML/cmm/m/it/10 <$
-\OT1/cmr/m/n/10 Siguiente(e.quienOcupa$[]$ $[]$.hayHoE).ID, Siguiente(e.quienOc
-upa$[]$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 409--410
-[] \OT1/cmr/m/n/10 var da-tos-HoE dat $\OMS/cmsy/m/n/10  $ $\OML/cmm/m/it/10 <$
-\OT1/cmr/m/n/10 Siguiente(e.quienOcupa$[]$ $[]$.hayHoE).ID, Siguiente(e.quienOc
-upa$[]$
- []
-
-
-LaTeX Warning: Reference `LastPage' on page 17 undefined on input line 416.
-
-[17]
-! Undefined control sequence.
-l.428    		\EndIF
-                 
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@b@2@EndWhile@0 
-l.430    	\EndWhile
-                   
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@b@2@EndFunction@0 
-l.432 \EndFunction
-                  
-? 
-
-! Package algorithmicx Error: Some blocks are not closed!!!.
-
-See the algorithmicx package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.433 \end{algorithmic}
-                       
-? 
-! Missing \endcsname inserted.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.438 \Function
-                {\textsc{$i$Hippizar}}{\paramInOut{r}{rastr} \paramIn{p}{pos...
-
-? 
-! Extra \endcsname.
-\ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
-                                                  \relax \def \ALG@thisblock...
-l.438 \Function
-                {\textsc{$i$Hippizar}}{\paramInOut{r}{rastr} \paramIn{p}{pos...
-
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.448 \end{algorithmic}
-                       
-? 
-! Missing = inserted for \ifnum.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.448 \end{algorithmic}
-                       
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.448 \end{algorithmic}
-                       
-? 
-! Undefined control sequence.
-<recently read> \disFlechas 
-                            
-l.472 ...\paramIn{p}{conj(posicion)}}{$\disFlechas
-                                                  $ res:bool} \Comment{$\Ode...
-
-? 
-
-LaTeX Warning: Reference `LastPage' on page 18 undefined on input line 484.
-
-[18]
-! Missing \endcsname inserted.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.557 \Function
-               
-? 
-! Extra \endcsname.
-\ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
-                                                  \relax \def \ALG@thisblock...
-l.557 \Function
-               
-? 
-
-! LaTeX Error: Lonely \item--perhaps a missing list environment.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.557 \Function
-               
-? 
-
-Underfull \hbox (badness 10000) detected at line 557
-[][]
- []
-
-
-LaTeX Warning: Reference `LastPage' on page 19 undefined on input line 557.
-
-[19]
 Overfull \vbox (91.86412pt too high) has occurred while \output is active []
 
 
 
-LaTeX Warning: Reference `LastPage' on page 20 undefined on input line 557.
+LaTeX Warning: Reference `LastPage' on page 17 undefined on input line 289.
 
-[20]
+[17]
+! Argument of \paramIn has an extra }.
+<inserted text> 
+                \par 
+l.292 ...\paramIn{p}{posicion} \paramIn{h:nombre}}
+                                                  {} \Comment{$\Ode{\vert Nm...
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
 Runaway argument?
-{
-! Paragraph ended before \text@command was complete.
+! Paragraph ended before \paramIn was complete.
 <to be read again> 
                    \par 
-l.559 
-      
-? 
-! Extra }, or forgotten \endgroup.
-<recently read> \egroup 
-                        
-l.559 
-      
-? 
+l.292 ...\paramIn{p}{posicion} \paramIn{h:nombre}}
+                                                  {} \Comment{$\Ode{\vert Nm...
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+! Undefined control sequence.
+l.346 ...te definir(e.posCiviles, s, prx) \COmment
+                                                  {$\Ode{\vert Nm \vert}$}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \ALG@b@2@EndFunction@0 
+l.403 \EndFunction
+                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+
+! Package algorithmicx Error: Some blocks are not closed!!!.
+
+See the algorithmicx package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.404 \end{algorithmic}
+                       
+This error message was generated by an \errmessage
+command, so I can't give any explicit help.
+Pretend that you're Hercule Poirot: Examine all clues,
+and deduce the truth by order and method.
+
+
+LaTeX Warning: Reference `LastPage' on page 18 undefined on input line 406.
+
+[18]
+Overfull \vbox (163.86412pt too high) has occurred while \output is active []
+
+
+
+LaTeX Warning: Reference `LastPage' on page 19 undefined on input line 406.
+
+[19]
 ! Missing \endcsname inserted.
 <to be read again> 
                    \ALG@currentblock@0 
-l.563 \Function
-               {\textsc{$i$Recompensar}}{\paramInOut{r}{rastr}, \paramIn{a}{...
+l.409 \Function
+                {\textsc{$i$moverAgente}}{\paramInOut{e}{estr} \paramIn{a}{a...
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
 
-? 
 ! Extra \endcsname.
 \ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
                                                   \relax \def \ALG@thisblock...
-l.563 \Function
-               {\textsc{$i$Recompensar}}{\paramInOut{r}{rastr}, \paramIn{a}{...
+l.409 \Function
+                {\textsc{$i$moverAgente}}{\paramInOut{e}{estr} \paramIn{a}{a...
+I'm ignoring this, since I wasn't doing a \csname.
 
-? 
 ! Missing number, treated as zero.
 <to be read again> 
                    \ALG@currentblock@0 
-l.578 \end{algorithmic}
+l.442 \end{algorithmic}
                        
-? 
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
 ! Missing = inserted for \ifnum.
 <to be read again> 
                    \ALG@currentblock@0 
-l.578 \end{algorithmic}
+l.442 \end{algorithmic}
                        
-? 
+I was expecting to see `<', `=', or `>'. Didn't.
+
 ! Missing number, treated as zero.
 <to be read again> 
                    \ALG@currentblock@0 
-l.578 \end{algorithmic}
+l.442 \end{algorithmic}
                        
-? 
-! Undefined control sequence.
-<argument> \longitud 
-                     {N_{e}}
-l.604 ...re}}{} \Comment{$\Ode{\longitud{N_{e}}}$}
-                                                  
-? 
-! Undefined control sequence.
-<argument> \longitud 
-                     {N_{e}}
-l.635 ...e(it)} \Comment{$\Ode{\longitud{N_{e}}}$}
-                                                  
-? 
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
 
-LaTeX Warning: Reference `LastPage' on page 21 undefined on input line 646.
+
+LaTeX Warning: Reference `LastPage' on page 20 undefined on input line 487.
+
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 517--518
+[] \OT1/cmr/m/n/10 var da-tos-HoE dat $\OMS/cmsy/m/n/10  $ $\OML/cmm/m/it/10 <$
+\OT1/cmr/m/n/10 Siguiente(e.quienOcupa$[]$ $[]$.hayHoE).ID, Siguiente(e.quienOc
+upa$[]$
+ []
+
+
+LaTeX Warning: Reference `LastPage' on page 21 undefined on input line 524.
 
 [21]
-! Undefined control sequence.
-<argument> \longitud 
-                     {N_{h}}
-l.649 ...ca}}{} \Comment{$\Ode{\longitud{N_{h}}}$}
-                                                  
-? 
-! Undefined control sequence.
-<argument> \longitud 
-                     {N_{h}}
-l.680 ...e(it)} \Comment{$\Ode{\longitud{N_{h}}}$}
-                                                  
-? 
+Underfull \hbox (badness 10000) in paragraph at lines 528--529
+[] \OT1/cmr/m/n/10 var da-tos-HoE dat $\OMS/cmsy/m/n/10  $ $\OML/cmm/m/it/10 <$
+\OT1/cmr/m/n/10 Siguiente(e.quienOcupa$[]$ $[]$.hayHoE).ID, Siguiente(e.quienOc
+upa$[]$
+ []
 
-LaTeX Warning: Reference `LastPage' on page 22 undefined on input line 691.
+! Undefined control sequence.
+l.547    		\EndIF
+                 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \ALG@b@2@EndWhile@0 
+l.549    	\EndWhile
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \ALG@b@2@EndFunction@0 
+l.551 \EndFunction
+                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+
+! Package algorithmicx Error: Some blocks are not closed!!!.
+
+See the algorithmicx package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.552 \end{algorithmic}
+                       
+(That was another \errmessage.)
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \ALG@currentblock@0 
+l.557 \Function
+                {\textsc{$i$esHippizable}}{\paramInOut{e}{estr} \paramIn{p}{...
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Extra \endcsname.
+\ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
+                                                  \relax \def \ALG@thisblock...
+l.557 \Function
+                {\textsc{$i$esHippizable}}{\paramInOut{e}{estr} \paramIn{p}{...
+I'm ignoring this, since I wasn't doing a \csname.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \ALG@currentblock@0 
+l.567 \end{algorithmic}
+                       
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Missing = inserted for \ifnum.
+<to be read again> 
+                   \ALG@currentblock@0 
+l.567 \end{algorithmic}
+                       
+I was expecting to see `<', `=', or `>'. Didn't.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \ALG@currentblock@0 
+l.567 \end{algorithmic}
+                       
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+
+LaTeX Warning: Reference `LastPage' on page 22 undefined on input line 587.
 
 [22]
+! Undefined control sequence.
+<recently read> \disFlechas 
+                            
+l.591 ...\paramIn{p}{conj(posicion)}}{$\disFlechas
+                                                  $ res:bool} \Comment{$\Ode...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-LaTeX Warning: Reference `LastPage' on page 23 undefined on input line 720.
+! Undefined control sequence.
+<argument> \longitud 
+                     {N_{e}}
+l.675 ...e(it)} \Comment{$\Ode{\longitud{N_{e}}}$}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `LastPage' on page 23 undefined on input line 686.
 
 [23]
+! Undefined control sequence.
+<argument> \longitud 
+                     {N_{h}}
+l.720 ...e(it)} \Comment{$\Ode{\longitud{N_{h}}}$}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `LastPage' on page 24 undefined on input line 731.
+
+[24]
+
+LaTeX Warning: Reference `LastPage' on page 25 undefined on input line 760.
+
+[25]
 ! Misplaced alignment tab character &.
-l.726 ...ino.y$==$e.campus.alto) $\vee$(p.Y$==$0 &
+l.766 ...ino.y$==$e.campus.alto) $\vee$(p.Y$==$0 &
                                                   & destino.y$==-$1) \Commen...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
 
-? 
 ! Misplaced alignment tab character &.
-l.726 ...no.y$==$e.campus.alto) $\vee$(p.Y$==$0 &&
+l.766 ...no.y$==$e.campus.alto) $\vee$(p.Y$==$0 &&
                                                    destino.y$==-$1) \Comment...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
 
-? 
 )
 
-LaTeX Warning: Reference `LastPage' on page 24 undefined on input line 43.
+LaTeX Warning: Reference `LastPage' on page 26 undefined on input line 47.
 
-[24] (C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\ModuloDiccString.tex
+[26]
+
+LaTeX Warning: Reference `LastPage' on page 27 undefined on input line 47.
+
+[27]
+\openout2 = `ModuloDiccString.aux'.
+
+ (./ModuloDiccString.tex
 
 LaTeX Font Warning: Font shape `OT1/cmr/bx/sc' undefined
 (Font)              using `OT1/cmr/bx/n' instead on input line 16.
@@ -1180,15 +1501,9 @@ LaTeX Font Warning: Font shape `OT1/cmr/bx/sc' undefined
 LaTeX Font Info:    Font shape `OMS/cmr/bx/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/b/n' tried instead on input line 16.
 
-LaTeX Font Warning: Font shape `OT1/cmss/bx/sc' undefined
-(Font)              using `OT1/cmss/bx/n' instead on input line 26.
+LaTeX Warning: Reference `LastPage' on page 28 undefined on input line 34.
 
-LaTeX Font Info:    Font shape `OMS/cmr/m/sc' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
-
-LaTeX Warning: Reference `LastPage' on page 25 undefined on input line 34.
-
-[25
+[28
 
 
 ]
@@ -1197,99 +1512,132 @@ LaTeX Warning: Reference `LastPage' on page 25 undefined on input line 34.
                 $
 l.36 ...ave.}{Elimina la clave k del diccionario.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.36 ...ave.}{Elimina la clave k del diccionario.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.36 ...ave.}{Elimina la clave k del diccionario.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.36 ...ave.}{Elimina la clave k del diccionario.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.50 ...nza a la posicion siguiente del iterador.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.50 ...nza a la posicion siguiente del iterador.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-LaTeX Warning: Reference `LastPage' on page 26 undefined on input line 60.
 
-[26]
+LaTeX Warning: Reference `LastPage' on page 29 undefined on input line 60.
+
+[29]
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.86 \\\hspace*{3.75em}}
                         
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.86 \\\hspace*{3.75em}}
                         
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.86 \\\hspace*{3.75em}}
                         
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.86 \\\hspace*{3.75em}}
                         
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.86 \\\hspace*{3.75em}}
                         
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.86 \\\hspace*{3.75em}}
                         
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.86 \\\hspace*{3.75em}}
                         
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Extra }, or forgotten $.
 \disRep ...rgen }Rep({\emph {#2}}) $\equiv $ ({#3}
                                                   )\par 
 l.86 \\\hspace*{3.75em}}
                         
-? 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.86 \\\hspace*{3.75em}}
                         
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-LaTeX Warning: Reference `LastPage' on page 27 undefined on input line 98.
 
-[27]
+LaTeX Warning: Reference `LastPage' on page 30 undefined on input line 98.
+
+[30]
 
 ! LaTeX Error: \mathcal allowed only in math mode.
 
@@ -1299,7 +1647,9 @@ Type  H <return>  for immediate help.
                                                   
 l.110 ... letras[i] $\gets$ NULL \Comment{\Ode{1}}
                                                   
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 
 ! LaTeX Error: \mathcal allowed only in math mode.
 
@@ -1309,7 +1659,9 @@ Type  H <return>  for immediate help.
                                                   
 l.157 ... caracteres[ord(k[i])]) \Comment{\Ode{1}}
                                                   
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 
 ! Package algorithmicx Error: Some blocks are not closed!!!.
 
@@ -1319,69 +1671,90 @@ Type  H <return>  for immediate help.
                                                   
 l.166 \end{algorithmic}
                        
-? 
+(That was another \errmessage.)
+
 ! Missing \endcsname inserted.
 <to be read again> 
                    \ALG@currentblock@0 
 l.172 \Function
                 {\textsc{iDefinido?}}{\paramIn{d}{estr}, \paramIn{k}{string}...
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
 
-? 
 ! Extra \endcsname.
 \ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
                                                   \relax \def \ALG@thisblock...
 l.172 \Function
                 {\textsc{iDefinido?}}{\paramIn{d}{estr}, \paramIn{k}{string}...
+I'm ignoring this, since I wasn't doing a \csname.
 
-? 
 ! Missing number, treated as zero.
 <to be read again> 
                    \ALG@currentblock@0 
 l.187 \end{algorithmic}
                        
-? 
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
 ! Missing = inserted for \ifnum.
 <to be read again> 
                    \ALG@currentblock@0 
 l.187 \end{algorithmic}
                        
-? 
+I was expecting to see `<', `=', or `>'. Didn't.
+
 ! Missing number, treated as zero.
 <to be read again> 
                    \ALG@currentblock@0 
 l.187 \end{algorithmic}
                        
-? 
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
 
-LaTeX Warning: Reference `LastPage' on page 28 undefined on input line 189.
 
-[28]
+LaTeX Warning: Reference `LastPage' on page 31 undefined on input line 189.
 
-LaTeX Warning: Reference `LastPage' on page 29 undefined on input line 190.
+[31]
 
-[29])
+LaTeX Warning: Reference `LastPage' on page 32 undefined on input line 190.
 
-LaTeX Warning: Reference `LastPage' on page 30 undefined on input line 44.
+[32])
 
-[30] (C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\ModuloDiccProm.tex
+LaTeX Warning: Reference `LastPage' on page 33 undefined on input line 48.
+
+[33]
+\openout2 = `ModuloDiccProm.aux'.
+
+ (./ModuloDiccProm.tex
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.25 ...l conjunto con las claves definidas en d.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Extra }, or forgotten $.
 <recently read> \egroup 
                         
 l.25 ...l conjunto con las claves definidas en d.}
                                                   
-? 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.25 ...l conjunto con las claves definidas en d.}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 
 LaTeX Font Warning: Font shape `OT1/cmss/bx/it' undefined
 (Font)              using `OT1/cmss/bx/n' instead on input line 25.
@@ -1389,9 +1762,9 @@ LaTeX Font Warning: Font shape `OT1/cmss/bx/it' undefined
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 25.
 
-LaTeX Warning: Reference `LastPage' on page 31 undefined on input line 39.
+LaTeX Warning: Reference `LastPage' on page 34 undefined on input line 39.
 
-[31
+[34
 
 
 ]
@@ -1400,51 +1773,64 @@ LaTeX Warning: Reference `LastPage' on page 31 undefined on input line 39.
                 $
 l.68 }
       
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.68 }
       
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.68 }
       
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.68 }
       
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 
 Overfull \hbox (14.99998pt too wide) in paragraph at lines 73--73
-[]| \OT1/cmr/m/it/10 estaEn?(l,k)| $\OMS/cmsy/m/n/10 $| [] 
+[]| \OT1/cmr/m/it/10 estaEn?(l,k)| $\OMS/cmsy/m/n/10 ^^Q$| [] 
  []
 
 
-LaTeX Warning: Reference `LastPage' on page 32 undefined on input line 87.
+LaTeX Warning: Reference `LastPage' on page 35 undefined on input line 87.
 
-[32]
+[35]
 ! Misplaced alignment tab character &.
 l.122     \State res $\gets$ &
                               siguiente(it).significado
-? 
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
 
-LaTeX Warning: Reference `LastPage' on page 33 undefined on input line 163.
 
-[33])
+LaTeX Warning: Reference `LastPage' on page 36 undefined on input line 163.
 
-LaTeX Warning: Reference `LastPage' on page 34 undefined on input line 45.
+[36])
 
-[34] (C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\informe.aux
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\caratula.aux)
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\ModuloCampus.aux)
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\ModuloRastrillaje.aux)
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\ModuloDiccString.aux)
-(C:\Users\Tapon\Documents\GitHub\Tps-Algo2\LatexTP2\ModuloDiccProm.aux))
+LaTeX Warning: Reference `LastPage' on page 37 undefined on input line 49.
+
+[37] (./informe.aux (./caratula.aux)
+LaTeX Info: Redefining \. on input line 7.
+LaTeX Info: Redefining \% on input line 7.
+ (./ModuloCampus.aux)
+(./ModuloRastrillaje.aux) (./ModuloDiccString.aux) (./ModuloDiccProm.aux))
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -1456,40 +1842,41 @@ LaTeX Warning: There were undefined references.
 
 ### simple group (level 4) entered at line 25 ({)
 ### simple group (level 3) entered at line 86 ({)
-### semi simple group (level 2) entered at line 88 (\begingroup)
-### semi simple group (level 1) entered at line 71 (\begingroup)
+### semi simple group (level 2) entered at line 91 (\begingroup)
+### semi simple group (level 1) entered at line 67 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 4789 strings out of 493921
- 66444 string characters out of 3144876
- 158255 words of memory out of 3000000
- 7943 multiletter control sequences out of 15000+200000
- 11627 words of font info for 44 fonts, out of 3000000 for 9000
- 841 hyphenation exceptions out of 8191
- 34i,16n,43p,979b,752s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmbsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmbx10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-bxti10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-csc10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cme
-x10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi1
-0.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.
-pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb
-><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C
-:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/P
-rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Progr
-am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program F
-iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files
- (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Program Files (
-x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Program Files (
-x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x8
-6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files (x86)/M
-iKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on informe.pdf (34 pages, 697089 bytes).
+ 5222 strings out of 493304
+ 71223 string characters out of 6139871
+ 172058 words of memory out of 5000000
+ 8515 multiletter control sequences out of 15000+600000
+ 11627 words of font info for 44 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 38i,16n,43p,1576b,725s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mbsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on informe.pdf (37 pages, 678181 bytes).
 PDF statistics:
- 193 PDF objects out of 1000 (max. 8388607)
+ 212 PDF objects out of 1000 (max. 8388607)
+ 148 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

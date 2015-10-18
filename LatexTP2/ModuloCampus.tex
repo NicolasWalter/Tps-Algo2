@@ -17,9 +17,7 @@
 
 \disOperaciones{b\'asicas de Campus}
 
-\disDeclaraFuncion{CrearCampus}{\paramIn{c}{nat}, \paramIn{f}{nat}}{res : campus}{true}{res $\igobs$ crearCampus(c,f)}{\Ode{1}}{Crea un campus de c columnas y f filas.}
-
-
+\disDeclaraFuncion{CrearCampus}{\paramIn{c}{nat}, \paramIn{f}{nat}}{res : campus}{true}{res $\igobs$ crearCampus(c,f)}{\Ode{$f^{2}*c^{2}$}}{Crea un campus de c columnas y f filas.}
 
 
 \disDeclaraFuncion{Filas?}{\paramIn{c}{campus}}{res : nat}{true}{res $\igobs$ filas(c)}{\Ode{1}}{Devuelve la cantidad de filas en el campus.}
@@ -36,8 +34,6 @@
 \newpage
  
 \disDeclaraFuncion{Vecinos}{\paramIn{c}{campus}, \paramIn{p}{posicion}}{res : conj(posicion)}{posValida(p,c)}{res $\igobs$ vecinos(p,c)}{\Ode{1}}{Devuelve el conjunto de posiciones vecinas a p.}
-
-\disDeclaraFuncion{VecinosComunes}{\paramIn{c}{campus}, \paramIn{p}{posicion}, \paramIn{p2}{posicion}}{res : conj(posicion)}{posValida(p,c) $\land$ posValida(p2,c)}{res $\igobs$ vecinos(p,c)$\cap$vecinos(p2,c)}{\Ode{1}}{Devuelve el conjunto de vecinos comunes. La complejidad es \Ode{1} dado que los vecinos son a lo sumo 4, o sea, constantes}
 
 \disDeclaraFuncion{VecinosComunes}{\paramIn{c}{campus}, \paramIn{p}{posicion}, \paramIn{p2}{posicion}}{res : conj(posicion)}{posValida(p,c) $\land$ posValida(p2,c)}{res $\igobs$ vecinos(p,c)$\cap$vecinos(p2,c)}{\Ode{1}}{Devuelve el conjunto de vecinos comunes entre dos posiciones. La complejidad es \Ode{1} dado que los vecinos son a lo sumo 4, o sea, constantes.}
 
