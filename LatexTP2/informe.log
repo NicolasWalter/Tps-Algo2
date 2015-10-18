@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.17)  18 OCT 2015 18:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.17)  18 OCT 2015 18:38
 entering extended mode
 **informe.tex
 (informe.tex
@@ -336,7 +336,7 @@ Cargando package 'dis' v0.035 (18/05/2011)
 ) (informe.aux (caratula.aux)
 LaTeX Info: Redefining \. on input line 7.
 LaTeX Info: Redefining \% on input line 7.
- (ModuloRastrillaje.aux))
+ (ModuloRastrillaje.aux) (iteradorExtendido.aux))
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
 LaTeX Font Info:    ... okay on input line 14.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
@@ -1277,7 +1277,7 @@ LaTeX Warning: Reference `LastPage' on page 21 undefined on input line 47.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...ficable si y s\'olo si it es modificable.}
+l.15 ...ente se obtenga el primer elemento de l..}
                                                   
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1285,7 +1285,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.15 ...ficable si y s\'olo si it es modificable.}
+l.15 ...ente se obtenga el primer elemento de l..}
                                                   
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1293,7 +1293,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.17 ...ficable si y s\'olo si it es modificable.}
+l.18 ...o siguiente a la posici\'on del iterador.}
                                                   
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1301,7 +1301,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.17 ...ficable si y s\'olo si it es modificable.}
+l.18 ...o siguiente a la posici\'on del iterador.}
                                                   
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1309,13 +1309,29 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.29 ...tListaE(\alpha)}}{$\disFlecha$ res: \alpha
+l.21 ...o siguiente a la posici\'on del iterador.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.21 ...o siguiente a la posici\'on del iterador.}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.45 ...tListaE(\alpha)}}{$\disFlecha$ res: \alpha
                                                   } \Comment{$\Ode{1}$}
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
-l.29 ...ListaE(\alpha)}}{$\disFlecha$ res: \alpha}
+l.45 ...ListaE(\alpha)}}{$\disFlecha$ res: \alpha}
                                                    \Comment{$\Ode{1}$}
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1330,7 +1346,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.29 ...isFlecha$ res: \alpha} \Comment{$\Ode{1}$}
+l.45 ...isFlecha$ res: \alpha} \Comment{$\Ode{1}$}
                                                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1339,7 +1355,7 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.30 ... $\gets$ $\Pi_{1}$(it.siguiente\rightarrow
+l.46 ... $\gets$ $\Pi_{1}$(it.siguiente\rightarrow
                                                    dato) \Comment{$\Ode{1}$}
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1351,7 +1367,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.30 ...iente\rightarrow dato) \Comment{$\Ode{1}$}
+l.46 ...iente\rightarrow dato) \Comment{$\Ode{1}$}
                                                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1360,7 +1376,7 @@ or  <return>  to continue without it.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.32 \end{algorithmic}
+l.48 \end{algorithmic}
                       
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1371,7 +1387,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.39 ...ts$ $\Pi_{1}$(SiguienteReal(it)\rightarrow
+l.55 ...ts$ $\Pi_{1}$(SiguienteReal(it)\rightarrow
                                                    anterior\rightarrow dato)...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1383,7 +1399,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.39 ...erior\rightarrow dato)	\Comment{$\Ode{1}$}
+l.55 ...erior\rightarrow dato)	\Comment{$\Ode{1}$}
                                                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1409,10 +1425,10 @@ LaTeX Warning: There were undefined references.
 ### semi simple group (level 1) entered at line 94 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 4945 strings out of 493673
- 66763 string characters out of 3141577
- 167392 words of memory out of 3000000
- 8164 multiletter control sequences out of 15000+200000
+ 4948 strings out of 493673
+ 66825 string characters out of 3141577
+ 167803 words of memory out of 3000000
+ 8165 multiletter control sequences out of 15000+200000
  12277 words of font info for 46 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  34i,16n,43p,1576b,408s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1439,7 +1455,7 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX
 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files (x86)/MiKTeX 2.
 9/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Program Files (x86)/MiKTeX
  2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on informe.pdf (22 pages, 681580 bytes).
+Output written on informe.pdf (22 pages, 682466 bytes).
 PDF statistics:
  167 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

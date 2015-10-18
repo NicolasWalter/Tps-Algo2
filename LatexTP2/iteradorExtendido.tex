@@ -12,9 +12,14 @@ Se extiende la interfaz del Iterador sobre Lista dada en el apunte de m\'odulos 
 
 \disOperaciones{b\'asicas del Iterador Extendido}
 
-\disDeclaraFuncion{Siguiente}{\paramIn{it}{itListaE(\alpha)}}{res: \alpha}{HaySiguiente?(it)}{alias(res \igobs $\Pi_{1}$(Siguiente(it)))}{\Ode{1}}{Devuelve el elemento siguiente a la posici\'on del iterador.Res es modificable si y s\'olo si it es modificable.}
+\disDeclaraFuncion{CrearIt}{\paramIn{l}{lista(\alpha)}}{res: itListaE(\alpha)}{true}{alias(res \igobs crearItBi(<>, l) $\wedge$ alias(SecuSuby(it) $=$ l)}{\Ode{1}}{Crea un iterador bidireccional de la lista, de forma tal que al pedir Siguiente se obtenga el primer elemento de l..}
+\disComentAliasing{el iterador se invalida si y s\'olo si se elimina el elemento siguiente del iterador sin utilizar la funci\'on EliminarSiguiente.}
 
-\disDeclaraFuncion{Anterior}{\paramIn{it}{itListaE(\alpha)}}{res: \alpha}{HayAnterior?(it)}{alias(res \igobs $\Pi_{1}$(Anterior(it)))}{\Ode{1}}{Devuelve el elemento siguiente a la posici\'on del iterador. Res es modificable si y s\'olo si it es modificable.}
+\disDeclaraFuncion{Siguiente}{\paramIn{it}{itListaE(\alpha)}}{res: \alpha}{HaySiguiente?(it)}{alias(res \igobs $\Pi_{1}$(Siguiente(it)))}{\Ode{1}}{Devuelve el elemento siguiente a la posici\'on del iterador.}
+\disComentAliasing{Res es modificable si y s\'olo si it es modificable.}
+
+\disDeclaraFuncion{Anterior}{\paramIn{it}{itListaE(\alpha)}}{res: \alpha}{HayAnterior?(it)}{alias(res \igobs $\Pi_{1}$(Anterior(it)))}{\Ode{1}}{Devuelve el elemento siguiente a la posici\'on del iterador.}
+\disComentAliasing{Res es modificable si y s\'olo si it es modificable.}
 
 
 \disAlgoritmos
@@ -23,6 +28,17 @@ Se extiende la interfaz del Iterador sobre Lista dada en el apunte de m\'odulos 
 \floatname{algorithm}{}
 % WARNING: SGA 27/05/2011. La opción [H] indica a LaTex que el algoritmo lo queremos AQUI!
 % Ver 4.4.1 Placement of Algorithms de algorithms.pdf.
+
+
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function {\textsc{$i$CrearItE}}{\paramIn{l}{lista(\alpha)}}{$\disFlecha$ res: itListaE} \Comment{$\Ode{1}$}
+	\State res $\gets$ $<$l.primero, l$>$ \Comment{$\Ode{1}$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+	
 
 \begin{algorithm}[H]
 \begin{algorithmic}[1]
