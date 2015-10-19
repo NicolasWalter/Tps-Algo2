@@ -60,7 +60,7 @@
 \disEstructuraDeRepresentacion
 
 \disSeRepresentaCon{campus}{estr}
-\disDondeEs{estr}{\disTuplaEstr{campus/campo, diccPromedio(agente ; datosAg)/agentes, arreglo(tupla(placa;posicion))/posAgentesLog, conjLineal(datosHoE)/hippies, conjLineal(datosHoE)/estudiantes, diccString(nombre;posicion)/posCiviles, diccLineal(nombre;posicion)/posRapida, vector(vector(datosPos))/quienOcupa, itConj(agente)/masVigilante, lista(datosK))/agregoEn1, bool/hayNuevas, vector(datosK)/buscoEnLog}}
+\disDondeEs{estr}{\disTuplaEstr{campus/campo, diccPromedio(agente ; datosAg)/agentes, arreglo(tupla(placa;posicion))/posAgentesLog, conjLineal(datosHoE)/hippies, conjLineal(datosHoE)/estudiantes, diccString(nombre;posicion)/posCiviles, diccLineal(nombre;posicion)/posRapida, vector(vector(datosPos))/quienOcupa, itConj(agente)/masVigilante, lista(datosK))/agregoEn1, vector(datosK)/buscoEnLog, bool/hayNuevas }}
 
 \disDondeEs{datosAg}{\disTuplaEstr{nat/QSanciones, nat/premios, posicion/posActual, itConj(agente)/grupoSanciones, itLista(datosK)/verK}}
 
@@ -73,7 +73,19 @@
 \disDondeEs{datosK}{\disTuplaEstr{nat/K, conjLineal(agente)/grupoK}}
 
 \disJustificacionDeLaEstructuraElegida
-\newpage
+{Para entender mejor la estructura damos una explicaci\'on:\\
+$campo$ es el campus que utiliza el rastrillaje, este indica las dimensiones de la cuadricula y la ubicacion de los obstaculos;
+$agentes$ es un diccionario que dado un agente(nro de placa) devuelve,en tiempo promedio si las condiciones son las adecuadas,una tupla con sus datos: cuantas veces fue sancionado, cuantos hippies capturo, en que posicion se encuentra actualmente
+, un iterador al conjunto de agentes con sus mismas sanciones, y un iterador a una lista de $datosK$: estas son tuplas compuestas por un numero natural K y un conjunto de agentes que comparten la cantidad de sanciones(k).
+$posAgentesLog$ es un arreglo de tuplas(placa,posicion) ordenadas de menor a mayor placa, haciendo que la busqueda de un elemento en este arreglo sea de complejidad logaritmica.\\
+$hippies$ y $estudiantes$ son conjuntos de $datosHoE$, estos son tuplas (Nombre, posicion). En dichos conjuntos estan incluidos todos los hippies y estudiantes respectivamente.\\
+$posCiviles$ es un diccionario en el que las claves son los nombres de todos los hippies y estudiantes presentes en el rastrillaje y los significados son las posciones actuales de cada clave\\
+$posRapida$ es un diccionario lineal utilizado para calcular en tiempo lineal a donde debe moverse un agente o hippie (hacia el hippie o estudiante mas cercano respectivamente)\\
+$quienOcupa$ es una matriz con las dimensiones del campus, en la que se recopilan las posiciones de todos los civiles, agentes y obstaculos del rastrillaje, indicando así en cada posicion de la matriz quien o que la esta ocupando en caso de no estar libre la posiccion\\
+$masVigilante$ es un interador al conjunto de agentes, que indica cual de todos estos es aquel que participo en la mayor cantidad de capturas, y en caso de haber mas de uno este iterador apunta al agente de menor placa entre estos\\
+$agregoEn1$ es una lista de datosK que es utilzada como rueda de auxilio a la hora de sancionar a un agente para seguir teniendo en orden de cantidad de sanciones a los agentes, para poder asi cumplir con la complejidad pedida en ``conKsanciones"\\
+$hayNuevas$ es un booleano que indica si entre dos usos de la funcion ``conKsanciones" hubo sanciones a algun agente, para asi poder saber si hay que buscar al conjunto de agentes en $buscoEnLog$, siendo así en tiempo logaritmico o si primero debo copiar los datos de $agregoEn1$ en $buscoEnLog$ y luego hacer la busqueda.
+}  
 \disInvarianteDeRepresentacion
 \hspace*{\disSubSubSecMargen}\textbf{\textsf{Informal}}
 
@@ -99,7 +111,7 @@
   \item e.hayNuevas es falsa Sii la longitud de e.buscoEnLog y de e.agregoEn1 y tienen los mismos elementos en el mismo orden
   
 \end{enumerate}
-
+\newpage
 \hspace*{\disSubSubSecMargen}\textbf{\textsf{Formal}}
 \onehalfspace
 \disRep{estr}{e}{$true$ $\Longleftrightarrow$ 
