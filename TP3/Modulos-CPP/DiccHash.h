@@ -22,39 +22,38 @@ class DiccionarioProm{
 		
 		struct TElem{
 			K 	 clave;
-			S 	 signif;
+			S 	 significado;
 
-			TElem(const K& c, const S& v) : clave(c), signif(v) {}
+			TElem(const K& c, const S& v) : clave(c), significado(v) {}
 		};
 
 
-	Arreglo<Lista<TElem> > 	tabla;
-	const Nat fHash(const Nat n) const;
-
+		Arreglo<Lista<TElem> > 	tabla;
+	 	Nat fHash(const Nat n) const;
 };
 
 template<class K, class S>
 DiccionarioProm<K, S>::DiccionarioProm(const Nat n){
- clavesMax=n;
-  cClaves= Conj<K>();
- tabla = Arreglo<Lista<TElem> >(n);
- for(Nat i=0; i<n; i++){
- 	tabla[i]=Lista<TElem>();
- }
+ 	clavesMax = n;
+  	cClaves = Conj<K>();
+ 	tabla = Arreglo<Lista<TElem> >(n);
+ 	for(Nat i=0; i<n; i++){
+ 		tabla.Definir(i,Lista<TElem>());
+ 	}
 }
 
 template<class K, class S>
 DiccionarioProm<K, S>::~DiccionarioProm(){}
 
 template<class K, class S>
-const Nat DiccionarioProm<K, S>::fHash(const Nat n) const{
+ Nat DiccionarioProm<K, S>::fHash(const Nat n) const{
 	return n % clavesMax;
 }
 
 
 template<class K, class S>
 bool DiccionarioProm<K, S>::Definido(const K& clave) const{
-	Nat i = fHash(clave,clavesMax);
+	Nat i = fHash(clave);
 
 	typename Lista<TElem>::const_Iterador it = tabla[i].CrearIt();
 	bool aux=false;
@@ -70,7 +69,7 @@ bool DiccionarioProm<K, S>::Definido(const K& clave) const{
 
 template<class K, class S>
 void DiccionarioProm<K, S>::Definir(const K& clave, const S& significado){
-	Nat i= fHash(clave,clavesMax); //elijo la posicion de la tabla
+	Nat i= fHash(clave); //elijo la posicion de la tabla
 	TElem tupla= TElem(clave,significado); // defino una tupla (clave,significado)
 	tabla[i].AgregarAtras(tupla);		// agrego la tupla en la lista dentro de i
 	cClaves.Agregar(clave);				// agrego la clave al conjunto de claves
@@ -78,29 +77,21 @@ void DiccionarioProm<K, S>::Definir(const K& clave, const S& significado){
 
 template<class K, class S>
 S& DiccionarioProm<K, S>::Obtener(const K& clave){
-	S& res;
-	Nat i= fHash(clave,clavesMax); //elijo la posicion de la tabla
-	typename Lista<TElem>::const_Iterador it = tabla[i].CrearIt();
+	S* res;
+	Nat i= fHash(clave); //elijo la posicion de la tabla
+	typename Lista<TElem>::Iterador it = tabla[i].CrearIt();
 		while(it.HaySiguiente()){
 			if (it.Siguiente().clave==clave){
-				res= it.Siguiente().significado;
+				res = &(it.Siguiente().significado);
 		}
-
 		it.Avanzar();
 	}
-	return res;
+	return *res;
 }
 
 template<class K, class S>
 typename Conj<K>::Iterador DiccionarioProm<K, S>::Claves(){
-	typename Conj<K>::Iterador it=cClaves.CrearIt();
-
+	typename Conj<K>::Iterador it = cClaves.CrearIt();
 }
 
  
-
-int main(int argc, char const *argv[])
-{
-	/* code */
-	return 0;
-}
