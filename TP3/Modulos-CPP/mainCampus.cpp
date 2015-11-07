@@ -2,9 +2,9 @@
 #include <iostream>
 using namespace std;
 
-int main(int argc, char const *argv[])
+int main()
 {
-	//Campus(2,3) nuevo;
-
+	Campus nuevo(2,3);
+	cout << nuevo.Filas() << endl;
 	return 0;
 }

@@ -1,5 +1,4 @@
-#ifndef CAMPUS_H_
-#define	CAMPUS_H_
+
 #include "aed2.h"
 
 	
@@ -7,11 +6,11 @@ class Campus
 {
 	public:
 		Campus(const Nat columnas ,const Nat filas);
-		~Campus();
+		//~Campus();
 		Nat Filas() const;
 		Nat Columnas() const;
-		bool Ocupadas(Posicion pos);
-		// void AgregarObstaculo(Posicion);
+		bool Ocupada(Posicion);
+		void AgregarObstaculo(Posicion pos);
 		// bool PosValida(Posicion);
 		// bool EsIngreso	(Posicion);
 		// Conj<Posicion> Vecinos(Posicion);
@@ -28,7 +27,7 @@ class Campus
 };
 
 
-Campus::Campus(const Nat col,const Nat fil){
+Campus::Campus(const Nat fil,const Nat col){
 	Vector<Vector<bool> > map;
 	Nat i = 0;
 	while (i <= fil){
@@ -54,6 +53,12 @@ Nat Campus::Columnas() const{
 	return columnas;
 }
 
+bool Campus::Ocupada(Posicion pos) const{
+	return true;
+}
+
+void Campus::AgregarObstaculo(Posicion pos){
+	mapa[pos.x-1][pos.y-1] = true;
+}
 
 
-#endif
