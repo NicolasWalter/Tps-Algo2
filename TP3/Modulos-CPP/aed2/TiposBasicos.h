@@ -2,9 +2,9 @@
 #ifndef AED2_TIPOSBASICOS_H_INCLUDED
 #define AED2_TIPOSBASICOS_H_INCLUDED
 
-#include<iostream>
-#include<string>
-#include<cassert>
+#include <iostream>
+#include <string>
+#include <cassert>
 
 #ifndef NULL
 	#define NULL 0

@@ -9,7 +9,6 @@ class DiccionarioProm{
 	public:
 		DiccionarioProm(const Nat n);
 		~DiccionarioProm();
-
 		bool Definido(const K& clave) const;
 		void  Definir(const K& clave, const S& significado);
 		S& 	 Obtener(const K& clave);
