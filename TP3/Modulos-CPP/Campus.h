@@ -9,7 +9,7 @@ class Campus
 		//~Campus();
 		Nat Filas() const;
 		Nat Columnas() const;
-		bool Ocupada(Posicion);
+		bool Ocupada(Posicion) const;
 		void AgregarObstaculo(Posicion pos);
 		// bool PosValida(Posicion);
 		// bool EsIngreso	(Posicion);
