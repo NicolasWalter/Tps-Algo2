@@ -1,12 +1,13 @@
 #include "aed2.h"
 #include "Campus.h"
 #include "DiccHash.h"
-
+using namespace std;
+#include <iostream>
 class Rastrillaje
 {
 public:
 	Rastrillaje(Campus c, Dicc<Agente, Posicion> d); //ComenzarRastrillaje
-	~Rastrillaje();
+	//~Rastrillaje();
 	 Campus ObsCampus() const; // el nombre "Campus()" tira error, debe ser porque es el constructor de la clase campus.
 	 Conj<Nombre> Estudiantes() const; // tengo dudas con estos const, creo que esta bien. (no modifica this)
 	 Conj<Nombre> Hippies() const;
@@ -87,3 +88,7 @@ private:
 	Vector<datosK> buscoEnLog;
 	bool hayNuevas;
 };
+
+Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
+
+}

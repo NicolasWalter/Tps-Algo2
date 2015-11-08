@@ -7,6 +7,7 @@ template<class K, class S>
 
 class DiccionarioProm{
 	public:
+		DiccionarioProm();
 		DiccionarioProm(const Nat n);
 		~DiccionarioProm();
 		bool Definido(const K& clave) const;
@@ -30,6 +31,13 @@ class DiccionarioProm{
 		Arreglo<Lista<TElem> > 	tabla;
 	 	Nat fHash(const Nat n) const;
 };
+
+template<class K, class S>
+DiccionarioProm<K, S>::DiccionarioProm(){
+	clavesMax=0;
+	cClaves = Conj<K>();
+tabla = Arreglo<Lista<TElem> >();
+}
 
 template<class K, class S>
 DiccionarioProm<K, S>::DiccionarioProm(const Nat n){

@@ -5,6 +5,7 @@
 class Campus
 {
 	public:
+		Campus();
 		Campus(const Nat columnas ,const Nat filas);
 		//~Campus();
 		Nat Filas() const;
@@ -26,6 +27,11 @@ class Campus
 		
 };
 
+Campus::Campus(){
+ filas=0;
+ columnas=0;
+ mapa=(Vector<Vector<bool> > ());
+}
 
 Campus::Campus(const Nat fil,const Nat col){
 	Vector<Vector<bool> > map;
