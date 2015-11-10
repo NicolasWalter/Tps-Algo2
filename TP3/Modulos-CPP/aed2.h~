@@ -21,6 +21,7 @@
 #include "aed2/Tipos.h"
 #include "DiccStringN.h"
 #include "DiccHash.h"
+
 using namespace aed2;
 
 #endif //AED2_INCLUDED_H

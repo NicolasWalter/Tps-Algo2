@@ -1,5 +1,4 @@
 #include "aed2.h"
-//using namespace aed2;
 using namespace std;
 #include <iostream>
 
@@ -14,7 +13,6 @@ class DiccionarioProm{
 		void  Definir(const K& clave, const S& significado);
 		S& 	 Obtener(const K& clave);
 		typename Conj<K>::Iterador Claves();
-	
 
 	private:
 		Nat clavesMax;
@@ -23,11 +21,8 @@ class DiccionarioProm{
 		struct TElem{
 			K 	 clave;
 			S 	 significado;
-
 			TElem(const K& c, const S& v) : clave(c), significado(v) {}
 		};
-
-
 		Arreglo<Lista<TElem> > 	tabla;
 	 	Nat fHash(const Nat n) const;
 };
@@ -57,18 +52,15 @@ template<class K, class S>
 	return n % clavesMax;
 }
 
-
 template<class K, class S>
 bool DiccionarioProm<K, S>::Definido(const K& clave) const{
 	Nat i = fHash(clave);
-
 	typename Lista<TElem>::const_Iterador it = tabla[i].CrearIt();
 	bool aux=false;
 	while(it.HaySiguiente()){
 		if (it.Siguiente().clave==clave){
 			aux=true;
 		}
-
 		it.Avanzar();
 	}
 	return aux;
@@ -76,16 +68,16 @@ bool DiccionarioProm<K, S>::Definido(const K& clave) const{
 
 template<class K, class S>
 void DiccionarioProm<K, S>::Definir(const K& clave, const S& significado){
-	Nat i= fHash(clave); //elijo la posicion de la tabla
-	TElem tupla= TElem(clave,significado); // defino una tupla (clave,significado)
-	tabla[i].AgregarAtras(tupla);		// agrego la tupla en la lista dentro de i
-	cClaves.Agregar(clave);				// agrego la clave al conjunto de claves
+	Nat i= fHash(clave); 					//elijo la posicion de la tabla
+	TElem tupla= TElem(clave,significado); 	// defino una tupla (clave,significado)
+	tabla[i].AgregarAtras(tupla);			// agrego la tupla en la lista dentro de i
+	cClaves.Agregar(clave);					// agrego la clave al conjunto de claves
 }
 
 template<class K, class S>
 S& DiccionarioProm<K, S>::Obtener(const K& clave){
 	S* res;
-	Nat i= fHash(clave); //elijo la posicion de la tabla
+	Nat i= fHash(clave); 					//elijo la posicion de la tabla
 	typename Lista<TElem>::Iterador it = tabla[i].CrearIt();
 		while(it.HaySiguiente()){
 			if (it.Siguiente().clave==clave){
@@ -100,5 +92,3 @@ template<class K, class S>
 typename Conj<K>::Iterador DiccionarioProm<K, S>::Claves(){
 	typename Conj<K>::Iterador it = cClaves.CrearIt();
 }
-
- 

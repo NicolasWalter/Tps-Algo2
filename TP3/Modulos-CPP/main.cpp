@@ -1,6 +1,6 @@
-#include "DiccHash.h"
 #include <iostream>
 using namespace std;
+#include "aed2.h"
 
 int main(int argc, char const *argv[])
 {
