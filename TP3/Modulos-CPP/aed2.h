@@ -19,6 +19,8 @@
 #include "aed2/Conj.h"
 #include "aed2/ConjAcotado.h"
 #include "aed2/Tipos.h"
+#include "DiccStringN.h"
+#include "DiccHash.h"
 
 using namespace aed2;
 
