@@ -30,8 +30,7 @@ class DiccionarioProm{
 template<class K, class S>
 DiccionarioProm<K, S>::DiccionarioProm(){
 	clavesMax=0;
-	cClaves = Conj<K>();
-tabla = Arreglo<Lista<TElem> >();
+	tabla = Arreglo<Lista<TElem> >();
 }
 
 template<class K, class S>
@@ -68,10 +67,10 @@ bool DiccionarioProm<K, S>::Definido(const K& clave) const{
 
 template<class K, class S>
 void DiccionarioProm<K, S>::Definir(const K& clave, const S& significado){
+	cClaves.Agregar(clave);					// agrego la clave al conjunto de claves
 	Nat i= fHash(clave); 					//elijo la posicion de la tabla
 	TElem tupla= TElem(clave,significado); 	// defino una tupla (clave,significado)
 	tabla[i].AgregarAtras(tupla);			// agrego la tupla en la lista dentro de i
-	cClaves.Agregar(clave);					// agrego la clave al conjunto de claves
 }
 
 template<class K, class S>
@@ -91,4 +90,5 @@ S& DiccionarioProm<K, S>::Obtener(const K& clave){
 template<class K, class S>
 typename Conj<K>::Iterador DiccionarioProm<K, S>::Claves(){
 	typename Conj<K>::Iterador it = cClaves.CrearIt();
+	return it;
 }

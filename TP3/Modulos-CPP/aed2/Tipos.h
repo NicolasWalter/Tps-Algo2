@@ -15,9 +15,16 @@ namespace aed2{
 			return (p1.x==x) && (p1.y==y);
 		}
 		
-		//bool operator!=(const Posicion& p1, const Posicion& p2){
-		//	return (p1.x!=p2.x) || (p1.y!=p2.y);
-		//}
+		bool operator!=(const Posicion& p1) const{
+			return !((p1.x==x) && (p1.y==y));
+		}
+
+		Posicion& operator =(const Posicion& p1){
+    		x = p1.x;
+    		y = p1.y;
+    		return *this;
+		}
+
 	};
 
 	typedef enum {izq,der,arriba,abajo} Direccion;
