@@ -18,7 +18,6 @@ class Campus
 		Conj<Posicion> IngresosMasCercanos(Posicion);
 		Nat distancia(Posicion,Posicion) const;
 
-
 	private:
 		Nat filas;
 		Nat columnas;
