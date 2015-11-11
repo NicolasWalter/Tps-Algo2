@@ -9,9 +9,11 @@ namespace aed2{
 		Nat x,y;
 		Posicion(Nat a, Nat b) : x(a), y(b){}
 
-		//bool operator==(const Posicion& p1, const Posicion& p2){
-		//	return (p1.x==p2.x) && (p1.y==p2.y);
-		//}
+		Posicion(const Posicion& p) : x(p.x), y(p.y) {}
+
+		bool operator==(const Posicion& p1) const{
+			return (p1.x==x) && (p1.y==y);
+		}
 		
 		//bool operator!=(const Posicion& p1, const Posicion& p2){
 		//	return (p1.x!=p2.x) || (p1.y!=p2.y);
