@@ -48,6 +48,7 @@ void DiccString<K,S>::mataNodosRecu(Nodo* nodete){
 			}
 			i++;
 		}
+		delete nodete;
 	}
 }
 
