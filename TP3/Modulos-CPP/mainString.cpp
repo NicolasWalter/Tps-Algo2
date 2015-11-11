@@ -10,15 +10,17 @@ using namespace std;
 	 	string wea="ar";
 	 	string qlo="ab";
 	 	string fome="a";
-
-
-	 	a.definir(fome,200);
+		
+		a.definir(fome,200);
 	 	a.definir(wea,12);
 		cout<<(a.obtener(wea))<<endl;
+		cout<<(a.obtener(fome))<<endl;
+		a.obtener(fome) = 13;
 		cout<<(a.obtener(fome))<<endl;
 		cout<<(a.definido(wea))<<endl;
 		a.borrar(wea);
 		cout<<(a.definido(wea))<<endl;
+
 	 	//cout<<*(a.estr->caracteres[97]->caracteres[114]->significado)<<endl;
 
 

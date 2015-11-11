@@ -26,20 +26,42 @@ private:
 
 public:
 	DiccString();
+    ~DiccString();  
     void definir(const K, S);
-    S obtener(const K);
+    S& obtener(const K);
     void borrar(const K&);
     bool definido(const K&);
     bool todosNull(Nodo*[], int);
+    void mataNodosRecu(Nodo*);
+
 
 };
-
-
-	template<class K, class S>
-	DiccString<K,S>::DiccString(){
-		Nodo* nuevo = new Nodo();
-		estr=nuevo;
+template<class K, class S>
+void DiccString<K,S>::mataNodosRecu(Nodo* nodete){
+	if(todosNull(nodete->caracteres,256)){
+		delete nodete;
+	}else{
+		int i=0;
+		while(i<256){
+			if(nodete->caracteres[i]!=NULL){
+				mataNodosRecu(nodete->caracteres[i]);
+			}
+			i++;
+		}
 	}
+}
+
+template<class K, class S>
+DiccString<K,S>::DiccString(){
+	Nodo* nuevo = new Nodo();
+	estr=nuevo;
+}
+
+template<class K, class S>
+DiccString<K,S>::~DiccString(){
+	mataNodosRecu(this->estr);
+
+}
 
 template<class K, class S>
 	void DiccString<K,S>::definir(const K clave, S signif){
@@ -62,7 +84,7 @@ template<class K, class S>
 }
 
 template<class K, class S>
-S DiccString<K,S>::obtener(const K clave){
+S& DiccString<K,S>::obtener(const K clave){
 	Nat i=0;
 	Nodo* actual=estr;
 	while(i<clave.size()){
