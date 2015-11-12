@@ -14,9 +14,9 @@ private:
 		Nodo* caracteres[256];
 		Nodo* padre;
 		bool finPalabra;
-		Nodo () :significado() , padre(NULL) , finPalabra(false) {for(Nat j=0; j< 256;j++){
-			caracteres[j]=NULL;
-		}};
+		Nodo () :significado(Posicion(0,0)) , padre(NULL) , finPalabra(false) {for(Nat j=0; j< 256;j++){
+			caracteres[j]=NULL;}
+		};
 
 
 	};
@@ -94,7 +94,6 @@ S& DiccString<K,S>::obtener(const K clave){
 		i++;
 	}    	
 	return (actual->significado);
-
 }
 
 template<class K, class S>

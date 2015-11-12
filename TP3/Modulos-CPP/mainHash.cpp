@@ -11,10 +11,11 @@ int main(int argc, char const *argv[])
 	d.Definir(4,23);
 	d.Definir(2,12);
 	bool b = d.Definido(7);
-	Conj<Nat>::Iterador it = d.Claves();
+	Conj<Nat>::const_Iterador it = d.Claves();
 	cout<< it.Siguiente() << endl;
 	it.Avanzar();
 	cout<< it.Siguiente() << endl;
+	cout << d.Obtener(10) << endl;
 
 	return 0;
 }

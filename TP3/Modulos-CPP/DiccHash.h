@@ -11,8 +11,8 @@ class DiccionarioProm{
 		~DiccionarioProm();
 		bool Definido(const K& clave) const;
 		void  Definir(const K& clave, const S& significado);
-		S& 	 Obtener(const K& clave);
-		typename Conj<K>::Iterador Claves();
+		S& Obtener(const K& clave);
+		typename Conj<K>::const_Iterador Claves() const;
 
 	private:
 		Nat clavesMax;
@@ -75,20 +75,18 @@ void DiccionarioProm<K, S>::Definir(const K& clave, const S& significado){
 
 template<class K, class S>
 S& DiccionarioProm<K, S>::Obtener(const K& clave){
-	S* res;
 	Nat i= fHash(clave); 					//elijo la posicion de la tabla
 	typename Lista<TElem>::Iterador it = tabla[i].CrearIt();
 		while(it.HaySiguiente()){
 			if (it.Siguiente().clave==clave){
-				res = &(it.Siguiente().significado);
+				return (it.Siguiente().significado);
 		}
 		it.Avanzar();
 	}
-	return *res;
 }
 
 template<class K, class S>
-typename Conj<K>::Iterador DiccionarioProm<K, S>::Claves(){
-	typename Conj<K>::Iterador it = cClaves.CrearIt();
+typename Conj<K>::const_Iterador DiccionarioProm<K, S>::Claves() const{
+	typename Conj<K>::const_Iterador it = cClaves.CrearIt();
 	return it;
 }
