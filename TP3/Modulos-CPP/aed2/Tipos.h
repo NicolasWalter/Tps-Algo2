@@ -31,9 +31,9 @@ namespace aed2{
 	};
 
 	struct datosK{
-		Nat K;
+		Nat k;
 		Conj<Agente> grupoK;
-		datosK(Nat ka, Conj<Agente> gru) : K(ka), grupoK(gru) {}
+		datosK(Nat ka, Conj<Agente> gru) : k(ka), grupoK(gru) {}
 	};
 
 
@@ -49,9 +49,9 @@ namespace aed2{
 	};
 
 	struct TuplaPos{
-		Nat placa;
+		Agente placa;
 		Posicion posi;
-		TuplaPos(Nat p, Posicion pos) : placa(p), posi(pos) {}
+		TuplaPos(Agente p, Posicion pos) : placa(p), posi(pos) {}
 	};
 
 	struct datosHoE{
@@ -66,9 +66,8 @@ namespace aed2{
 		bool ocupada;
 		Clases queHay;
 		Conj<Nombre>::Iterador hayHoE;
-		//Dicc<Agente, >::Iterador hayCana; //falta el tipo del significado
-
-		datosPos(bool o, Clases q, Conj<Nombre>::Iterador hoe) : ocupada(o), queHay(q), hayHoE(hoe) {} 
+		Dicc<Agente,datosAg>::Iterador hayCana; //falta el tipo del significado
+		datosPos(bool b, Clases c, Conj<Nombre>::Iterador hoe, Dicc<Agente,datosAg>::Iterador iter) : ocupada(b), queHay(c), hayHoE(hoe), hayCana(iter) {} 
 		//en el constructor falta haycana
 	};
 

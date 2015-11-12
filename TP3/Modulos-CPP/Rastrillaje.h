@@ -38,7 +38,36 @@ private:
 };
 
 Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
-
+	DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
+	Lista<datosK> Klista;
+	Vector<Vector<datosPos> > map;
+	for (Nat i=1; i<c.Filas(); i++){
+		Vector<datosPos> filita;
+		for(Nat j=1; i<c.Columnas();j++){
+			Posicion pos(j,i);
+			Conj<Nombre>::Iterador itN;
+			Dicc<Agente,datosAg>::Iterador itA;
+			if(c.Ocupada(pos)){
+				datosPos dat1(false,obstaculo,itN,itA);
+				filita.AgregarAtras(dat1);
+			}else{
+				datosPos dat2(false,nada,itN,itA);
+				filita.AgregarAtras(dat2);
+			}
+		}
+		map.AgregarAtras(filita);
+	}
+	Arreglo<TuplaPos> arr(d.CantClaves());
+	Dicc<Agente,Posicion>::Iterador iter = d.CrearIt();
+	Conj<Agente> vac;
+	datosK dati(0,vac);
+	Lista<datosK>::Iterador itk = Klista.AgregarAtras(dati);
+	while(iter.HaySiguiente()){
+		//FALTA LA LINEA DE AGREGAR ORDENADO!!!!!!!!!!!!!
+		datosAg datN(0,0,iter.SiguienteSignificado(),(itk.Siguiente().grupoK).Agregar(iter.SiguienteClave()),itk);
+		datosPos nuevoDP(true,agente,dprom.Definir) // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
+		map[iter.SiguienteSignificado().x][iter.SiguienteSignificado().y] = 
+	}
 }
 
 Campus Rastrillaje::ObsCampus() const{
@@ -82,4 +111,6 @@ Agente Rastrillaje::MasVigilante() const{
 Conj<Agente>::Iterador Rastrillaje::ConMismasSanciones(Agente a){ //VER COMO HACER PARA QUE DEVUELVA CONJ<AGENTE>
 	return (agentes.Obtener(a).grupoSanciones);
 }
+
+
 
