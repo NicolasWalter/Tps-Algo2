@@ -9,6 +9,8 @@ namespace aed2{
 	typedef Nat Agente;
 	typedef String Nombre;
 
+
+
 	struct Posicion{
 		Nat x,y;
 		Posicion(Nat a, Nat b) : x(a), y(b){}
@@ -71,11 +73,12 @@ namespace aed2{
 
 	typedef enum {agente,estudiante,hippie,obstaculo,nada} Clases;
 
+template<class S>
 	struct datosPos{
 		bool ocupada;
 		Clases queHay;
 		Conj<Nombre>::Iterador hayHoE;
-		Dicc<Agente,datosAg>::Iterador hayCana; //falta el tipo del significado
+		typename Lista<S>::Iterador hayCana; //falta el tipo del significado
 		datosPos(bool b, Clases c, Conj<Nombre>::Iterador hoe, Dicc<Agente,datosAg>::Iterador iter) : ocupada(b), queHay(c), hayHoE(hoe), hayCana(iter) {} 
 		//en el constructor falta haycana
 	};

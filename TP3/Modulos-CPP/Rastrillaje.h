@@ -92,8 +92,8 @@ Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
 		//AgregarOrdenado(arr,nCana);
 		datosAg datN(0,0,iter.SiguienteSignificado(),(itk.Siguiente().grupoK).Agregar(iter.SiguienteClave()),itk);
 		Conj<Nombre>::Iterador itAux;// iterador vacio!
-		Lista<DiccionarioProm<Agente, datosAg> >::Iterador itCanaDatos = dprom.DefinirRapido(iter.SiguienteClave(),datN); //ERROR.
-		//datosPos nuevoDP(true,agente,itCanaDatos,itAux) // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
+		Lista<typename DiccionarioProm<Agente, datosAg>::TElem >::Iterador itCanaDatos = dprom.DefinirRapido(iter.SiguienteClave(),datN); //ERROR.
+		datosPos nuevoDP(true,agente,itAux,itCanaDatos) // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
 		//map[iter.SiguienteSignificado().x][iter.SiguienteSignificado().y] = nuevoDP;
 		iter.Avanzar();
 	}
