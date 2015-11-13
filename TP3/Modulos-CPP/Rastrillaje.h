@@ -35,11 +35,32 @@ private:
 	Lista<datosK> agregoEn1;
 	Vector<datosK> buscoEnLog;
 	bool hayNuevas;
-	void AgregarOrdenado(Arreglo<TuplaPos> a, TuplaPos t);
+	//void AgregarOrdenado(Arreglo<TuplaPos> a, TuplaPos t);
 };
 
 
+//REVISAR SI SE DECLARA ASI O SE TIENE QUE DECLARAR COMO FUNCION DE LA CLASE (Descomentar la declaracion en private y agregar Rastrillaje::)
+void AgregarOrdenado(Arreglo<TuplaPos> &a, TuplaPos t){
+	Nat i=0;
+	Nat n=a.Tamanho();
+	while(i<n && a.Definido(i) && a[i].placa<t.placa){
+		i++;
+	}
+	
+	TuplaPos aux1=t;
+    TuplaPos aux2;
 
+	while(i<n && a.Definido(i)){
+		aux2=a[i];
+		//a[i]=aux1;
+		a.Definir(i,aux1);
+		aux1=aux2;
+		i++;
+	}
+	if(! a.Definido(i)){
+		a.Definir(i,aux1);
+	}
+}
 
 Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
 	DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
@@ -68,7 +89,7 @@ Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
 	Lista<datosK>::Iterador itk = Klista.AgregarAtras(dati);
 	while(iter.HaySiguiente()){
 		TuplaPos nCana(iter.SiguienteClave(),iter.SiguienteSignificado());
-		//AgregarOrdenado(arr,nCana);//FALTA LA LINEA DE AGREGAR ORDENADO!!!!!!!!!!!!!
+		AgregarOrdenado(arr,nCana);//FALTA LA LINEA DE AGREGAR ORDENADO!!!!!!!!!!!!!
 		datosAg datN(0,0,iter.SiguienteSignificado(),(itk.Siguiente().grupoK).Agregar(iter.SiguienteClave()),itk);
 		
 		//datosPos nuevoDP(true,agente,dprom.Definir) // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!

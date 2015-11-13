@@ -28,6 +28,8 @@ namespace aed2{
     		y = p1.y;
     		return *this;
 		}
+
+		Posicion(){}
 	};
 
 	struct datosK{
@@ -52,6 +54,13 @@ namespace aed2{
 		Agente placa;
 		Posicion posi;
 		TuplaPos(Agente p, Posicion pos) : placa(p), posi(pos) {}
+		TuplaPos(){}
+		TuplaPos& operator =(const TuplaPos& t1){
+    		placa = t1.placa;
+    		posi = t1.posi;
+    		return *this;
+		}
+
 	};
 
 	struct datosHoE{
