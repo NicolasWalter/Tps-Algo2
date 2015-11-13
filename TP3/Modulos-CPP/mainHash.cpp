@@ -16,6 +16,10 @@ int main(int argc, char const *argv[])
 	it.Avanzar();
 	cout<< it.Siguiente() << endl;
 	cout << d.Obtener(10) << endl;
+	Lista<typename DiccionarioProm<Nat, Nat>::TElem>::Iterador iter = d.DefinirRapido(12,3);
+	cout<< iter.Siguiente().clave << endl;
+
+
 
 	return 0;
 }

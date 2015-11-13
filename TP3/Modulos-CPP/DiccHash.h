@@ -6,6 +6,8 @@ template<class K, class S>
 
 class DiccionarioProm{
 	public:
+		struct TElem;
+
 		DiccionarioProm();
 		DiccionarioProm(const Nat n);
 		~DiccionarioProm();
@@ -13,18 +15,20 @@ class DiccionarioProm{
 		void  Definir(const K& clave, const S& significado);
 		S& Obtener(const K& clave);
 		typename Conj<K>::const_Iterador Claves() const;
+		typename Lista<TElem>::Iterador DefinirRapido(const K& clave, const S& significado);
 
-	private:
-		Nat clavesMax;
-		Conj<K> cClaves;
-		
 		struct TElem{
 			K 	 clave;
 			S 	 significado;
 			TElem(const K& c, const S& v) : clave(c), significado(v) {}
 		};
+	private:
+		Nat clavesMax;
+		Conj<K> cClaves;
+		
 		Arreglo<Lista<TElem> > 	tabla;
 	 	Nat fHash(const Nat n) const;
+
 };
 
 template<class K, class S>
@@ -89,4 +93,14 @@ template<class K, class S>
 typename Conj<K>::const_Iterador DiccionarioProm<K, S>::Claves() const{
 	typename Conj<K>::const_Iterador it = cClaves.CrearIt();
 	return it;
+}
+
+template<class K, class S>
+typename Lista<typename DiccionarioProm<K, S>::TElem>::Iterador DiccionarioProm<K, S>::DefinirRapido(const K& clave, const S& significado){
+	cClaves.Agregar(clave);					// agrego la clave al conjunto de claves
+	Nat i= fHash(clave); 					//elijo la posicion de la tabla
+	TElem tupla = TElem(clave,significado); 	// defino una tupla (clave,significado)
+	Lista<TElem> listita = tabla[i];
+	typename Lista<TElem>::Iterador iter = listita.AgregarAtras(tupla);	// agrego la tupla en la lista dentro de i
+	return iter;
 }

@@ -35,7 +35,7 @@ private:
 	Lista<datosK> agregoEn1;
 	Vector<datosK> buscoEnLog;
 	bool hayNuevas;
-	//void AgregarOrdenado(Arreglo<TuplaPos> a, TuplaPos t);
+	void AgregarOrdenado(Arreglo<TuplaPos> a, TuplaPos t);
 };
 
 
@@ -89,10 +89,11 @@ Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
 	Lista<datosK>::Iterador itk = Klista.AgregarAtras(dati);
 	while(iter.HaySiguiente()){
 		TuplaPos nCana(iter.SiguienteClave(),iter.SiguienteSignificado());
-		AgregarOrdenado(arr,nCana);//FALTA LA LINEA DE AGREGAR ORDENADO!!!!!!!!!!!!!
+		//AgregarOrdenado(arr,nCana);
 		datosAg datN(0,0,iter.SiguienteSignificado(),(itk.Siguiente().grupoK).Agregar(iter.SiguienteClave()),itk);
-		
-		//datosPos nuevoDP(true,agente,dprom.Definir) // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
+		Conj<Nombre>::Iterador itAux;// iterador vacio!
+		Lista<DiccionarioProm<Agente, datosAg> >::Iterador itCanaDatos = dprom.DefinirRapido(iter.SiguienteClave(),datN); //ERROR.
+		//datosPos nuevoDP(true,agente,itCanaDatos,itAux) // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
 		//map[iter.SiguienteSignificado().x][iter.SiguienteSignificado().y] = nuevoDP;
 		iter.Avanzar();
 	}

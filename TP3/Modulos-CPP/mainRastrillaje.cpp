@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
- 	TuplaPos a(2,Posicion(1,1));
+/* 	TuplaPos a(2,Posicion(1,1));
  	TuplaPos b(4,Posicion(1,2));
  	TuplaPos c(5,Posicion(1,6));
  	TuplaPos d(6,Posicion(1,9));
@@ -33,7 +33,7 @@ int main(int argc, char const *argv[])
  		j++;
  	}
 
-
+*/
 
 	return 0;
 }
