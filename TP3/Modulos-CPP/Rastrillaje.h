@@ -35,7 +35,11 @@ private:
 	Lista<datosK> agregoEn1;
 	Vector<datosK> buscoEnLog;
 	bool hayNuevas;
+	void AgregarOrdenado(Arreglo<TuplaPos> a, TuplaPos t);
 };
+
+
+
 
 Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
 	DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
@@ -63,11 +67,32 @@ Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
 	datosK dati(0,vac);
 	Lista<datosK>::Iterador itk = Klista.AgregarAtras(dati);
 	while(iter.HaySiguiente()){
-		//FALTA LA LINEA DE AGREGAR ORDENADO!!!!!!!!!!!!!
+		TuplaPos nCana(iter.SiguienteClave(),iter.SiguienteSignificado());
+		//AgregarOrdenado(arr,nCana);//FALTA LA LINEA DE AGREGAR ORDENADO!!!!!!!!!!!!!
 		datosAg datN(0,0,iter.SiguienteSignificado(),(itk.Siguiente().grupoK).Agregar(iter.SiguienteClave()),itk);
-		datosPos nuevoDP(true,agente,dprom.Definir) // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
-		map[iter.SiguienteSignificado().x][iter.SiguienteSignificado().y] = 
+		
+		//datosPos nuevoDP(true,agente,dprom.Definir) // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
+		//map[iter.SiguienteSignificado().x][iter.SiguienteSignificado().y] = nuevoDP;
+		iter.Avanzar();
 	}
+	campo = c;
+	agentes = dprom;
+	posAgentesLog = arr;
+	Conj<datosHoE> hip;
+	hippies = hip;
+	Conj<datosHoE> est;
+	estudiantes = est;
+	DiccString<Nombre,Posicion> diccS;
+	posCiviles = diccS;
+	Dicc<Nombre,Posicion> diccL;
+	posRapida = diccL;
+	quienOcupa = map;
+	//Conj<Agente>::Iterador masVig = dprom.CrearIt(); // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
+	//masVigilante = masVig;
+	agregoEn1 = Klista;
+	Vector<datosK> pLog;
+	buscoEnLog = pLog;
+	hayNuevas = false;
 }
 
 Campus Rastrillaje::ObsCampus() const{
