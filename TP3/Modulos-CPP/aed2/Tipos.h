@@ -69,6 +69,12 @@ namespace aed2{
 		Nombre ID;
 		Dicc<Nombre,Posicion>::Iterador posActual;
 		datosHoE(Nombre id, Dicc<Nombre,Posicion>::Iterador it ): ID(id), posActual(it) {}
+			bool operator==(const datosHoE& d1) const{
+			return (d1.ID==ID) && (d1.posActual==posActual);
+		}
+		bool operator!=(const datosHoE& d1) const{
+			return !((d1.ID==ID) && (d1.posActual==posActual));
+		}
 	};
 
 	typedef enum {agente,estudiante,hippie,obstaculo,nada} Clases;
