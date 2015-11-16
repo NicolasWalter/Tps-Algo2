@@ -14,7 +14,7 @@ private:
 		Nodo* caracteres[256];
 		Nodo* padre;
 		bool finPalabra;
-		Nodo () :significado(Posicion(0,0)) , padre(NULL) , finPalabra(false) {for(Nat j=0; j< 256;j++){
+		Nodo () :significado() , padre(NULL) , finPalabra(false) {for(Nat j=0; j< 256;j++){
 			caracteres[j]=NULL;}
 		};
 

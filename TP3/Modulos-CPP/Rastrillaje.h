@@ -1,5 +1,6 @@
 #include "aed2.h"
 #include "Campus.h"
+#define ITHASH Lista<typename DiccionarioProm<Agente, datosAg>::TElem >::Iterador
 class Rastrillaje
 {
 public:
@@ -23,6 +24,16 @@ public:
 	Conj<Agente> ConKSanciones(Nat k) const;
 
 private:
+
+	struct datosPos{
+		bool ocupada;
+		Clases queHay;
+		Conj<Nombre>::Iterador hayHoE;
+		ITHASH hayCana; //falta el tipo del significado
+		datosPos(bool b, Clases c, Conj<Nombre>::Iterador hoe, ITHASH iter) : ocupada(b), queHay(c), hayHoE(hoe), hayCana(iter) {} 
+		//en el constructor falta haycana
+	};
+
 	Campus campo;
 	DiccionarioProm<Agente,datosAg> agentes;
 	Arreglo<TuplaPos> posAgentesLog;
@@ -31,11 +42,11 @@ private:
 	DiccString<Nombre,Posicion> posCiviles; //esta comentado porque no esta terminado el modulo
 	Dicc<Nombre,Posicion> posRapida;
 	Vector<Vector<datosPos> > quienOcupa;
-	Conj<Agente>::Iterador masVigilante;
+	Conj<Agente>::const_Iterador masVigilante;
 	Lista<datosK> agregoEn1;
 	Vector<datosK> buscoEnLog;
 	bool hayNuevas;
-	void AgregarOrdenado(Arreglo<TuplaPos> a, TuplaPos t);
+	//void AgregarOrdenado(Arreglo<TuplaPos> a, TuplaPos t);
 };
 
 
@@ -71,7 +82,7 @@ Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
 		for(Nat j=1; i<c.Columnas();j++){
 			Posicion pos(j,i);
 			Conj<Nombre>::Iterador itN;
-			Dicc<Agente,datosAg>::Iterador itA;
+			ITHASH itA;
 			if(c.Ocupada(pos)){
 				datosPos dat1(false,obstaculo,itN,itA);
 				filita.AgregarAtras(dat1);
@@ -89,12 +100,12 @@ Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
 	Lista<datosK>::Iterador itk = Klista.AgregarAtras(dati);
 	while(iter.HaySiguiente()){
 		TuplaPos nCana(iter.SiguienteClave(),iter.SiguienteSignificado());
-		//AgregarOrdenado(arr,nCana);
+		AgregarOrdenado(arr,nCana);
 		datosAg datN(0,0,iter.SiguienteSignificado(),(itk.Siguiente().grupoK).Agregar(iter.SiguienteClave()),itk);
 		Conj<Nombre>::Iterador itAux;// iterador vacio!
-		Lista<typename DiccionarioProm<Agente, datosAg>::TElem >::Iterador itCanaDatos = dprom.DefinirRapido(iter.SiguienteClave(),datN); //ERROR.
-		datosPos nuevoDP(true,agente,itAux,itCanaDatos) // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
-		//map[iter.SiguienteSignificado().x][iter.SiguienteSignificado().y] = nuevoDP;
+		ITHASH itCanaDatos = dprom.DefinirRapido(iter.SiguienteClave(),datN); //ERROR.
+		datosPos nuevoDP(true,agente,itAux,itCanaDatos); // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
+		map[iter.SiguienteSignificado().x][iter.SiguienteSignificado().y] = nuevoDP;
 		iter.Avanzar();
 	}
 	campo = c;
@@ -109,8 +120,8 @@ Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
 	Dicc<Nombre,Posicion> diccL;
 	posRapida = diccL;
 	quienOcupa = map;
-	//Conj<Agente>::Iterador masVig = dprom.CrearIt(); // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
-	//masVigilante = masVig;
+	Conj<Agente>::const_Iterador masVig = dprom.Claves(); // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
+	masVigilante = masVig;
 	agregoEn1 = Klista;
 	Vector<datosK> pLog;
 	buscoEnLog = pLog;

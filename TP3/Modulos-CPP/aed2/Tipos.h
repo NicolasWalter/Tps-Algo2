@@ -3,7 +3,6 @@
 
 #include "TiposBasicos.h"
 
-
 namespace aed2{
 	typedef enum {izq,der,arriba,abajo} Direccion;
 	typedef Nat Agente;
@@ -79,15 +78,7 @@ namespace aed2{
 
 	typedef enum {agente,estudiante,hippie,obstaculo,nada} Clases;
 
-template<class S>
-	struct datosPos{
-		bool ocupada;
-		Clases queHay;
-		Conj<Nombre>::Iterador hayHoE;
-		typename Lista<S>::Iterador hayCana; //falta el tipo del significado
-		datosPos(bool b, Clases c, Conj<Nombre>::Iterador hoe, Dicc<Agente,datosAg>::Iterador iter) : ocupada(b), queHay(c), hayHoE(hoe), hayCana(iter) {} 
-		//en el constructor falta haycana
-	};
+
 
 
 
