@@ -17,11 +17,11 @@ public:
 	Agente MasVigilante() const;
 	Conj<Agente>::Iterador ConMismasSanciones(Agente a); //VER COMO HACER PARA QUE DEVUELVA CONJ<AGENTE>
 	void IngresarEstudiante(Nombre e, Posicion p);
-	void IngresarHippie(Nombre h, Posicion p);
+	void IngresarHippie(Posicion, Nombre);
 	void MoverEstudiante(Nombre e, Direccion d);
 	void MoverHippie(Nombre h);
 	void MoverAgente(Agente a);
-	Conj<Agente> ConKSanciones(Nat k) const;
+	const Conj<Agente>& ConKSanciones(Nat k) const;
 
 private:
 
@@ -187,6 +187,8 @@ Conj<Agente>::Iterador Rastrillaje::ConMismasSanciones(Agente a){ //VER COMO HAC
 	return (agentes.Obtener(a).grupoSanciones);
 }
 
+Conj<Agente> Rastrillaje::ConKSanciones(Nat k) const;
+
 /*
 				TO DO LIST
 
@@ -197,11 +199,8 @@ Conj<Agente>::Iterador Rastrillaje::ConMismasSanciones(Agente a){ //VER COMO HAC
 
 	POSTAS:(Primero las auxiliares)
 			MOVER:
-				  HIPPIE
 				  ESTUDIANTE
-				  AGENTE
 			INGRESAR:
-					 HIPPIE
 					 ESTUDIANTE	
 
 			ConKSanciones?
@@ -535,4 +534,120 @@ Direccion Rastrillaje::proxPosicionA(Agente a){
 	}
 }
 
+void Rastrillaje::IngresarHippie(Posicion p,Nombre h){
+	posCiviles.definir(h,p);
+	Dicc<Nombre,Posicion>::Iterador iterPos = posRapida.DefinirRapido(h,p);
+	datosHoE datazo(h,iterPos);
+	Conj<datosHoE>::Iterador itN=hippies.AgregarRapido(datazo);
+	ITHASH itA;
+	datosPos dat(true,hippie,itA,itN);
+	quienOcupa[p.x][p.y]=dat;
+	Conj<Posicion>::Iterador it;
+	if(esCapturable(p)){
+		capturarHippie(p);
+	}else{
+		while(it.HaySiguiente()){
+			if(campo.Ocupada(it.Siguiente()) || quienOcupa[it.Siguiente().x][it.Siguiente().y].ocupada){
+				it.Avanzar();
+			}else{
+				if(esEstudiante(it.Siguiente()) && esHippizable(it.Siguiente())){
+					hippizar(it.Siguiente());
+					if(esCapturable(it.Siguiente())){
+						capturarHippie(it.Siguiente());
+					}
+				}else{
+					if(esEstudiante(it.Siguiente()) && esCapturable(it.Siguiente())){
+						Conj<Posicion>::Iterador itAg = campo.Vecinos(it.Siguiente()).CrearIt();
+						while(itAg.HaySiguiente()){
+							if(esAgente(itAg.Siguiente())){
+								Sancionar(itAg.Siguiente());
+							}
+							itAg.Avanzar();
+						}
+					}
+				}
+			}
+			it.Avanzar();
+		}
+	}
+}
 
+void Rastrillaje::MoverAgente(Agente a){
+	Nat j=busquedaBin(buscoEnLog,a);
+	Posicion actual=posAgentesLog[j].posi;
+	Direccion d=proxPosicionA(a);
+	Posicion prx=campo.ProxPosicion(d,actual);
+	datosAg datAux=agentes.Obtener(a);
+	datAux.posActual=prx;
+	ITHASH itA=quienOcupa[actual.x][actual.y].hayCana;
+	ITHASH itAN;
+	Conj<datosHoE>::Iterador itN;
+	datosPos dat(false,nada,itAN,itN);
+	quienOcupa[actual.x][actual.y]=dat;
+	datosPos dat2(true,agente,itA,itN);
+	quienOcupa[prx.x][prx.y]=dat2;
+	Conj<Posicion>::Iterador it=campo.Vecinos(prx).CrearIt();
+	while(it.HaySiguiente()){
+		if(campo.Ocupada(it.Siguiente()) || quienOcupa[it.Siguiente().x][it.Siguiente().y].ocupada){
+			it.Avanzar();
+		}else{
+			if(esEstudiante(it.Siguiente()) && esCapturable(it.Siguiente())){
+				Conj<Posicion>::Iterador itAg=campo.Vecinos(it.Siguiente()).CrearIt();
+				while(itAg.HaySiguiente()){
+					if(esAgente(itAg.Siguiente())){
+						Sancionar(itAg.Siguiente());
+					}
+					itAg.Avanzar();
+				}
+			}else{
+				if(esHippie(it.Siguiente()) && esCapturable(it.Siguiente())){
+					capturarHippie(it.Siguiente());
+				}
+			}
+		}
+		it.Avanzar();
+	}
+}
+
+void Rastrillaje::MoverHippie(Nombre h){
+	Posicion actual=posCiviles.obtener(h);
+	Direccion d=proxPosicionH(h);
+	Posicion prx=campo.ProxPosicion(d,actual);
+	posCiviles.definir(h,prx);
+	posRapida.Definir(h,prx);
+	Conj<datosHoE>::Iterador itR=quienOcupa[actual.x][actual.y].hayHoE;
+	Conj<datosHoE>::Iterador itNA;
+	ITHASH itA;
+	datosPos dat1(true,hippie,itA,itR);
+	datosPos dat2(false,nada,itA,itNA);
+	quienOcupa[prx.x][prx.y]=dat1;
+	quienOcupa[prx.x][prx.y]=dat2;
+	Conj<Posicion>::Iterador it=campo.Vecinos(prx).CrearIt();
+	while(it.HaySiguiente()){
+		if(campo.Ocupada(it.Siguiente()) || quienOcupa[it.Siguiente().x][it.Siguiente().y].ocupada){
+			it.Avanzar();
+		}else{
+			if(esEstudiante(it.Siguiente()) && esHippizable(it.Siguiente())){
+				hippizar(it.Siguiente());
+				if(esCapturable(it.Siguiente())){
+					capturarHippie(it.Siguiente());
+				}
+			}else{
+				if(esEstudiante(it.Siguiente()) && esCapturable(it.Siguiente())){
+					Conj<Posicion>::Iterador itAg=campo.Vecinos(it.Siguiente()).CrearIt();
+					while(itAg.HaySiguiente()){
+						if(esAgente(itAg.Siguiente())){
+							Sancionar(itAg.Siguiente());
+						}
+						itAg.Avanzar();
+					}
+				}else{
+					if(esHippie(it.Siguiente()) && esCapturable(it.Siguiente())){
+						capturarHippie(it.Siguiente());
+					}
+				}
+			}
+		}
+		it.Avanzar();	
+	}
+}

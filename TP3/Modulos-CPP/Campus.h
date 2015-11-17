@@ -4,8 +4,8 @@ class Campus
 {
 	public:
 		Campus();
-		Campus(const Nat filas, const Nat columnas);
-		~Campus();
+		Campus(const Nat filas, const Nat columnas); //by juli len
+		~Campus(); 
 		const Nat Filas() const;
 		const Nat Columnas() const;
 		bool Ocupada(Posicion) const;
