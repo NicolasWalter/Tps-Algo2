@@ -22,6 +22,8 @@ public:
 	void MoverHippie(Nombre h);
 	void MoverAgente(Agente a);
 	const Conj<Agente>& ConKSanciones(Nat k) const;
+	ostream& mostrarRast(std::ostream& os ) const ;
+	Clases dimeQueHay(Posicion); //Despues podemos borrarla, es para testear no mas
 
 private:
 
@@ -94,14 +96,14 @@ Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
 	DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
 	Lista<datosK> Klista;
 	Vector<Vector<datosPos> > map;
-	for (Nat i=1; i<c.Filas(); i++){
+	for (Nat i=0; i<c.Filas(); i++){
 		Vector<datosPos> filita;
-		for(Nat j=1; i<c.Columnas();j++){
+		for(Nat j=0; j<c.Columnas();j++){
 			Posicion pos(j,i);
 			Conj<datosHoE>::Iterador itN;
 			ITHASH itA;
 			if(c.Ocupada(pos)){
-				datosPos dat1(false,obstaculo,itA,itN);
+				datosPos dat1(true,obstaculo,itA,itN);
 				filita.AgregarAtras(dat1);
 			}else{
 				datosPos dat2(false,nada,itA,itN);
@@ -187,8 +189,9 @@ Conj<Agente>::Iterador Rastrillaje::ConMismasSanciones(Agente a){ //VER COMO HAC
 	return (agentes.Obtener(a).grupoSanciones);
 }
 
-Conj<Agente> Rastrillaje::ConKSanciones(Nat k) const;
+const Conj<Agente>& Rastrillaje::ConKSanciones(Nat k) const{
 
+}
 /*
 				TO DO LIST
 
@@ -650,4 +653,42 @@ void Rastrillaje::MoverHippie(Nombre h){
 		}
 		it.Avanzar();	
 	}
+}
+
+ostream& operator<<(ostream& out, const Rastrillaje& a) {
+	return a.mostrarRast(out);
+}
+
+ostream& Rastrillaje::mostrarRast(std::ostream& os ) const {
+	int i=0;
+	while(i<campo.Filas()){
+		int j=0;
+		while(j<campo.Columnas()){
+			if(quienOcupa[j][i].ocupada){
+				if(quienOcupa[j][i].queHay==obstaculo){
+					os<<"X ";
+				}else  if(quienOcupa[j][i].queHay==agente){
+					os<<"A ";
+				}else if(quienOcupa[j][i].queHay==estudiante){
+					os<<"E ";
+				}else {
+					os<<"H ";
+				}
+			}else{
+				if(quienOcupa[j][i].queHay==obstaculo){
+					os<<"X ";
+				}else{
+					os<<"- ";	
+				}
+				
+			}
+			j++;
+		}
+		os<<" "<<endl;
+		i++;
+	}
+}
+
+Clases Rastrillaje::dimeQueHay(Posicion p){
+	return quienOcupa[p.x][p.y].queHay;
 }

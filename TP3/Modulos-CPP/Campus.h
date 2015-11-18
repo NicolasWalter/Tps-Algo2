@@ -36,10 +36,10 @@ Campus::~Campus(){}
 Campus::Campus(const Nat fil,const Nat col){
 	Vector<Vector<bool> > map;
 	Nat i = 0;
-	while (i <= fil){
+	while (i < fil){
 		Vector<bool> nuevo;
 		Nat j = 0;
-		while (j <= col){
+		while (j < col){
 			nuevo.AgregarAtras(false);
 			j++;
 		}
@@ -64,15 +64,16 @@ bool Campus::Ocupada(Posicion pos) const{
 }
 
 void Campus::AgregarObstaculo(Posicion pos){
-	mapa[pos.x-1][pos.y-1] = true;
+	//mapa[pos.x-1][pos.y-1] = true;// .1 ???
+	mapa[pos.y][pos.x] = true;
 }
 
 bool Campus::PosValida(Posicion pos) const{
-	return (0 < pos.x) && (pos.x<=filas) && (0<pos.y) && (pos.y <= columnas);
+	return (0 <= pos.x) && (pos.x<filas) && (0<=pos.y) && (pos.y < columnas);
 }
 
 bool Campus::EsIngreso(Posicion pos) const{
-	return (pos.y == 1) || (pos.y==filas);
+	return (pos.y == 0) || (pos.y==filas-1);
 }
 
 Conj<Posicion> Campus::Vecinos(Posicion pos){
@@ -142,8 +143,8 @@ Nat Campus::distancia(Posicion p1, Posicion p2) const{
 
 Conj<Posicion> Campus::IngresosMasCercanos(Posicion pos){
 	Conj<Posicion> nuevo;
-	Posicion ingSup = Posicion(pos.x, Filas());
-	Posicion ingInf = Posicion(pos.x, 1);
+	Posicion ingSup = Posicion(pos.x, Filas()-1);
+	Posicion ingInf = Posicion(pos.x, 0);
 	if(distancia(pos,ingInf) < distancia(pos,ingSup)){
 		nuevo.Agregar(ingInf);
 	}else if(distancia(pos,ingInf) > distancia(pos,ingSup)){

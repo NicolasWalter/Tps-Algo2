@@ -33,6 +33,8 @@ public:
     bool definido(const K&);
     bool todosNull(Nodo*[], int);
     void mataNodosRecu(Nodo*);
+    DiccString<K,S>& operator=( DiccString<K,S>& otro); //es fruta,solo sirve al asignar tries recien creados
+
 
 
 };
@@ -145,4 +147,14 @@ bool DiccString<K,S>::definido(const K& clave){
 		}
 	}
 	return (def && !(actual->finPalabra == false));
+}
+
+
+template<class K, class S>
+DiccString<K,S>& DiccString<K,S>::operator = ( DiccString<K,S>& otro)
+{
+  estr = new Nodo();
+  //significados_ = otro.significados_;
+
+  return *this;
 }
