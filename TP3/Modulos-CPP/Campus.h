@@ -65,7 +65,7 @@ bool Campus::Ocupada(Posicion pos) const{
 
 void Campus::AgregarObstaculo(Posicion pos){
 	//mapa[pos.x-1][pos.y-1] = true;// .1 ???
-	mapa[pos.y][pos.x] = true;
+	mapa[pos.x][pos.y] = true;
 }
 
 bool Campus::PosValida(Posicion pos) const{
@@ -73,7 +73,7 @@ bool Campus::PosValida(Posicion pos) const{
 }
 
 bool Campus::EsIngreso(Posicion pos) const{
-	return (pos.y == 0) || (pos.y==filas-1);
+	return (pos.x == 0) || (pos.x==filas-1);
 }
 
 Conj<Posicion> Campus::Vecinos(Posicion pos){
