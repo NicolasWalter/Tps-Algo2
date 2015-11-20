@@ -16,7 +16,8 @@ class DiccionarioProm{
 		S& Obtener(const K& clave);
 		typename Conj<K>::const_Iterador Claves() const;
 		typename Lista<TElem>::Iterador DefinirRapido(const K& clave, const S& significado);
-
+/*		DiccionarioProm<K,S>& operator=(const DiccionarioProm<K,S>& otro);
+*/
 		struct TElem{
 			K 	 clave;
 			S 	 significado;
@@ -30,6 +31,18 @@ class DiccionarioProm{
 	 	Nat fHash(const Nat n) const;
 
 };
+
+/*template<class K, class S>
+Dicc<K,S>& Dicc<K,S>::operator = (const Dicc<K,S>& otro)
+{
+  claves_ = otro.claves_;
+  significados_ = otro.significados_;
+
+  return *this;
+}*/
+/*template<class K, class S>
+DiccionarioProm<K,S>& operator=(const DiccionarioProm<K,S>& otro) : cClaves(otro.cClaves), clavesMax(otro.clavesMax), tabla(otro.tabla) {}*/
+
 
 template<class K, class S>
 DiccionarioProm<K, S>::DiccionarioProm(){
