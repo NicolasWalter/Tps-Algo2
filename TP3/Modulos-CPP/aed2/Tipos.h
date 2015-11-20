@@ -49,6 +49,14 @@ namespace aed2{
 
 	datosAg(Nat q, Nat p,Posicion pos,Conj<Agente>::Iterador gr, Lista<datosK>::Iterador v) 
 	: Qsanciones(q), premios(p), posActual(pos), grupoSanciones(gr), verK(v) {}
+	datosAg& operator =(const datosAg& d1){
+    		Qsanciones = d1.Qsanciones;
+    		premios = d1.premios;
+    		posActual=d1.posActual;
+    		grupoSanciones=d1.grupoSanciones;
+    		verK=d1.verK;
+    		return *this;
+		}
 	};
 
 	struct TuplaPos{

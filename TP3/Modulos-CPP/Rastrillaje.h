@@ -23,7 +23,24 @@ public:
 	void MoverAgente(Agente a);
 	const Conj<Agente>& ConKSanciones(Nat k) const;
 	ostream& mostrarRast(std::ostream& os ) const ;
-	Clases dimeQueHay(Posicion); //Despues podemos borrarla, es para testear no mas
+	bool dimeQueHay(Posicion); //Despues podemos borrarla, es para testear no mas
+	bool dimeSiEsCapturable(Posicion);
+		Direccion proxPosicionA(Agente);
+	Nat dimeCantidadHippies();
+	bool ocupadaD(Posicion, Direccion);
+		Direccion vecinoMasCercano(Posicion,Posicion);
+
+
+
+	Posicion hippieObjetivo(Posicion p);
+	Direccion queCaminoTomar(Posicion, Posicion);
+
+
+	bool esHippie(Posicion);
+
+		void capturarHippie(Posicion);
+
+
 
 private:
 
@@ -50,22 +67,20 @@ private:
 	bool hayNuevas;
 	//void AgregarOrdenado(Arreglo<TuplaPos> a, TuplaPos t);
 	bool esEstudiante(Posicion);
-	bool esHippie(Posicion);
+	//bool esHippie(Posicion);
 	bool esAgente(Posicion);
 	void estudiantizar(Posicion);
 	void hippizar(Posicion);
 	bool esCapturable(Posicion);
 	bool esHippizable(Posicion);
 	bool esEstudiantizable(Posicion);
-	void capturarHippie(Posicion);
+//	void capturarHippie(Posicion);
 	bool todasOcupadas(Posicion);
 	void Recompensar(Posicion);
 	void Sancionar(Posicion);
-	bool ocupadaD(Posicion, Direccion);
-	Direccion vecinoMasCercano(Posicion,Posicion);
+	//Direccion vecinoMasCercano(Posicion,Posicion);
 	bool seFue(Posicion,Posicion);
 	Direccion proxPosicionH(Nombre);
-	Direccion proxPosicionA(Agente);
 };
 
 
@@ -92,14 +107,14 @@ void AgregarOrdenado(Arreglo<TuplaPos> &a, TuplaPos t){
 	}
 }
 
-Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
+Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d) { // VER QUE ONDA LO DE METE EL HASH EN EL CONSTRUCTOR
 	DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
 	Lista<datosK> Klista;
 	Vector<Vector<datosPos> > map;
 	for (Nat i=0; i<c.Filas(); i++){
 		Vector<datosPos> filita;
 		for(Nat j=0; j<c.Columnas();j++){
-			Posicion pos(j,i);
+			Posicion pos(i,j);
 			Conj<datosHoE>::Iterador itN;
 			ITHASH itA;
 			if(c.Ocupada(pos)){
@@ -115,9 +130,11 @@ Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
 	Arreglo<TuplaPos> arr(d.CantClaves());
 	Dicc<Agente,Posicion>::Iterador iter = d.CrearIt();
 	Conj<Agente> vac;
+	Conj<Agente> pruebaAg;
 	datosK dati(0,vac);
 	Lista<datosK>::Iterador itk = Klista.AgregarAtras(dati);
 	while(iter.HaySiguiente()){
+		pruebaAg.Agregar(iter.SiguienteClave());
 		TuplaPos nCana(iter.SiguienteClave(),iter.SiguienteSignificado());
 		AgregarOrdenado(arr,nCana);
 		datosAg datN(0,0,iter.SiguienteSignificado(),(itk.Siguiente().grupoK).Agregar(iter.SiguienteClave()),itk);
@@ -144,11 +161,73 @@ Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d){
 	agregoEn1 = Klista;
 	Vector<datosK> pLog;
 	Conj<Agente> agentesVacio;
-	datosK datInicial(0,agentesVacio);
+	datosK datInicial(0,pruebaAg);
 	pLog.AgregarAtras(datInicial);
 	buscoEnLog = pLog;
 	hayNuevas = false;
 }
+
+
+/*
+Version caballero walter
+Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d) : agentes(d.CantClaves()){
+	Lista<datosK> Klista;
+	Vector<Vector<datosPos> > map;
+	for (Nat i=0; i<c.Filas(); i++){
+		Vector<datosPos> filita;
+		for(Nat j=0; j<c.Columnas();j++){
+			Posicion pos(j,i);
+			Conj<datosHoE>::Iterador itN;
+			ITHASH itA;
+			if(c.Ocupada(pos)){
+				datosPos dat1(true,obstaculo,itA,itN);
+				filita.AgregarAtras(dat1);
+			}else{
+				datosPos dat2(false,nada,itA,itN);
+				filita.AgregarAtras(dat2);
+			}
+		}
+		map.AgregarAtras(filita);
+	}
+	Arreglo<TuplaPos> arr(d.CantClaves());
+	Dicc<Agente,Posicion>::Iterador iter = d.CrearIt();
+	Conj<Agente> vac;
+	Conj<Agente> pruebaAg;
+	datosK dati(0,vac);
+	Lista<datosK>::Iterador itk = Klista.AgregarAtras(dati);
+	while(iter.HaySiguiente()){
+		pruebaAg.Agregar(iter.SiguienteClave());
+		TuplaPos nCana(iter.SiguienteClave(),iter.SiguienteSignificado());
+		AgregarOrdenado(arr,nCana);
+		datosAg datN(0,0,iter.SiguienteSignificado(),(itk.Siguiente().grupoK).Agregar(iter.SiguienteClave()),itk);
+		Conj<datosHoE>::Iterador itAux;// iterador vacio!
+		ITHASH itCanaDatos = agentes.DefinirRapido(iter.SiguienteClave(),datN);
+		datosPos nuevoDP(true,agente,itCanaDatos,itAux); // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
+		map[iter.SiguienteSignificado().x][iter.SiguienteSignificado().y] = nuevoDP;
+		iter.Avanzar();
+	}
+	campo = c;
+	//agentes = dprom; //PUEDE SER QUE HAGA FALTA UN OPERADOR =
+	posAgentesLog = arr;
+	Conj<datosHoE> hip;
+	hippies = hip;
+	Conj<datosHoE> est;
+	estudiantes = est;
+	DiccString<Nombre,Posicion> diccS;
+	posCiviles = diccS;
+	Dicc<Nombre,Posicion> diccL;
+	posRapida = diccL;
+	quienOcupa = map;
+	Conj<Agente>::const_Iterador masVig = agentes.Claves(); // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!!
+	masVigilante = masVig;
+	agregoEn1 = Klista;
+	Vector<datosK> pLog;
+	Conj<Agente> agentesVacio;
+	datosK datInicial(0,agentesVacio);
+	pLog.AgregarAtras(datInicial);
+	buscoEnLog = pLog;
+	hayNuevas = false;
+}*/
 
 Campus Rastrillaje::ObsCampus() const{
 	return campo;
@@ -259,11 +338,12 @@ void Rastrillaje::estudiantizar(Posicion p){
 }	
 
 bool Rastrillaje::esCapturable(Posicion p){
-	typename Conj<Posicion>::const_Iterador it=campo.Vecinos(p).CrearIt();
+	Conj<Posicion> vecinetes=campo.Vecinos(p);
+	Conj<Posicion>::const_Iterador it=vecinetes.CrearIt();
 	Nat contador=0;
 	Nat i=0;
 	bool hayGuardia=false;
-	while(i<campo.Vecinos(p).Cardinal()){
+	while(it.HaySiguiente()){
 		if(quienOcupa[p.x][p.y].ocupada){
 			contador++;
 		}
@@ -273,7 +353,7 @@ bool Rastrillaje::esCapturable(Posicion p){
 		i++;
 		it.Avanzar();
 	}
-	return contador==4 && hayGuardia;
+	return contador==vecinetes.Cardinal() && hayGuardia;
 
 }
 
@@ -312,11 +392,14 @@ void Rastrillaje::capturarHippie(Posicion p){
 	Conj<datosHoE>::Iterador itN;
 	datosPos nuevo(false,nada,itA,itN);
 	quienOcupa[p.x][p.y] = nuevo;
-	typename Conj<Posicion>::const_Iterador itPos=campo.Vecinos(p).CrearIt();
-	while(itPos.HaySiguiente()){
+	Conj<Posicion> vecinetes=campo.Vecinos(p);
+	Conj<Posicion>::const_Iterador itPos=vecinetes.CrearIt();
+	Nat i=0;
+	while(i<vecinetes.Cardinal()){
 		if(quienOcupa[itPos.Siguiente().x][itPos.Siguiente().y].queHay == agente){
 			Recompensar(itPos.Siguiente());
 		}
+		i++;
 		itPos.Avanzar();
 	}
 }
@@ -381,26 +464,67 @@ void Rastrillaje::Sancionar(Posicion p){
 
 bool Rastrillaje::ocupadaD(Posicion p, Direccion dir){
 	if (dir==arriba){
-		return quienOcupa[p.x][p.y +1].ocupada;
+		return quienOcupa[p.x-1][p.y].ocupada;
 	}else{
 		if(dir==abajo){
-			return quienOcupa[p.x][p.y -1].ocupada;
+			return quienOcupa[p.x+1][p.y].ocupada;
 		}else{
 			if(dir==izq){
-				return quienOcupa[p.x -1][p.y].ocupada;
+				return quienOcupa[p.x][p.y-1].ocupada;
 			}else{
-				return quienOcupa[p.x +1][p.y].ocupada;
+				return quienOcupa[p.x][p.y+1].ocupada;
 			}
 		}
 	}
 }
 
+Posicion Rastrillaje::hippieObjetivo(Posicion p){
+
+	Conj<datosHoE>::Iterador it = hippies.CrearIt();
+	if(it.HaySiguiente()){
+		Dicc<Nombre,Posicion>::Iterador itdicca = it.Siguiente().posActual;
+		Posicion minimo=itdicca.SiguienteSignificado();
+		while(it.HaySiguiente()){
+			Dicc<Nombre,Posicion>::Iterador itdicc = it.Siguiente().posActual;
+			Posicion dondeHippie=itdicc.SiguienteSignificado();
+			if(campo.distancia(p,dondeHippie)<campo.distancia(p,minimo) && !quienOcupa[dondeHippie.x][dondeHippie.y].ocupada){
+				minimo=dondeHippie;
+			}
+			it.Avanzar();
+		}
+		return minimo;
+	}else{
+		if(p.x<campo.Filas()/2){
+			return Posicion(p.x-1,p.y);
+		}else{
+			return Posicion(p.x+1,p.y);
+		}
+	}
+
+}
+
+
+Direccion Rastrillaje::queCaminoTomar(Posicion d, Posicion h){
+	if(d.x>h.x && !ocupadaD(d,arriba)){
+		return arriba;
+	}else if(d.x<h.x && !ocupadaD(d,abajo)){
+		return abajo;
+	}else if(d.y<h.y && !ocupadaD(d,der)){
+		return der;
+	}else{
+		return izq;
+	}
+}
+
 Direccion Rastrillaje::vecinoMasCercano(Posicion p, Posicion p2){
-	typename Conj<Posicion>::const_Iterador it=campo.Vecinos(p).CrearIt();
+	//typename Conj<Posicion>::const_Iterador it=campo.Vecinos(p).CrearIt();
+	Conj<Posicion> vecinetes=campo.Vecinos(p);
+	Conj<Posicion>::const_Iterador it=vecinetes.CrearIt();
+	Direccion res;
 	Posicion destino=it.Siguiente();
 	Nat i=0;
 	while(i<campo.Vecinos(p).Cardinal()){
-		if(quienOcupa[it.Siguiente().x][it.Siguiente().y].ocupada){
+		if(! quienOcupa[it.Siguiente().x][it.Siguiente().y].ocupada){
 			if(campo.distancia(p,it.Siguiente())<campo.distancia(p,destino)){
 				destino=it.Siguiente();
 			}
@@ -408,33 +532,32 @@ Direccion Rastrillaje::vecinoMasCercano(Posicion p, Posicion p2){
 		i++;
 		it.Avanzar();
 	}
-	if(destino.x!=p.x){
-		if(destino.y>p.y){
-			return arriba;
-		}else{
-			return abajo;
-		}
-		if(destino.x>p.x){
-			return der;
-		}else{
-			return izq;
-		}
+
+	if(destino.x<p.x){
+		return arriba;
+	}else if(destino.x>p.x){
+		return abajo;
+	}else if(destino.y<p.y){
+		return der;
+	}else{
+		return izq;
 	}
+	
 
 }
 
-Nat busquedaBin(Vector<datosK> v, 	Nat objetivo){
+Nat busquedaBin(Arreglo<TuplaPos> v, 	Nat objetivo){
 	Nat i=0;
-	Nat d=v.Longitud()-1;
+	Nat d=v.Tamanho()-1;
 	while(i+1<d){
 		Nat m=(i+d)/2;
-		if(v[m].k<objetivo){
+		if(v[m].placa<objetivo){
 			i=m;
 		}else{
 			d=m;
 		}
 	}
-	if(v[i].k==objetivo){
+	if(v[i].placa==objetivo){
 		return i;
 	}else{
 		return d;
@@ -502,52 +625,71 @@ Direccion Rastrillaje::proxPosicionA(Agente a){
 	Posicion menorD = agentes.Obtener(a).posActual;
 	Posicion p=menorD;
 	if(! it.HaySiguiente()){
-		if(menorD.y <= (campo.Filas()/2)){
-			if(!ocupadaD(p,abajo)){
-				return abajo;
-			}else{
-				if(!ocupadaD(p,der)){
-					return der;
+		if(menorD.x > (campo.Filas()/2)){
+				if(!ocupadaD(p,abajo)){
+					return abajo;
 				}else{
-					if(!ocupadaD(p,izq)){
-						return izq;
+					if(!ocupadaD(p,der)){
+						return der;
 					}else{
-						return arriba;
+						if(!ocupadaD(p,izq)){
+							return izq;
+						}else{
+							return arriba;
+						}
 					}
 				}
-			}
-		}else{
-			if(!ocupadaD(p,arriba)){
-				return arriba;
 			}else{
-				if(!ocupadaD(p,der)){
-					return der;
+				if(!ocupadaD(p,arriba)){
+					return arriba;
 				}else{
-					if(!ocupadaD(p,izq)){
-						return izq;
+					if(!ocupadaD(p,der)){
+						return der;
 					}else{
-						return abajo;
+						if(!ocupadaD(p,izq)){
+							return izq;
+						}else{
+							return abajo;
+						}
 					}
 				}
-			}
 
-		}
+			}
 	}else{
 		Dicc<Nombre,Posicion>::Iterador nuevo=(it.Siguiente().posActual);
 		menorD=nuevo.SiguienteSignificado();
-		//Posicion nueva3=(it.Siguiente().posActual).SiguienteSignificado();
 		Posicion otraPos;
 		while(it.HaySiguiente()){
 			Dicc<Nombre,Posicion>::Iterador aux=it.Siguiente().posActual;
-			otraPos=aux.SiguienteSignificado();
-			if(campo.distancia(p,otraPos)<campo.distancia(p,menorD)){
+			otraPos=aux.SiguienteSignificado();			
+			if(campo.distancia(p,otraPos) < campo.distancia(p,menorD)){
 				menorD=otraPos;
 			}
 			it.Avanzar();
 		}
-		return vecinoMasCercano(p,menorD);
+		Direccion res= vecinoMasCercano(p,menorD);
+		if(!ocupadaD(p,res)){
+			return res;
+		}else{
+			if(!ocupadaD(p,arriba)){
+					return arriba;
+				}else{
+					if(!ocupadaD(p,der)){
+						return der;
+					}else{
+						if(!ocupadaD(p,izq)){
+							return izq;
+						}else{
+							return abajo;
+						}
+					}
+				}
+		}
 	}
+	
 }
+
+
 
 void Rastrillaje::IngresarHippie(Posicion p,Nombre h){
 	posCiviles.definir(h,p);
@@ -588,12 +730,13 @@ void Rastrillaje::IngresarHippie(Posicion p,Nombre h){
 }
 
 void Rastrillaje::MoverAgente(Agente a){
-	Nat j=busquedaBin(buscoEnLog,a);
+	Nat j=busquedaBin(posAgentesLog,a);
 	Posicion actual=posAgentesLog[j].posi;
-	Direccion d=proxPosicionA(a);
+	Direccion d=queCaminoTomar(actual,hippieObjetivo(actual));
 	Posicion prx=campo.ProxPosicion(d,actual);
-	//datosAg datAux=agentes.Obtener(a);
-	/*datAux.posActual=prx;
+	agentes.Obtener(a).posActual=prx;
+	posAgentesLog[j].posi=prx;
+	//datAux.posActual=prx;
 	ITHASH itA=quienOcupa[actual.x][actual.y].hayCana;
 	ITHASH itAN;
 	Conj<datosHoE>::Iterador itN;
@@ -601,27 +744,37 @@ void Rastrillaje::MoverAgente(Agente a){
 	quienOcupa[actual.x][actual.y]=dat;
 	datosPos dat2(true,agente,itA,itN);
 	quienOcupa[prx.x][prx.y]=dat2;
-	Conj<Posicion>::Iterador it=campo.Vecinos(prx).CrearIt();*/
-	/*while(it.HaySiguiente()){
-		if(campo.Ocupada(it.Siguiente()) || quienOcupa[it.Siguiente().x][it.Siguiente().y].ocupada){
-			it.Avanzar();
+	//Conj<Posicion>::Iterador it=campo.Vecinos(prx).CrearIt();
+	Conj<Posicion> vecinetes=campo.Vecinos(prx);
+	Conj<Posicion>::const_Iterador it=vecinetes.CrearIt();
+	int i=0;
+	while(it.HaySiguiente()){
+		if((quienOcupa[it.Siguiente().x][it.Siguiente().y].queHay==obstaculo) || quienOcupa[it.Siguiente().x][it.Siguiente().y].queHay==nada){
+
 		}else{
 			if(esEstudiante(it.Siguiente()) && esCapturable(it.Siguiente())){
-				Conj<Posicion>::Iterador itAg=campo.Vecinos(it.Siguiente()).CrearIt();
-				while(itAg.HaySiguiente()){
+				Conj<Posicion> vecinosAg=campo.Vecinos(it.Siguiente());
+				Conj<Posicion>::Iterador itAg=vecinosAg.CrearIt();
+				int j=0;
+				while(j<vecinosAg.Cardinal()){
 					if(esAgente(itAg.Siguiente())){
 						Sancionar(itAg.Siguiente());
 					}
+					j++;
+					if(j==vecinosAg.Cardinal()){
 					itAg.Avanzar();
+					}
 				}
 			}else{
 				if(esHippie(it.Siguiente()) && esCapturable(it.Siguiente())){
-					capturarHippie(it.Siguiente());
+					Posicion aux=it.Siguiente();
+					capturarHippie(aux);
 				}
 			}
 		}
+		i++;
 		it.Avanzar();
-	}*/
+	}
 }
 
 void Rastrillaje::MoverHippie(Nombre h){
@@ -676,23 +829,18 @@ ostream& Rastrillaje::mostrarRast(std::ostream& os ) const {
 	while(i<campo.Filas()){
 		int j=0;
 		while(j<campo.Columnas()){
-			if(quienOcupa[j][i].ocupada){
-				if(quienOcupa[j][i].queHay==obstaculo){
+			if(quienOcupa[i][j].ocupada){
+				if(quienOcupa[i][j].queHay==obstaculo){
 					os<<"X ";
-				}else  if(quienOcupa[j][i].queHay==agente){
+				}else  if(quienOcupa[i][j].queHay==agente){
 					os<<"A ";
-				}else if(quienOcupa[j][i].queHay==estudiante){
+				}else if(quienOcupa[i][j].queHay==estudiante){
 					os<<"E ";
 				}else {
 					os<<"H ";
 				}
 			}else{
-				if(quienOcupa[j][i].queHay==obstaculo){
-					os<<"X ";
-				}else{
-					os<<"- ";	
-				}
-				
+					os<<"- ";					
 			}
 			j++;
 		}
@@ -701,6 +849,14 @@ ostream& Rastrillaje::mostrarRast(std::ostream& os ) const {
 	}
 }
 
-Clases Rastrillaje::dimeQueHay(Posicion p){
-	return quienOcupa[p.x][p.y].queHay;
+bool Rastrillaje::dimeQueHay(Posicion p){
+	return quienOcupa[p.x][p.y].ocupada;
+}
+
+bool Rastrillaje::dimeSiEsCapturable(Posicion p){
+	return esCapturable(p);
+}
+
+Nat Rastrillaje::dimeCantidadHippies(){
+	return hippies.Cardinal();
 }

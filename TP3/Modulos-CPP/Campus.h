@@ -113,13 +113,13 @@ Conj<Posicion> Campus::VecinosComunes(Posicion p1, Posicion p2){
 
 Posicion Campus::ProxPosicion(Direccion dir, Posicion pos){
 	if (dir==izq){
-		pos = Posicion(pos.x-1,pos.y);
-	}else if(dir==der){
-		pos = Posicion(pos.x+1,pos.y);
-	}else if(dir==arriba){
-		pos = Posicion(pos.x,pos.y+1);
-	}else{
 		pos = Posicion(pos.x,pos.y-1);
+	}else if(dir==der){
+		pos = Posicion(pos.x,pos.y+1);
+	}else if(dir==arriba){
+		pos = Posicion(pos.x-1,pos.y);
+	}else{
+		pos = Posicion(pos.x+1,pos.y);
 	}
 	return pos;
 }
@@ -143,8 +143,8 @@ Nat Campus::distancia(Posicion p1, Posicion p2) const{
 
 Conj<Posicion> Campus::IngresosMasCercanos(Posicion pos){
 	Conj<Posicion> nuevo;
-	Posicion ingSup = Posicion(pos.x, Filas()-1);
-	Posicion ingInf = Posicion(pos.x, 0);
+	Posicion ingSup = Posicion(0, pos.y);
+	Posicion ingInf = Posicion(filas-1, pos.y);
 	if(distancia(pos,ingInf) < distancia(pos,ingSup)){
 		nuevo.Agregar(ingInf);
 	}else if(distancia(pos,ingInf) > distancia(pos,ingSup)){
