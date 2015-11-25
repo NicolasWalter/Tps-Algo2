@@ -19,21 +19,22 @@ Driver::~Driver()
 
 void  Driver::comenzarRastrillaje(const Dicc<Agente,Posicion>& d)
 {
-    // TODO
-	assert(false);
+
+	rast.ComenzarRastrillaje(camp,d);
+
 }
 
 
 void Driver::crearCampus(Nat ancho, Nat alto)
 {
     // TODO
-	assert(false);
+	camp=Campus(alto,ancho);
 }
 
 void Driver::agregarObstaculo(Posicion p)
 {
     // TODO
-	assert(false);
+	camp.AgregarObstaculo(p);
 }
 
 
@@ -42,19 +43,19 @@ void Driver::agregarObstaculo(Posicion p)
 Nat Driver::filas() const
 {
     // TODO
-	assert(false);
+	return camp.Filas();
 }
 
 Nat Driver::columnas() const
 {
     // TODO
-	assert(false);
+	return camp.columnas();
 }
 
 bool Driver::ocupada(Posicion p) const
 {
     // TODO
-	assert(false);
+	return camp.Ocupada(p);
 }
 
 
@@ -62,78 +63,90 @@ bool Driver::ocupada(Posicion p) const
 
 void Driver::ingresarEstudiante(Nombre n, Posicion p)
 {
-    // TODO
-	assert(false);
+	rast.IngresarEstudiante(n,p);
 }
 
 void Driver::ingresarHippie(Nombre n, Posicion p)
 {
     // TODO
-	assert(false);
+	rast.IngresarHippie(n,p);
 }
 
 void Driver::moverEstudiante(Nombre n, Direccion d)
 {
-    // TODO
-	assert(false);
+    rast.MoverEstudiante(n,d);
 }
 
 void Driver::moverHippie(Nombre n)
 {
     // TODO
-	assert(false);
+	rast.MoverHippie(n);
 }
 
 void Driver::moverAgente(Agente pl)
 {
     // TODO
-	assert(false);
+	rast.MoverAgente(pl);	
 }
 
 
 /// Observadores de CampusSeguro
 
+
 Nombre Driver::iesimoEstudiante(Nat i) const
 {
-    // TODO
-	assert(false);
+	Conj<datosHoE>::Iterador it = rast.estudiantes.CrearIt();
+	Nat j=0;
+	while(j < i){
+		it.Avanzar();
+		j++;
+	}
+	return it.Siguiente().ID;
+	
 }
-
 Nombre Driver::iesimoHippie(Nat i) const
 {
-    // TODO
-	assert(false);
+    Conj<datosHoE>::Iterador it = rast.hippies.CrearIt();
+	Nat j=0;
+	while(j < i){
+		it.Avanzar();
+		j++;
+	}
+	return it.Siguiente().ID;
 }
 
 Nat Driver::iesimoAgente(Nat i) const
 {
-    // TODO
+	/*Lista<typename DiccionarioProm<Agente, datosAg>::TElem >::Iterador it = rast.agentes.CrearIt();
+	Nat j=0;
+	while(j<i){
+		it.
+	}*/
 	assert(false);
+
 }
 
 
 Posicion Driver::posEstudianteYHippie(Nombre n) const
 {
-    // TODO
-	assert(false);
+	return rast.PosEstudianteYHippie(n);
 }
 
 Posicion Driver::posAgente(Agente pl) const
 {
-    // TODO
-	assert(false);
+	return rast.PosAgente(pl);
 }
 
 Nat Driver::cantSanciones(Agente pl) const
 {
     // TODO
-	assert(false);
+	return rast.CantSanciones(pl);
 }
 
 Nat Driver::cantHippiesAtrapados(Agente pl) const
 {
     // TODO
-	assert(false);
+	return rast.CantHippiesAtrapados(pl);
 }
 
 
@@ -142,14 +155,13 @@ Nat Driver::cantHippiesAtrapados(Agente pl) const
 Agente Driver::masVigilante() const
 {
     // TODO
-	assert(false);
+	return rast.MasVigilante();
 }
 
 const Conj<Agente>& Driver::conMismasSanciones(Agente a) const
 {
     // TODO
-	assert(false);
-}
+	return rast.ConMismasSanciones(a);
 
 const Conj<Agente>& Driver::conKSanciones(Nat k)
 {

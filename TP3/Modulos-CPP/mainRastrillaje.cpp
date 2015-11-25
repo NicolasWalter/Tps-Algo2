@@ -37,10 +37,10 @@ int main(int argc, char const *argv[])
 	cout<<rast.ocupadaD(Posicion(1,2),arriba)<<endl;
 	cout<<rast;
 	cout<<" "<<endl;
-	rast.IngresarHippie(Posicion(0,4),"pachi");
+	rast.IngresarHippie(Posicion(0,4),"pacha");
 	cout<<rast;
 	cout<<" "<<endl;
-		rast.MoverHippie("pachi");
+		rast.MoverHippie("pacha");
 			cout<<rast;
 
 
@@ -89,7 +89,7 @@ rast.MoverAgente(3);
 	rast.IngresarEstudiante("walter",Posicion(7,4));
 cout<<rast;
 cout<<" "<<endl;
-rast.MoverHippie("pachi");
+rast.MoverHippie("pacha");
 cout<<rast;
 	cout<<"est objetivo: "<<rast.estudianteObjetivo(Posicion(3,3)).x<<" "<<rast.estudianteObjetivo(Posicion(3,3)).y<<endl;
 	rast.MoverEstudiante("walter",arriba);	

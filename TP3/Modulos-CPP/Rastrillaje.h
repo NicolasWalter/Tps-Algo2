@@ -24,23 +24,28 @@ public:
 	const Conj<Agente>& ConKSanciones(Nat k) const;
 	ostream& mostrarRast(std::ostream& os ) const ;
 	bool dimeQueHay(Posicion); //Despues podemos borrarla, es para testear no mas
-	bool dimeSiEsCapturable(Posicion);
+	bool dimeSiEsCapturable(Posicion);//Despues podemos borrarla, es para testear no mas
 	//Direccion proxPosicionA(Agente);
-	Nat dimeCantidadHippies();
+	bool dimeSiEsHippizable(Posicion);
+	Nat dimeCantidadHippies();//Despues podemos borrarla, es para testear no mas
 	bool ocupadaD(Posicion, Direccion);
 	//Direccion vecinoMasCercano(Posicion,Posicion);
+	bool dimeSiEsEstudiante(Posicion);
+	Agente dimeQueAgenteEs(Posicion);
 
 
 
+
+	//PUBLICO O PRIVADO?
 	Posicion hippieObjetivo(Posicion p);
 	Direccion queCaminoTomar(Posicion, Posicion);
 	Posicion estudianteObjetivo(Posicion);
 
 
 
-	bool esHippie(Posicion);
+	bool esHippie(Posicion);//Borrable
 
-		void capturarHippie(Posicion);
+	//void capturarHippie(Posicion);
 
 
 
@@ -76,7 +81,7 @@ private:
 	bool esCapturable(Posicion);
 	bool esHippizable(Posicion);
 	bool esEstudiantizable(Posicion);
-//	void capturarHippie(Posicion);
+	void capturarHippie(Posicion);
 	bool todasOcupadas(Posicion);
 	void Recompensar(Posicion);
 	void Sancionar(Posicion);
@@ -235,12 +240,12 @@ Campus Rastrillaje::ObsCampus() const{
 	return campo;
 }
 
-typename Conj<datosHoE>::const_Iterador Rastrillaje::Estudiantes() const{ //tendria que devolver cosas del tipo NOMBRE, arreglar.
+typename Conj<datosHoE>::const_Iterador Rastrillaje::Estudiantes() const{ //tendria que devolver cosas del tipo NOMBRE, arreglar? O flasheada vieja?
 	typename Conj<datosHoE>::const_Iterador iter = estudiantes.CrearIt();
 	return iter;
 }
 
-typename Conj<datosHoE>::const_Iterador Rastrillaje::Hippies() const{	//tendria que devolver cosas del tipo NOMBRE, arreglar.
+typename Conj<datosHoE>::const_Iterador Rastrillaje::Hippies() const{	//tendria que devolver cosas del tipo NOMBRE, arreglar? O flasheada vieja?
 	typename Conj<datosHoE>::const_Iterador iter = hippies.CrearIt();
 	return iter;
 }
@@ -276,26 +281,6 @@ Conj<Agente>::Iterador Rastrillaje::ConMismasSanciones(Agente a){ //VER COMO HAC
 const Conj<Agente>& Rastrillaje::ConKSanciones(Nat k) const{
 
 }
-/*
-				TO DO LIST
-
-	REVISAR AUXILIARES: 
-				       RECOMPENSAR(VER Q ONDA LO DE LOS ITERADORES)
-					   SANCIONAR(PUEDE SER HORRIBLE)
-
-	POSTAS:(Primero arreglar todo lo que ya pasamos)
-			MOVER:
-				  ESTUDIANTE
-			INGRESAR:
-					 ESTUDIANTE	
-
-			ConKSanciones
-
-
-
-*/
-
-
 
 
 bool Rastrillaje::esEstudiante(Posicion p){
@@ -341,7 +326,7 @@ bool Rastrillaje::esCapturable(Posicion p){
 	Nat i=0;
 	bool hayGuardia=false;
 	while(it.HaySiguiente()){
-		if(quienOcupa[p.x][p.y].ocupada){
+		if(quienOcupa[it.Siguiente().x][it.Siguiente().y].ocupada){
 			contador++;
 		}
 		if(quienOcupa[it.Siguiente().x][it.Siguiente().y].queHay==agente){
@@ -369,7 +354,8 @@ bool Rastrillaje::esHippizable(Posicion p){
 }
 
 bool Rastrillaje::esEstudiantizable(Posicion p){
-	typename Conj<Posicion>::const_Iterador it=campo.Vecinos(p).CrearIt();
+	Conj<Posicion> vecinetes=campo.Vecinos(p);
+	Conj<Posicion>::const_Iterador it=vecinetes.CrearIt();
 	Nat contador=0;
 	while(it.HaySiguiente()){
 		if(quienOcupa[it.Siguiente().x][it.Siguiente().y].queHay==estudiante){
@@ -416,7 +402,7 @@ bool Rastrillaje::todasOcupadas(Posicion p){
 	return contador==4;
 }
 
-
+//NO ANDA LA PRIMER LINEA
 void Rastrillaje::Recompensar(Posicion p){
 	Agente a = quienOcupa[p.x][p.y].hayCana.Siguiente().clave;
 	datosAg dat = agentes.Obtener(a);
@@ -432,7 +418,7 @@ void Rastrillaje::Recompensar(Posicion p){
 }
 
 void Rastrillaje::Sancionar(Posicion p){
-	Agente a = quienOcupa[p.x][p.y].hayCana.Siguiente().clave;
+	Agente a = quienOcupa[p.x][p.y].hayCana.Siguiente().clave;//Debe explotar aca
 	datosAg dat = agentes.Obtener(a);
 	dat.Qsanciones++;
 	dat.grupoSanciones.EliminarSiguiente();
@@ -446,7 +432,7 @@ void Rastrillaje::Sancionar(Posicion p){
 			Conj<Agente>::Iterador iterConj = nuevo2.Agregar(a);
 			datosK nuevo(dat.Qsanciones,nuevo2);
 			dat.verK.AgregarComoAnterior(nuevo);
-			dat.grupoSanciones = iterConj; //Problema de tipos, estoy asignandole a un it de conj un it de lista
+			dat.grupoSanciones = iterConj; //Problema de tipos, estoy asignandole a un it de conj un it de lista???
 		}	
 	}else{
 		//dat.verK.AgregarComoSiguiente(nuevo);
@@ -591,29 +577,34 @@ void Rastrillaje::IngresarHippie(Posicion p,Nombre h){
 	ITHASH itA;
 	datosPos dat(true,hippie,itA,itN);
 	quienOcupa[p.x][p.y]=dat;
-	Conj<Posicion>::Iterador it;
+	Conj<Posicion> vecinetes=campo.Vecinos(p);
+	Conj<Posicion>::const_Iterador it=vecinetes.CrearIt();
+
 	if(esCapturable(p)){
 		capturarHippie(p);
 	}else{
 		while(it.HaySiguiente()){
-			if(campo.Ocupada(it.Siguiente()) || quienOcupa[it.Siguiente().x][it.Siguiente().y].ocupada){
-				it.Avanzar();
+			if((quienOcupa[it.Siguiente().x][it.Siguiente().y].queHay==obstaculo) || quienOcupa[it.Siguiente().x][it.Siguiente().y].queHay==nada){
 			}else{
 				if(esEstudiante(it.Siguiente()) && esHippizable(it.Siguiente())){
 					hippizar(it.Siguiente());
 					if(esCapturable(it.Siguiente())){
-						capturarHippie(it.Siguiente());
+						//capturarHippie(it.Siguiente());
 					}
 				}else{
 					if(esEstudiante(it.Siguiente()) && esCapturable(it.Siguiente())){
-						Conj<Posicion>::Iterador itAg = campo.Vecinos(it.Siguiente()).CrearIt();
+						Conj<Posicion> vecinetes=campo.Vecinos(it.Siguiente());
+						Conj<Posicion>::const_Iterador itAg=vecinetes.CrearIt();
 						while(itAg.HaySiguiente()){
 							if(esAgente(itAg.Siguiente())){
-								Sancionar(itAg.Siguiente());
+								//Sancionar(itAg.Siguiente());
 							}
 							itAg.Avanzar();
 						}
 					}
+
+
+
 				}
 			}
 			it.Avanzar();
@@ -771,7 +762,6 @@ void Rastrillaje::MoverEstudiante(Nombre s, Direccion d){
 		} else {
 			while (itPos.HaySiguiente()){
 				if ((quienOcupa[itPos.Siguiente().x][itPos.Siguiente().y].queHay==obstaculo) || quienOcupa[itPos.Siguiente().x][itPos.Siguiente().y].queHay==nada){
-					itPos.Avanzar();
 				} else {
 					if (esEstudiante(itPos.Siguiente()) && esCapturable(itPos.Siguiente())) {
 						Conj<Posicion>::Iterador itAg2 = campo.Vecinos(itPos.Siguiente()).CrearIt();
@@ -785,6 +775,9 @@ void Rastrillaje::MoverEstudiante(Nombre s, Direccion d){
 						if (esHippie(itPos.Siguiente()) && esCapturable(itPos.Siguiente())){
 							capturarHippie(itPos.Siguiente());
 						}
+						if (esHippie(itPos.Siguiente()) && esEstudiantizable(itPos.Siguiente())){
+								estudiantizar(itPos.Siguiente());
+							}
 					}
 				}
 				itPos.Avanzar();
@@ -793,6 +786,8 @@ void Rastrillaje::MoverEstudiante(Nombre s, Direccion d){
 	}
 }
 
+
+// OPERADOR << Y MOSTRAR
 
 ostream& operator<<(ostream& out, const Rastrillaje& a) {
 	return a.mostrarRast(out);
@@ -823,18 +818,33 @@ ostream& Rastrillaje::mostrarRast(std::ostream& os ) const {
 	}
 }
 
+
+// PUBLICAS PARA TESTEAR
+
 bool Rastrillaje::dimeQueHay(Posicion p){
 	return quienOcupa[p.x][p.y].ocupada;
+}
+
+bool Rastrillaje::dimeSiEsEstudiante(Posicion p){
+	return esEstudiante(p);
 }
 
 bool Rastrillaje::dimeSiEsCapturable(Posicion p){
 	return esCapturable(p);
 }
 
+bool Rastrillaje::dimeSiEsHippizable(Posicion p){
+	return esHippizable(p);
+}
+
 Nat Rastrillaje::dimeCantidadHippies(){
 	return hippies.Cardinal();
 }
 
+Agente Rastrillaje::dimeQueAgenteEs(Posicion p){
+		return quienOcupa[p.x][p.y].hayCana.Siguiente().clave;
+
+}
 
 //  FUNCIONES NUEVAS PARA MOVER 
 
