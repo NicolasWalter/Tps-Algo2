@@ -33,13 +33,13 @@ public:
     bool definido(const K&);
     bool todosNull(Nodo*[], int);
     void mataNodosRecu(Nodo*);
-    DiccString<K,S>& operator=( DiccString<K,S>& otro); //es fruta,solo sirve al asignar tries recien creados
+    DiccString<K,S>& operator=( DiccString<K,S>& otro); //solo sirve al asignar tries recien creados
 
 
 
 };
 template<class K, class S>
-void DiccString<K,S>::mataNodosRecu(Nodo* nodete){
+void DiccString<K,S>::mataNodosRecu(Nodo* nodete){//FUNCION RECURSIVA QUE VA ELIMINANDO NODOS
 	if(todosNull(nodete->caracteres,256)){
 		delete nodete;
 	}else{
@@ -70,9 +70,9 @@ template<class K, class S>
 	void DiccString<K,S>::definir(const K clave, S signif){
 	Nat i=0;
 	Nodo* actual=estr;
-	while(i<clave.size()){
+	while(i<clave.size()){	//RECORRO TODOS LOS CARACTERES DE LA CLAVE 
 		Nat ord=clave[i];
-		if(actual->caracteres[ord]==NULL) {
+		if(actual->caracteres[ord]==NULL) { //VEO SI TENGO QUE CREAR UN NODO NUEVO O NO
 			Nodo* nuevaLetra = new Nodo();
 			nuevaLetra->padre=actual;
 			actual->caracteres[ord]=nuevaLetra;
@@ -81,7 +81,7 @@ template<class K, class S>
 			actual=actual->caracteres[ord];
 		}
 		i++;
-	}
+	}	//DESPUES DE TODO EL RECORRIDO ASIGNO EL SIGNIFICADO
 	actual->significado=signif;
 	actual->finPalabra = true;
 }
@@ -90,16 +90,16 @@ template<class K, class S>
 S& DiccString<K,S>::obtener(const K clave) const{
 	Nat i=0;
 	Nodo* actual=estr;
-	while(i<clave.size()){
+	while(i<clave.size()){	//RECORRO TODOS LOS CARACTERES DE LA CLAVE 
 		Nat ord=clave[i];
 		actual=actual->caracteres[ord];
 		i++;
 	}    	
-	return (actual->significado);
+	return (actual->significado);	//EL ULTIMO NODO TIENE EL SIGNIFICADO
 }
 
 template<class K, class S>
-bool DiccString<K,S>::todosNull(Nodo* caracteres[], int n){
+bool DiccString<K,S>::todosNull(Nodo* caracteres[], int n){ //SE FIJA SI TODOS LOS ELEMENTOS DE UN ARREGLO DE CARACTERES SON NULL
 	int i=0;
 	bool res=true;
 	while(i<n){
@@ -121,7 +121,8 @@ void DiccString<K,S>::borrar(const K& clave){
 	actual->finPalabra=false;
 	Nodo* camino=NULL;
 	int lug=clave.size() -1;
-	while(todosNull(actual->caracteres,256) && actual->padre!=NULL && actual->finPalabra==false) {
+	while(todosNull(actual->caracteres,256) && actual->padre!=NULL && actual->finPalabra==false) { 
+		//SI TODOS SON NULL(NO TIENE HIJOS) Y SU PADRE NO ES NULL(NO ES ESTR) Y NO ES FINAL DE PALABRA -> ES UN NODO BORRABLE
 		camino=actual;
 		actual=actual->padre;
 		int ord2=clave[lug];

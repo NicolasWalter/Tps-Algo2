@@ -493,11 +493,11 @@ void test_captura_estudiante()
 	ASSERT(campus.conMismasSanciones(a).Cardinal() == 3 );
 	ASSERT(campus.conMismasSanciones(a2).Cardinal() == 3 );
 	ASSERT(campus.conMismasSanciones(a3).Cardinal() == 3 );
-	/*Nat c = campus.conKSanciones(1).Cardinal();
-	ASSERT(c == 3);*/
+	Nat c = campus.conKSanciones(1).Cardinal();
+	ASSERT(c == 3);
 
-	/*Nat c2 = campus.conKSanciones(0).Cardinal();
-	ASSERT(c2 == 0 );*/
+	Nat c2 = campus.conKSanciones(0).Cardinal();
+	ASSERT(c2 == 0 );
 
 
 }

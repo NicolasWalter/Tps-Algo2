@@ -129,18 +129,18 @@ Posicion Driver::posEstudianteYHippie(Nombre n) const
 	return rast.PosEstudianteYHippie(n);
 }
 
-Posicion Driver::posAgente(Agente pl)
+Posicion Driver::posAgente(Agente pl) //ACA ROBE UN CONST
 {
 	return rast.PosAgente(pl);
 }
 
-Nat Driver::cantSanciones(Agente pl) 
+Nat Driver::cantSanciones(Agente pl) //ACA ROBE UN CONST
 {
     // TODO
 	return rast.CantSanciones(pl);
 }
 
-Nat Driver::cantHippiesAtrapados(Agente pl)
+Nat Driver::cantHippiesAtrapados(Agente pl)//ACA ROBE UN CONST
 {
     // TODO
 	return rast.CantHippiesAtrapados(pl);
@@ -155,7 +155,7 @@ Agente Driver::masVigilante() const
 	return rast.MasVigilante();
 }
 
-const Conj<Agente> Driver::conMismasSanciones(Agente a)
+const Conj<Agente> Driver::conMismasSanciones(Agente a)//ACA ROBE UN CONST
 {
    
 	return rast.ConMismasSanciones(a);

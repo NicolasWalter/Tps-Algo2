@@ -19,13 +19,13 @@ public:
 	Nat CantSanciones(Agente a);
 	Nat CantHippiesAtrapados(Agente a);
 	Agente MasVigilante() const;
-	Conj<Agente> ConMismasSanciones(Agente a) ; //VER COMO HACER PARA QUE DEVUELVA CONJ<AGENTE>
+	Conj<Agente> ConMismasSanciones(Agente a) ; 
 	void IngresarEstudiante(Nombre e, Posicion p);
 	void IngresarHippie(Posicion, Nombre);
 	void MoverEstudiante(Nombre e, Direccion d);
 	void MoverHippie(Nombre h);
 	void MoverAgente(Agente a);
-	const Conj<Agente>& ConKSanciones(Nat k) const;
+	const Conj<Agente>& ConKSanciones(Nat k);
 	ostream& mostrarRast(std::ostream& os ) const ;
 
 
@@ -107,6 +107,7 @@ private:
 
 };
 
+//AMBAS BUSQUEDAS BINARIAS DEVUELVEN DONDE DEBERIA ESTAR EL ELEMENTO BUSCADO
 Nat busquedaBin(Arreglo<TuplaPos> v, 	Nat objetivo){
 	Nat i=0;
 	Nat d=v.Tamanho()-1;
@@ -195,14 +196,14 @@ DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
 	conjVacio = vac;
 	Conj<Agente> pruebaAg;
 	//datosK dati(0,vac);
-	Dicc<Agente,Posicion>::Iterador gadorcha = d.CrearIt();
-	while(gadorcha.HaySiguiente()){
-		vac.Agregar(gadorcha.SiguienteClave());
-		gadorcha.Avanzar();
+	Dicc<Agente,Posicion>::Iterador iterete = d.CrearIt();
+	while(iterete.HaySiguiente()){
+		vac.Agregar(iterete.SiguienteClave());
+		iterete.Avanzar();
 	}
-	datosK datGadorcha(0,vac);
+	datosK datIterete(0,vac);
 	agregoEn1 = Klista;
-	Lista<datosK>::Iterador itKGadorcha = agregoEn1.AgregarAtras(datGadorcha);
+	Lista<datosK>::Iterador itKiterete = agregoEn1.AgregarAtras(datIterete);
 	//agregoEn1 = Klista;
 
 
@@ -214,8 +215,8 @@ DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
 		TuplaPos nCana(iter.SiguienteClave(),iter.SiguienteSignificado());
 		AgregarOrdenado(arr,nCana);
 		//Conj<Agente>::Iterador iteee=vac.Agregar(iter.SiguienteClave());//meto en vac el agente al que mira iter
-		Conj<Agente>::Iterador iteGadorcha=vac.CrearIt();
-		datosAg datN(0,0,iter.SiguienteClave(),iter.SiguienteSignificado(),iteGadorcha,itKGadorcha);//0 premios y sanc, wachem, pos, iterador a vac, iterador a klista
+		Conj<Agente>::Iterador iteera=vac.CrearIt();
+		datosAg datN(0,0,iter.SiguienteClave(),iter.SiguienteSignificado(),iteera,itKiterete);//0 premios y sanc, wachem, pos, iterador a vac, iterador a klista
 		Conj<datosHoE>::Iterador itAux;// iterador vacio!
 		ITHASH itCanaDatos = dprom.DefinirRapido(iter.SiguienteClave(),datN);//meto al agente con sus datos en el hash
 		datosPos nuevoDP(true,agente,itCanaDatos,itAux); // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!! <--- comentario viejo?
@@ -260,7 +261,7 @@ DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
 	hayNuevas = false;	
 
 }
-Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d) { // VER QUE ONDA LO DE METE EL HASH EN EL CONSTRUCTOR
+Rastrillaje::Rastrillaje(Campus c, Dicc<Agente, Posicion> d) { 
 DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
 	Lista<datosK> Klista;
 	Vector<Vector<datosPos> > map;
@@ -283,18 +284,17 @@ DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
 	Arreglo<TuplaPos> arr(d.CantClaves());
 	Dicc<Agente,Posicion>::Iterador iter = d.CrearIt();
 	Conj<Agente> vac;
-	conjVacio=vac;
-
+	conjVacio = vac;
 	Conj<Agente> pruebaAg;
 	//datosK dati(0,vac);
-	Dicc<Agente,Posicion>::Iterador gadorcha = d.CrearIt();
-	while(gadorcha.HaySiguiente()){
-		vac.Agregar(gadorcha.SiguienteClave());
-		gadorcha.Avanzar();
+	Dicc<Agente,Posicion>::Iterador iterete = d.CrearIt();
+	while(iterete.HaySiguiente()){
+		vac.Agregar(iterete.SiguienteClave());
+		iterete.Avanzar();
 	}
-	datosK datGadorcha(0,vac);
+	datosK datIterete(0,vac);
 	agregoEn1 = Klista;
-	Lista<datosK>::Iterador itKGadorcha =agregoEn1.AgregarAtras(datGadorcha);
+	Lista<datosK>::Iterador itKiterete = agregoEn1.AgregarAtras(datIterete);
 	//agregoEn1 = Klista;
 
 
@@ -306,8 +306,8 @@ DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
 		TuplaPos nCana(iter.SiguienteClave(),iter.SiguienteSignificado());
 		AgregarOrdenado(arr,nCana);
 		//Conj<Agente>::Iterador iteee=vac.Agregar(iter.SiguienteClave());//meto en vac el agente al que mira iter
-		Conj<Agente>::Iterador iteGadorcha=vac.CrearIt();
-		datosAg datN(0,0,iter.SiguienteClave(),iter.SiguienteSignificado(),iteGadorcha,itKGadorcha);//0 premios y sanc, wachem, pos, iterador a vac, iterador a klista
+		Conj<Agente>::Iterador iteera=vac.CrearIt();
+		datosAg datN(0,0,iter.SiguienteClave(),iter.SiguienteSignificado(),iteera,itKiterete);//0 premios y sanc, wachem, pos, iterador a vac, iterador a klista
 		Conj<datosHoE>::Iterador itAux;// iterador vacio!
 		ITHASH itCanaDatos = dprom.DefinirRapido(iter.SiguienteClave(),datN);//meto al agente con sus datos en el hash
 		datosPos nuevoDP(true,agente,itCanaDatos,itAux); // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!! <--- comentario viejo?
@@ -350,7 +350,6 @@ DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
 	pLog.AgregarAtras(datInicial);
 	buscoEnLog = pLog;
 	hayNuevas = false;	
-
 }
 
 
@@ -358,12 +357,12 @@ Campus Rastrillaje::ObsCampus() const{
 	return campo;
 }
 
-typename Conj<datosHoE>::const_Iterador Rastrillaje::Estudiantes() const{ //tendria que devolver cosas del tipo NOMBRE, arreglar? O flasheada vieja?
+typename Conj<datosHoE>::const_Iterador Rastrillaje::Estudiantes() const{ 
 	typename Conj<datosHoE>::const_Iterador iter = estudiantes.CrearIt();
 	return iter;
 }
 
-typename Conj<datosHoE>::const_Iterador Rastrillaje::Hippies() const{	//tendria que devolver cosas del tipo NOMBRE, arreglar? O flasheada vieja?
+typename Conj<datosHoE>::const_Iterador Rastrillaje::Hippies() const{	
 	typename Conj<datosHoE>::const_Iterador iter = hippies.CrearIt();
 	return iter;
 }
@@ -397,12 +396,31 @@ Conj<Agente> Rastrillaje::ConMismasSanciones(Agente a){ //VER COMO HACER PARA QU
 	//return res;
 }
 
-const Conj<Agente>& Rastrillaje::ConKSanciones(Nat q) const{
-	Nat posibleIndex= busquedaBinK(buscoEnLog,q);
-	if(buscoEnLog[posibleIndex].k == q){
-		return buscoEnLog[posibleIndex].grupoK;
+const Conj<Agente>& Rastrillaje::ConKSanciones(Nat q) {
+	if(hayNuevas){
+		hayNuevas = false;	
+		Vector<datosK> pLog;
+		Lista<datosK>::const_Iterador iter =agregoEn1.CrearIt();
+		Nat i=0;
+		while(iter.HaySiguiente()){
+			pLog.AgregarAtras(iter.Siguiente());
+			i++;
+			iter.Avanzar();
+		}
+		buscoEnLog=pLog;
+		Nat posibleIndex=busquedaBinK(buscoEnLog,q);
+		if(buscoEnLog[posibleIndex].k ==q ){
+			return buscoEnLog[posibleIndex].grupoK;
+		}else{
+			return conjVacio;
+		}
 	}else{
-		return conjVacio;
+		Nat posibleIndex=busquedaBinK(buscoEnLog,q);
+		if(buscoEnLog[posibleIndex].k ==q ){
+			return buscoEnLog[posibleIndex].grupoK;
+		}else{
+			return conjVacio;
+		}
 	}
 }
 
@@ -531,29 +549,6 @@ bool Rastrillaje::todasOcupadas(Posicion p){
 }
 
 
-/*void Rastrillaje::Recompensar(Posicion p){
-	ITHASH canita=quienOcupa[p.y -1][p.x -1].hayCana;
-	Agente a = canita.Siguiente().significado.wachem;
-	datosAg dat = agentes.Obtener(a);
-	datosAg viejoGorra=agentes.Obtener(masVigilante.Siguiente());
-	agentes.Obtener(a).premios=dat.premios+1;
-	if(dat.premios+1>viejoGorra.premios){
-		Conj<Agente> vacioNuevo;
-		vacioNuevo.Agregar(a);
-		Conj<Agente>::const_Iterador nMV= vacioNuevo.CrearIt();
-		masVigilante = nMV; 
-	}else{
-		if(dat.premios+1 == viejoGorra.premios){
-			if(a<viejoGorra.wachem){
-				Conj<Agente> vacioNuevo;
-				vacioNuevo.Agregar(a);
-				Conj<Agente>::const_Iterador nMV= vacioNuevo.CrearIt();
-				masVigilante = nMV; 
-			}
-		}
-	}	
-}*/
-
 void Rastrillaje::Recompensar(Posicion p){
 	ITHASH canita=quienOcupa[p.y -1][p.x -1].hayCana;
 	Agente a = canita.Siguiente().significado.wachem;
@@ -573,11 +568,28 @@ void Rastrillaje::Recompensar(Posicion p){
 
 void Rastrillaje::Sancionar(Posicion p){
 	ITHASH canita = quienOcupa[p.y -1][p.x -1].hayCana;
-	Agente a = canita.Siguiente().significado.wachem;//Debe explotar aca
-	datosAg dat = agentes.Obtener(a);
+	Agente a = canita.Siguiente().significado.wachem;
+	datosAg& dat = agentes.Obtener(a);
 	agentes.Obtener(a).Qsanciones = dat.Qsanciones+1;
-	//Agente gadorcha=dat.grupoSanciones.Siguiente();
+	//agentes.Obtener(a).grupoSanciones.EliminarSiguiente();
 	dat.verK.Siguiente().grupoK.Eliminar(a);
+	if(dat.verK.Siguiente().grupoK.Cardinal() == 0){
+		dat.verK.EliminarSiguiente();
+	}else{
+		dat.verK.Avanzar();
+	}
+	if(!dat.verK.HaySiguiente() || dat.verK.Siguiente().k > dat.Qsanciones){
+		Conj<Agente> eoeo;
+		//eoeo.Agregar(a);
+		datosK nuevete(dat.Qsanciones,eoeo);
+		dat.verK.AgregarComoSiguiente(nuevete);
+	}
+	dat.grupoSanciones = dat.verK.Siguiente().grupoK.AgregarRapido(a);
+	hayNuevas=true;
+	//Conj<Agente>::Iterador nuevoIter =dat.grupoSanciones.EliminarSiguiente();
+	
+	//Agente gadorcha=dat.grupoSanciones.Siguiente();
+	/*dat.verK.Siguiente().grupoK.Eliminar(a);
 	dat.verK.Avanzar();
 	hayNuevas=true;
 	if(dat.verK.HaySiguiente()){
@@ -600,7 +612,7 @@ void Rastrillaje::Sancionar(Posicion p){
 		dat.verK.AgregarComoSiguiente(nuevoo);
 		dat.grupoSanciones = iterConjj;
 		//dat.verK.Avanzar();
-	}
+	}*/
 }
  
 

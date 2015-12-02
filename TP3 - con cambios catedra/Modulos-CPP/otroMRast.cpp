@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
 	Posicion p3;
 	p3.x = 3;
 	p3.y = 1;
-	camp.AgregarObstaculo(p2);
+	//camp.AgregarObstaculo(p2);
 	camp.AgregarObstaculo(p3);
 
 	Dicc<Agente,Posicion> agentes;
@@ -31,8 +31,9 @@ int main(int argc, char const *argv[])
 	p.y = 1;
 
 
-	agentes.Definir(a2,Posicion(5,5));
+	agentes.Definir(a2,p2);
 	agentes.Definir(a,p);
+	agentes.Definir(a3,Posicion(7,7));
 	//agentes.Definir(a2,p2);
 	//agentes.Definir(a3,p3);
 
@@ -47,10 +48,10 @@ int main(int argc, char const *argv[])
 	cout<<rast;
 	cout<<" "<<endl;
 	cout<<rast.CantSanciones(a)<<endl;
-	cout<<"conMismas: "<<rast.ConMismasSanciones(a).Cardinal()<<endl;
+	cout<<"conMismas pre: "<<rast.ConMismasSanciones(a).Cardinal()<<endl;
  	rast.IngresarEstudiante(e,pe);
- 	cout<<"conMismas: "<<rast.ConMismasSanciones(a).Cardinal()<<endl;
- 	 cout<<"conMismas: "<<rast.ConMismasSanciones(a2).Cardinal()<<endl;
+ 	cout<<"conMismas sancionado: "<<rast.ConMismasSanciones(a).Cardinal()<<endl;
+ 	cout<<"conMismas otro: "<<rast.ConMismasSanciones(a3).Cardinal()<<endl;
 	//rast.Sancionar(p);
 	cout<<rast;
 	cout<<" "<<endl;
