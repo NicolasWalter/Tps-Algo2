@@ -9,17 +9,17 @@ public:
 
 
 	Rastrillaje(Campus c, Dicc<Agente, Posicion> d); //ComenzarRastrillaje
-	//~Rastrillaje();
+	~Rastrillaje();
 	Campus ObsCampus() const; // el nombre "Campus()" tira error, debe ser porque es el constructor de la clase campus.
 	typename Conj<datosHoE>::const_Iterador Estudiantes() const; 
 	typename Conj<datosHoE>::const_Iterador Hippies() const;
 	typename Conj<Agente>::const_Iterador Agentes() const;
 	Posicion PosEstudianteYHippie(Nombre id) const;
-	Posicion PosAgente(Agente a);
-	Nat CantSanciones(Agente a);
-	Nat CantHippiesAtrapados(Agente a);
+	Posicion PosAgente(Agente a) const;
+	Nat CantSanciones(Agente a) const;
+	Nat CantHippiesAtrapados(Agente a) const;
 	Agente MasVigilante() const;
-	Conj<Agente> ConMismasSanciones(Agente a) ; 
+	Conj<Agente> ConMismasSanciones(Agente a) const; 
 	void IngresarEstudiante(Nombre e, Posicion p);
 	void IngresarHippie(Posicion, Nombre);
 	void MoverEstudiante(Nombre e, Direccion d);
@@ -166,12 +166,21 @@ void AgregarOrdenado(Arreglo<TuplaPos> &a, TuplaPos t){
 		a.Definir(i,aux1);
 	}
 }
+
+Rastrillaje::~Rastrillaje(){
+	//posCiviles.mataNodosRecu(posCiviles.estr);
+
+}
+
+
 Rastrillaje::Rastrillaje(){
 	
 }
 
 void Rastrillaje::ComenzarRastrillaje(Campus c, Dicc<Agente, Posicion> d){
 DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
+	agentes = dprom; //PUEDE SER QUE HAGA FALTA UN OPERADOR =
+
 	Lista<datosK> Klista;
 	Vector<Vector<datosPos> > map;
 	for (Nat i=1; i<=c.Filas(); i++){
@@ -218,7 +227,7 @@ DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
 		Conj<Agente>::Iterador iteera=vac.CrearIt();
 		datosAg datN(0,0,iter.SiguienteClave(),iter.SiguienteSignificado(),iteera,itKiterete);//0 premios y sanc, wachem, pos, iterador a vac, iterador a klista
 		Conj<datosHoE>::Iterador itAux;// iterador vacio!
-		ITHASH itCanaDatos = dprom.DefinirRapido(iter.SiguienteClave(),datN);//meto al agente con sus datos en el hash
+		ITHASH itCanaDatos = agentes.DefinirRapido(iter.SiguienteClave(),datN);//meto al agente con sus datos en el hash
 		datosPos nuevoDP(true,agente,itCanaDatos,itAux); // FALTA UN DEFINIR EN DICCPROM QUE TE DEVUELVA UN ITERADOR!!!!!!!!! <--- comentario viejo?
 		map[iter.SiguienteSignificado().y -1][iter.SiguienteSignificado().x -1] = nuevoDP;
 
@@ -228,7 +237,6 @@ DiccionarioProm<Agente,datosAg> dprom(d.CantClaves());
 
 
 	campo = c;
-	agentes = dprom; //PUEDE SER QUE HAGA FALTA UN OPERADOR =
 	posAgentesLog = arr;
 	Conj<datosHoE> hip;
 	hippies = hip;
@@ -375,15 +383,15 @@ Posicion Rastrillaje::PosEstudianteYHippie(Nombre id) const{
 	return posCiviles.obtener(id);
 }
 
-Posicion Rastrillaje::PosAgente(Agente a){
+Posicion Rastrillaje::PosAgente(Agente a) const{
 	return agentes.Obtener(a).posActual;
 }
 
-Nat Rastrillaje::CantSanciones(Agente a){
+Nat Rastrillaje::CantSanciones(Agente a) const{
 	return agentes.Obtener(a).Qsanciones;
 }
 
-Nat Rastrillaje::CantHippiesAtrapados(Agente a){
+Nat Rastrillaje::CantHippiesAtrapados(Agente a)const{
 	return agentes.Obtener(a).premios;
 }
 
@@ -391,7 +399,7 @@ Agente Rastrillaje::MasVigilante() const{
 	return masVigilanteP;
 }
 
-Conj<Agente> Rastrillaje::ConMismasSanciones(Agente a){ //VER COMO HACER PARA QUE DEVUELVA CONJ<AGENTE>
+Conj<Agente> Rastrillaje::ConMismasSanciones(Agente a)const{ //VER COMO HACER PARA QUE DEVUELVA CONJ<AGENTE>
 	return agentes.Obtener(a).verK.Siguiente().grupoK;
 	//return res;
 }

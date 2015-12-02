@@ -45,13 +45,13 @@ class Driver
  		Nat cantAgentes() const;
 
 		Posicion posEstudianteYHippie(Nombre n) const;
-		Posicion posAgente(Agente pl) ;
-		Nat cantSanciones(Agente pl) ;
-		Nat cantHippiesAtrapados(Agente pl) ;
+		Posicion posAgente(Agente pl) const;
+		Nat cantSanciones(Agente pl) const;
+		Nat cantHippiesAtrapados(Agente pl) const;
 
 		/// Otras operaciones de CampusSeguro
 		Agente masVigilante() const;
-		const Conj<Agente> conMismasSanciones(Agente a);
+		const Conj<Agente> conMismasSanciones(Agente a) const;
 		const Conj<Agente> conKSanciones(Nat k);
 
 

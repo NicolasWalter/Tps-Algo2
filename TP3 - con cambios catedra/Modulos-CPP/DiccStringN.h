@@ -20,7 +20,6 @@ private:
 
 
 	};
-	Nodo* estr;
 
 
 
@@ -28,16 +27,24 @@ public:
 	DiccString();
     ~DiccString();  
     void definir(const K, S);
-    S& obtener(const K) const;
+/*    Nodo* cabeza();
+*/    S& obtener(const K) const;
     void borrar(const K&);
     bool definido(const K&);
     bool todosNull(Nodo*[], int);
     void mataNodosRecu(Nodo*);
     DiccString<K,S>& operator=( DiccString<K,S>& otro); //solo sirve al asignar tries recien creados
+	Nodo* estr;
 
 
 
 };
+
+/*template<class K, class S>
+Nodo* DiccString<K,S>::cabeza(){
+	return estr;
+}*/
+
 template<class K, class S>
 void DiccString<K,S>::mataNodosRecu(Nodo* nodete){//FUNCION RECURSIVA QUE VA ELIMINANDO NODOS
 	if(todosNull(nodete->caracteres,256)){
@@ -62,7 +69,7 @@ DiccString<K,S>::DiccString(){
 
 template<class K, class S>
 DiccString<K,S>::~DiccString(){
-	mataNodosRecu(this->estr);
+	mataNodosRecu(estr);
 
 }
 
@@ -154,7 +161,7 @@ bool DiccString<K,S>::definido(const K& clave){
 template<class K, class S>
 DiccString<K,S>& DiccString<K,S>::operator = ( DiccString<K,S>& otro)
 {
-  estr = new Nodo();
+  //estr = new Nodo();
   //significados_ = otro.significados_;
 
   return *this;
